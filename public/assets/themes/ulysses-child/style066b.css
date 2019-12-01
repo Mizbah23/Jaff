@@ -1,0 +1,16 @@
+/*
+Theme Name: Ulysses Child
+Theme URI: http://geothemes.org/demo/wp/ulysses/
+Author: GeoThemes
+Author URI: http://www.geothemes.org
+Template: ulysses
+Description: ULYSSES is a modern WordPress theme for your gym, fitness or sport center. You can customize it very easy to fit your business needs.
+Version: 1.0
+Tags: one-column, two-columns, right-sidebar, fluid-layout, custom-menu, editor-style, featured-images, microformats, post-formats, rtl-language-support, sticky-post
+Text Domain: ulysses
+*/
+
+@import url("../ulysses/style.css");
+
+/* = Theme customization starts here
+-------------------------------------------------------------- */
