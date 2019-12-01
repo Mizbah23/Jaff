@@ -317,7 +317,7 @@ class ProgramController extends Controller
         $co->status = $request->sts;
         $co->save();
         $notification = array(
-                'message' => ($request->sts==1)?'Coach Actived':'Coach Disabled',
+                'message' => ($request->sts==1)?'Coach Activated':'Coach Disabled',
                 'type' => ($request->sts==1)?'success':'warning',
             );
         return Response::json($notification); 

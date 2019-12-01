@@ -341,33 +341,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="modal fade text-left addHourMdl" tabindex="-1" role="dialog" aria-labelledby="myModalLabel130" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
         <div class="modal-content">
@@ -570,15 +543,18 @@
         
         <div class="col-xl-9 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
+                
                 <div class="card-content">
                     <div class="card-body " style="padding-bottom: 0px;">
+                        <form method="get" action="{{route('report.slotPrint')}}" target="_blank">
+                           
                         <div class="row">
                             
                             
                             <div class="col-xl-3 col-md-6 col-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">Day</label>
-                                    <select id="searchday" class=" form-control">
+                                    <select id="searchday" name="searchday" class=" form-control">
                                     <option value="">- all -</option>
                                     @foreach($weekdays as $wd)
                                     <option value="{{$wd->id}}">{{$wd->day}}</option>
@@ -589,7 +565,7 @@
                             <div class="col-xl-3 col-md-6 col-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">Ground</label>
-                                    <select id="searchgrnd" class=" form-control">
+                                    <select id="searchgrnd" name="searchgrnd" class=" form-control">
                                     <option value="">- all -</option>
                                     @foreach($grounds as $gd)
                                     <option value="{{$gd->id}}">{{$gd->name}}</option>
@@ -601,7 +577,7 @@
                             <div class="col-xl-3 col-md-6 col-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">Pricing type</label>
-                                    <select id="searchtyp" class=" form-control">
+                                    <select id="searchtyp" name="searchtyp" class=" form-control">
                                         <option value="">- all -</option>
                                         @foreach($types as $ty)
                                         <option value="{{$ty->id}}">{{$ty->type}}</option>
@@ -612,13 +588,14 @@
 
                             <div class="col-xl-3 col-md-6 col-12 mb-1" style="padding-top: 17px;">
                                 <fieldset class="form-group" style="margin-bottom: 0px;">    
-                                    <button type="button" class=" btn btn-outline-success mr-1 mb-1 waves-effect waves-light">
-                                        <a href="{{route('report.slotPrint')}}" target="_blank">
+                                    <button type="submit" class=" btn btn-outline-success mr-1 mb-1 waves-effect waves-light">
+                                        
                                         <i class="feather icon-printer"></i> Print
                                         </a></button>
                                 </fieldset>               
                             </div>
                         </div>
+                    </form>
                     </div>
                 </div>
             </div>

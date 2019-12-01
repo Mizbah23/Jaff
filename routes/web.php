@@ -235,8 +235,11 @@ Route::prefix('admin')->group(function()
    Route::post('/save-book', 'BookingController@saveBook')->name('save.book');
    Route::get('/test','CalendarController@showTest');
    Route::prefix('reports')->group(function(){
-   /*****************reports route****************/
-   Route::get('/slot-list/print','ReportController@slotPrint')->name('report.slotPrint');
+  
+   /*****************Reports route****************/
+   // Route::get('/slot-list/print','ReportController@slotPrint')->name('report.slotPrint');
+   Route::get('/slot-list/print', ['as' => 'report.slotPrint', 'uses' => 'ReportController@slotPrint']);
+   Route::get('/holiday-list/print', ['as' => 'report.holidayPrint', 'uses' => 'ReportController@holidayPrint']);
     
    });
 
