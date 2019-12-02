@@ -329,62 +329,29 @@
     
 
 	<!-- .........................Testimonial Section............................-->
-	<div class="pricing-section" id="price-table-section">
-	    <div class="container">
-		<div class="row">
-		    <div id="plan-86" class="col-md-4 wow rollIn">
-			<div class="pricing-table ">
-                            <h2 class="pricing-table-name">Silver</h2>	
-                            <div class="pricing-table-price d-bg-c">
-                                $25 /<span>per month</span>
-                            </div>
-                            <ul class="pricing-table-stuff">
-                                <li>Yoga</li>
-                                <li>Massage</li>
-                                <li>Swimming Pool</li>
-                                <li>Cardio</li>
-                                <li>Aerobics</li>
-                                <li>Solar</li>
-                            </ul>
-                            <p><a href="http://google.com/" class="button d-bg-c-h">Buy now</a></p>
-			</div>
-		    </div>
+<div class="page-wrapper">
+    <div class="post-slider">
+        <h1 class="slider-title text-center">Testimonials</h1>
+        <i class="fa fa-chevron-left prev"></i>
+        <i class="fa fa-chevron-right next"></i>
+        <div class="post-wrapper">
+            @foreach($testimonials as $t)
+            <div class="post">
+                <img src="{{($t->image)}}" class="slider-image" alt="slider image"  />
+                <div class="post-info">
+                    <h3>{{($t->name)}}</h3>
+                    <h4>{{$t->designation}}</h4>
+                    <p>
+                    <img src="public/img/quote-sign-left.png" class="quote-sign-left" alt="quote-sign-left" />
+                   {{$t->message}}<img src="public/img/quote-sign-right.png" class="quote-sign-right" alt="quote-sign-right" />
                     
-		    <div id="plan-87" class="col-md-4 wow rollIn">
-                        <div class="pricing-table popular-table d-bg-c">
-                            <h2 class="pricing-table-name">Gold</h2>
-                            <div class="pricing-table-price d-text-c">$25 /<span>per day</span></div>
-                            <ul class="pricing-table-stuff">
-                                <li>Cardio</li>
-                                <li>Swimming Pool</li>
-                                <li>Massage</li>
-                                <li>Yoga</li>
-                                <li>Aerobics</li>
-                                <li>Solar</li>
-                            </ul>
-                            <p><a href="#" class="button d-bg-c-h">Buy now</a></p>
-                        </div>
-		    </div>
-		    
-                    <div id="plan-88" class="col-md-4 wow rollIn">
-                        <div class="pricing-table ">
-                            <h2 class="pricing-table-name">Platium</h2>	
-                            <div class="pricing-table-price d-bg-c">$25 /<span>per year</span></div>
-                            <ul class="pricing-table-stuff">
-                                <li>Cardio</li>
-                                <li>Swimming Pool</li>
-                                <li>Massage</li>
-                                <li>Yoga</li>
-                                <li>Aerobics</li>
-                                <li>Solar</li>
-                            </ul>
-                            <p><a href="http://google.com/" class="button d-bg-c-h">Buy now</a></p>
-                        </div>
-                    </div>
-                    
-		</div>
+                    </p>
+                </div>
             </div>
-	</div>
+            @endforeach
+        </div>
+    </div>
+</div>
 	
         
         <!-- .........................Map Section............................-->

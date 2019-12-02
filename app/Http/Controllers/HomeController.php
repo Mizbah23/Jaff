@@ -11,6 +11,7 @@ use Jaff\Offer;
 use Jaff\Program;
 use Jaff\About;
 use Jaff\Singleimg;
+use Jaff\Testimonial;
 use DB;
 use Response;
 
@@ -41,6 +42,7 @@ class HomeController extends Controller
         $data['coaches']=Coach::where('status',1)->get();
         $data['abouts']=About::orderBy('id','asc')->get();
         $data['offers'] = Offer::where('status',1)->get();
+        $data['testimonials'] = Testimonial::orderBy('id','desc')->limit(5)->get();
         $data['weeks'] = Weekday::select('weekdays.day','weekdays.id','weekdays.sts',DB::raw("(SELECT count(slots.slot_id) FROM slots WHERE "
                             . "slots.`day_id`=weekdays.`id`) as total_slot"),DB::raw("(SELECT MIN(slots.start) FROM slots WHERE "
                             . "slots.`day_id`=weekdays.`id`) as start"),DB::raw("(SELECT MAX(slots.end) FROM slots WHERE "

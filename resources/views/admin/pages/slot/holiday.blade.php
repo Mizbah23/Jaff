@@ -21,6 +21,7 @@
 <div class="modal fade addHolidayModel" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
         <div class="modal-content">
+          <form method="post" id="addHolidayForm" enctype="multipart/form-data"> 
             <div class="modal-header bg-info white">
                 <h5 class="modal-title" id="exampleModalScrollableTitle">Add Holiday</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -28,7 +29,7 @@
                 </button>
             </div>
             <div class="modal-body" style="padding-top: 23px;">
-                <form method="post" id="addHolidayForm" enctype="multipart/form-data">    
+                 
                 <div class="row" >  
                     <div class="col-md-8 col-xs-8 col-md-offset-2 col-xs-offset-2">
                         <fieldset class="form-group">
@@ -62,7 +63,7 @@
                     Save <span class="addbtn" role="status" aria-hidden="true"></span>
                 </button>
             </div>
-        </form>
+            </form>
         </div>
     </div>
 </div>
