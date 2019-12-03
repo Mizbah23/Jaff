@@ -7,7 +7,7 @@
 <!--   <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/dataTables.checkboxes.css')}}">
    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/data-list-view.css')}}">-->
  <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/select2.min.css')}}">
-   <link rel="stylesheet" href="{{asset('public/css/back/bootstrap-timepicker.css')}}">
+ <link rel="stylesheet" href="{{asset('public/css/back/bootstrap-timepicker.css')}}">
 @stop
 @section('content')
 <style>
@@ -718,10 +718,8 @@
 
 <script type="text/javascript" src="{{asset('public/js/back/bootstrap-fileupload.js')}}"></script>
  
-
-
 <script src="{{asset('public/js/back/select2.full.min.js')}}"></script>
-<script src="{{asset('public/js/back/form-select2.min.js')}}"></script>
+<script src="{{asset('public/js/back/form-select2.js')}}"></script>
 <script src="{{asset('public/js/back/bootstrap-timepicker.js')}}"></script>
 
 

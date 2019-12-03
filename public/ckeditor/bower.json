@@ -7,4 +7,5 @@
 	"homepage": "http://ckeditor.com",
 	"main": "./ckeditor.js",
 	"moduleType": "globals"
+
 }

@@ -101,7 +101,7 @@
 <!--slick slider-->
 <script type="text/javascript" src="public/js/front/slick.min.js"></script>
 
-    <script>
+<script>
 // $(document).ready(function(){
 // console.log('success');
 // });
