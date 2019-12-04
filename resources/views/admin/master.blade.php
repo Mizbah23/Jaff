@@ -92,15 +92,18 @@
     
     <script src="{{asset('public/js/back/vendors.min.js')}}"></script>
     
-    <script src="{{asset('public/js/back/tether.min.js')}}"></script>
+    
+   {{--  <script src="{{asset('public/js/back/tether.min.js')}}"></script> --}}
     <!--<script src="{{asset('public/js/back/shepherd.min.js')}}"></script>-->
     <script src="{{asset('public/js/back/app-menu.min.js')}}"></script>
     <script src="{{asset('public/js/back/app.min.js')}}"></script>
     <script src="{{asset('public/js/back/components.min.js')}}"></script>
+
     
-<script src="{{asset('public/js/back/sweetalert2.min.js')}}"></script>
-<!-- Toastr -->
-<script src="{{asset('public/js/back/toastr.min.js')}}"></script>
+
+    <script src="{{asset('public/js/back/sweetalert2.min.js')}}"></script>
+    <!-- Toastr -->
+    <script src="{{asset('public/js/back/toastr.min.js')}}"></script>
      @yield('script')
      <script type="text/javascript">
  Toast = Swal.mixin({

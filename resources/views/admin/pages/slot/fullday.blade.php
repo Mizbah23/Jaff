@@ -3,6 +3,7 @@
 
 @section('link')
    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/datatables.min.css')}}">
+   <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/select2.min.css')}}">
    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
    <link href="{{asset('public/css/back/bootstrap-fileupload.css')}}" rel="stylesheet" />
    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/pickadate.css')}}">
@@ -31,7 +32,7 @@
 </style>
 
 <!-- *****************************add model**********************************-->
-<div class="modal fade addModel" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+<div class="modal fade addModel" id="exampleModalScrollable" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header bg-info white">
@@ -92,7 +93,7 @@
 
 
 <!-- *****************************edit model**********************************-->
-<div class="modal fade upModel" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+<div class="modal fade upModel" id="exampleModalScrollable"  role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-success white">
@@ -343,6 +344,8 @@
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script src="{{asset('public/js/back/picker.js')}}"></script>
 <script src="{{asset('public/js/back/picker.date.js')}}"></script>
+<script src="{{asset('public/js/back/select2.full.min.js')}}"></script>
+<script src="{{asset('public/js/back/form-select2.js')}}"></script> 
 <script>
     $(document).ready(function()
     {

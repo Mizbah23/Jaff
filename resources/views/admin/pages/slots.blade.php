@@ -18,7 +18,7 @@
 </style>
 
 <!--***********************************addhour*******************************-->
-<div class="modal fade addSlotMdl" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+<div class="modal fade addSlotMdl" id="exampleModalScrollable"  role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
     <div class="modal-content">
             
@@ -115,7 +115,7 @@
                 </div>     
             </div>
                 <div class="col-xl-6">
-  <div class="table-responsive">
+    <div class="table-responsive">
                                     <table class="table table-striped mb-0">
                                         <thead>
                                             <tr>
@@ -147,7 +147,7 @@
 
 
 
-<div class="modal fade upSlotMdl" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+<div class="modal fade upSlotMdl" id="exampleModalScrollable" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
     <div class="modal-content">
             
@@ -714,12 +714,10 @@
 <script src="{{asset('public/js/back/datatables.min.js')}}"></script>
 
 <script src="{{asset('public/js/back/datatables.bootstrap4.min.js')}}"></script>
-
-
 <script type="text/javascript" src="{{asset('public/js/back/bootstrap-fileupload.js')}}"></script>
- 
 <script src="{{asset('public/js/back/select2.full.min.js')}}"></script>
-<script src="{{asset('public/js/back/form-select2.js')}}"></script>
+<script src="{{asset('public/js/back/form-select2.js')}}"></script> 
+
 <script src="{{asset('public/js/back/bootstrap-timepicker.js')}}"></script>
 
 
@@ -1072,4 +1070,5 @@ $('#uendTime').on('change', function()
     }); 
 });
 </script>
+
 @stop

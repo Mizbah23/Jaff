@@ -5,6 +5,7 @@
    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/datatables.min.css')}}">
    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
    <link href="{{asset('public/css/back/bootstrap-fileupload.css')}}" rel="stylesheet" />
+   <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/select2.min.css')}}">
    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/pickadate.css')}}">
 @stop
 @section('content')
@@ -45,11 +46,13 @@
                     <div class="col-md-4 col-xs-4">
                         <div class="form-group">
                             <label for="first-name-icon">Playground</label>
-                            <select name="ground_id" id="ground_id" class="select2 form-control" placeholder="Type">
+                            <select name="ground_id" id="ground_id" class="select2 form-control">
+                                
                                 @foreach($grounds as $ground)
                                 <option value="{{$ground->id}}">{{$ground->name}}</option>
                                 @endforeach
                             </select>
+                        
                         </div>
                     </div>
                     {{csrf_field()}} 
@@ -352,6 +355,8 @@
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script src="{{asset('public/js/back/picker.js')}}"></script>
 <script src="{{asset('public/js/back/picker.date.js')}}"></script>
+<script src="{{asset('public/js/back/select2.full.min.js')}}"></script>
+<script src="{{asset('public/js/back/form-select2.js')}}"></script> 
 <script>
     $(document).ready(function()
     {
