@@ -17,7 +17,7 @@
 
 <div class="path-section" style='background-image: url(public/img/slide-1.jpg);'>
     <div class="bg-cover" style="padding: 120px 0 20px">
-        <div class="container">
+    <div class="container">
             <h3>Time Table</h3>
         </div>
     </div>
@@ -138,7 +138,7 @@
             </div>
         </div>
                    
-                        <div id='fc-default'></div>
+                        
                     
                 
 
@@ -155,9 +155,9 @@
 @stop
 @section('script')
 
-<script type='text/javascript' src='public/js/front/jqueryui-1.12.1.js'></script>
+{{-- <script type='text/javascript' src='public/js/front/jqueryui-1.12.1.js'></script> --}}
 
-{{-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> --}}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="public/js/front/moment.min.js"></script>
 {{-- <script src="public/js/front/fullcalendar.min.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>

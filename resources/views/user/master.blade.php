@@ -73,7 +73,7 @@
 
 
 {{-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> --}}
-{{-- <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script> --}}
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script type='text/javascript' src='public/js/front/scripts1748.js'></script>
 <script type='text/javascript' src='public/js/front/jquery.blockUI.min44fd.js'></script>
 <script type='text/javascript'>
@@ -101,9 +101,9 @@
 <script type='text/javascript' src='public/js/front/functions.js'></script>
 <script type='text/javascript' src='public/js/front/wp-embed.min066b.js'></script>
 <!--slick slider-->
-{{-- <script type="text/javascript" src="public/js/front/slick.min.js"></script> --}}
+<script type="text/javascript" src="public/js/front/slick.min.js"></script>
 
-{{-- <script>
+<script>
 // $(document).ready(function(){
 // console.log('success');
 // });
@@ -145,7 +145,7 @@
   ]
 });   
 
-</script> --}}
+</script>
 <!-- BEGIN: Page Vendor JS-->
     
 

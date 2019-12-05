@@ -36,12 +36,15 @@ class LoginController extends Controller
      * @return void
      */
     public function showLoginForm()
+    
     {
         $data = array();
-        $data['title'] = 'Sign In';
-        return view('auth.login', $data);
+        $data['title'] = 'Log In';
+        return view('user.auth.login',$data);
         
     }
+        
+    
     public function __construct()
     {
         $this->middleware('guest:web',['except'=>['logout','userLogout']]);
@@ -49,15 +52,42 @@ class LoginController extends Controller
     
     public function login(Request $request)
     {
+         // dd($request);
         $this->validate($request,[
             'phone' => 'required',
-            'password' => 'required|min:6'
+            'password' => 'required| min:2'
         ]);
-        if(Auth::guard('web')->attempt(['phone'=>$request->phone,'password'=>$request->password],$request->remember))
-        {
-            return redirect()->intended(route('home'));
-        }
-        return redirect()->back()->withInput($request->only('phone','remember'));
+        // dd($request);
+        $user = User::where('phone', $request->phone)->first();
+        // dd($user);
+       if(!is_null($user))
+       {   
+           if(!Hash::check($request->password, $user->password))
+           {
+               // dd($user);
+               session()->flash('errors', 'Your Password is wrong !!');
+               return redirect()->route('login');
+           }else{
+               if ($user->status == 1)
+               {
+                   if(Auth::guard('web')->attempt
+                           (['phone' => $request->phone, 'password' => $request->password], $request->remember))
+                   {
+                       // $request->session()->put('user',$user);
+                       // dd($request->session());
+                       return redirect()->route('home');
+                   }
+               }else{
+                   // $user->notify(new VerifyRegistration($user));
+                   // dd('not a user');
+                   session()->flash('errors', 'You have not confirmed your verification.. Please check and confirm your phone');
+                   return redirect()->route('login');
+               }
+           }
+       }else{
+           session()->flash('errors', 'Please Register first !!');
+           return redirect()->route('login');
+       }
     }
     
     
