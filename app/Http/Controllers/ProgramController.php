@@ -8,6 +8,7 @@ use Jaff\Coach;
 use Jaff\About;
 use Jaff\Singleimg;
 use Jaff\Testimonial;
+use Jaff\Membership;
 use Response;
 class ProgramController extends Controller
 {
@@ -636,6 +637,148 @@ class ProgramController extends Controller
         $testimonials->delete();
         $notification = array(
                  'message' => 'Testimonial Info Deleted Successfully',
+                 'type' => 'error'
+             );
+        return Response::json($notification);
+    }
+
+
+    /*******Membership*************/
+
+    public function membershipList()
+    {
+        $data = array();
+        $data['title'] = 'Membership';
+        return view('admin.pages.home.membership',$data);
+    }
+
+    public function saveMembership(Request $request)
+    {
+
+        $membership = new Membership;
+        $membership->name = $request->name;
+        $membership->duration = $request->duration;
+        $membership->fee = $request->fee;
+        $request->discount? $membership->discount=1 :  $membership->discount=0;
+        $membership->damount = $request->damount;
+
+        $membership->save();
+        $notification = array(
+                'message' => 'Membership Info Successfully Included',
+                'type' => 'success'
+        );
+        return Response::json($notification); 
+    }
+
+        public function getMembership(Request $request) 
+    
+    {
+        $columns = array(0 =>'id',1=> 'name',2=> 'duration',3=> 'fee',4=> 'discount',5=> 'amount',6=>'status',7=>'action');
+        $totalData = Membership::count();
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+        if(empty($request->input('search.value')))
+        {
+            $posts = Membership::offset($start)->limit($limit)->orderBy($order,$dir)->get();
+            $totalFiltered =  Membership::count();
+        }
+        else{
+            $search = $request->input('search.value');
+            $posts = Membership::where('name', 'like', "%{$search}%")
+                    ->orwhere('designation', 'like', "%{$search}%")
+                    ->offset($start)->limit($limit)
+                    ->orderBy($order, $dir)->get();
+            $totalFiltered = Membership::where('name', 'like', "%{$search}%")
+                            ->orwhere('designation', 'like', "%{$search}%")
+                            ->count();
+        }
+    $data = array();
+
+    if($posts){
+        foreach($posts as $r)
+        {     
+            
+            $nestedData['name'] = $r->name;
+            $nestedData['duration'] = $r->duration;
+            $nestedData['fee'] = $r->fee;
+
+            if( $r->discount==0){
+                $discount = '<div class="btn-group"><div class="badge badge-danger dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Off</span></a>
+                <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
+                    <a class="dropdown-item csts" data-discount="'.$r->discount.'" data-discount="1" href="#">Activated</a></div>
+                </div>
+                 </div>';
+            }else{
+                 $discount = '<div class="btn-group"><div class="badge badge-success dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Live</span></a>
+                <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
+                    <a class="dropdown-item csts" data-discount="'.$r->discount.'" data-discount="0" href="#">Deactivated</a></div>
+                </div>
+                 </div>';
+            }
+            $nestedData['discount'] = $r->discount;
+            $nestedData['damount'] = $r->damount;
+
+            if( $r->status==0){
+                $status = '<div class="btn-group"><div class="badge badge-danger dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Off</span></a>
+                <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
+                    <a class="dropdown-item csts" data-status="'.$r->status.'" data-status="1" href="#">Activated</a></div>
+                </div>
+                 </div>';
+            }else{
+                 $status = '<div class="btn-group"><div class="badge badge-success dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Live</span></a>
+                <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
+                    <a class="dropdown-item csts" data-status="'.$r->status.'" data-status="0" href="#">Deactivated</a></div>
+                </div>
+                 </div>';
+            }
+            $nestedData['status'] = $r->status;
+            $nestedData['action'] = '<a href="#" class="editmdl" data-id="'.$r->id.'" data-name="'.$r->name.'" data-duration="'.$r->duration.'" data-fee="'.$r->fee.'" data-discount="'.$r->discount.'" data-damount="'.$r->damount.'" data-status="'.$r->status.'"
+            style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a> '
+                    . '<a href="#" class="delmdl" data-delid="'.$r->id.'" data-ttl="'.$r->name.'" style="padding: 4px;"><i class="ficon feather icon-trash-2 danger"></i></a>';
+            $data[] = $nestedData;
+        }
+    }     
+        $json_data = array(
+            "draw"        => intval($request->input('draw')),
+            "recordsTotal"    => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data"        => $data
+        );
+        echo json_encode($json_data);    
+    }
+
+        public function updateMembership(Request $request)
+    
+    {
+        $membership = Membership::find($request->id);
+        $membership->name = $request->uname;
+        $membership->duration = $request->duration;
+        $membership->fee = $request->fee;
+        $request->discount? $membership->discount=1 :  $membership->discount=0;
+        $membership->amount = $request->damount;
+
+
+        $membership->save();
+        $notification = array(
+                'message' => 'Membership Updated Successfully',
+                'type' => 'success'
+        );
+        return Response::json($notification);
+    }
+
+    public function deleteMembership(Request $request)
+    {
+      
+        $membership = Membership::find($request->delid);
+        $membership->delete();
+        $notification = array(
+                 'message' => 'Membership Info Deleted ',
                  'type' => 'error'
              );
         return Response::json($notification);

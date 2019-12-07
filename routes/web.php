@@ -123,14 +123,20 @@ Route::prefix('admin')->group(function()
        Route::post('/delete','ProgramController@deleteTestimonial')->name('delete.testimonial');
         // Route::post('/sts','ProgramController@statusProgram')->name('status.program');
     });
+
+    Route::prefix('membership')->group(function()
+    {
+       Route::get('/','ProgramController@membershipList')->name('membership');
+       Route::post('/save','ProgramController@saveMembership')->name('save.membership');
+       Route::post('/list','ProgramController@getMembership')->name('membership.list');
+       Route::post('/update','ProgramController@updateMembership')->name('update.membership');
+       Route::post('/delete','ProgramController@deleteMembership')->name('delete.membership');
+        // Route::post('/sts','ProgramController@statusProgram')->name('status.program');
+    });
     
     
     
-    
-    
-    
-    
-    
+     
     
    //*************Slot Setting****************
     Route::prefix('fullday')->group(function()

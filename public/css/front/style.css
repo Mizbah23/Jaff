@@ -8603,9 +8603,9 @@ ul.dropdown-menu.dropdown-menu-media.dropdown-menu-right {
 }
 
 /* reset code */
-html {
+/*html {
   scroll-behavior: smooth;
-}
+}*/
 
 ul,
 ol {
@@ -8761,6 +8761,16 @@ p {
   background: linear-gradient(to right, rgb(232, 232, 232), rgba(232, 232, 232, 1));
   padding: 4rem 0;
   margin: -76px;
+  width: 1324px;
+}
+@media(min-width:400px){
+	section.signin-form{
+		width: 100%;
+	}
+	.overlay {
+    width: 100%;
+    margin-left: -2px;
+}
 }
 
 a.brand-logo {

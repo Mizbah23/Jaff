@@ -78,6 +78,11 @@
                         <a href="{{route('testimonials')}}"><i class="feather icon-clipboard"></i>
                         <span class="menu-title" data-i18n="Email">Testimonials</span></a>
                     </li>
+
+                    <li class=" nav-item membership">
+                        <a href="{{route('membership')}}"><i class="fa fa-dribbble"></i>
+                        <span class="menu-title" data-i18n="Email">Membership</span></a>
+                    </li>
                 </ul>
             </li>
                 
