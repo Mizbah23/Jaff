@@ -759,11 +759,11 @@ class ProgramController extends Controller
     
     {
         $membership = Membership::find($request->id);
-        $membership->name = $request->uname;
+        $membership->name = $request->name;
         $membership->duration = $request->duration;
         $membership->fee = $request->fee;
         $request->discount? $membership->discount=1 :  $membership->discount=0;
-        $membership->amount = $request->damount;
+        $membership->damount = $request->damount;
 
 
         $membership->save();

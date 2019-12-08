@@ -154,7 +154,7 @@
                         <div class="form-group" >
                             <label for="first-name-icon">Discount Amount(%)</label>
                             <div class="position-relative has-icon-left">
-                               <input type="number" name="damount" id="damount" class="sClass form-control" placeholder="Discount Amount(%)" autocomplete="off">
+                               <input type="number" name="damount" id="dcamount" class="sClass form-control" placeholder="Discount Amount(%)" autocomplete="off">
                                <div class="form-control-position"><i class="fa fa-circle"></i></div>
                             </div>
                         </div>  
@@ -361,7 +361,7 @@ $(document).on('click', '.editmdl', function()
     $('#duration').val($(this).data('duration'));
     $('#fee').val($(this).data('fee'));
     $('#discount').val($(this).data('discount'));
-    $('#damount').val($(this).data('damount'));
+    $('#dcamount').val($(this).data('damount'));
    
     $('.editMdl').modal('show');
 });
