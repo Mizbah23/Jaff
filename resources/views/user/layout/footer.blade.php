@@ -1,11 +1,11 @@
-    <footer class="footer" style="height:418px; padding: 55px 0;">
+    <footer class="footer">
         <div class="layer footer-1">
             <div class="row">
                 
                     <div class="col-lg-4 col-md-6 footer-top mt-md-0 mt-sm-5">
                         <div class="logo">
                         <h2>
-                           <img src="public/img/app-logo.png" alt="Jaff" style="height:150px;">
+                           <img src="public/img/app-logo.png" alt="Jaff" >
                         </h2>
                          </div>
                         <p class="my-3">Donec consequat sam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus</p>

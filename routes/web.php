@@ -131,7 +131,7 @@ Route::prefix('admin')->group(function()
        Route::post('/list','ProgramController@getMembership')->name('membership.list');
        Route::post('/update','ProgramController@updateMembership')->name('update.membership');
        Route::post('/delete','ProgramController@deleteMembership')->name('delete.membership');
-        // Route::post('/sts','ProgramController@statusProgram')->name('status.program');
+       Route::post('/status','ProgramController@statusMembership')->name('status.membership');
     });
     
     

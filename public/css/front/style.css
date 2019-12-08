@@ -273,6 +273,26 @@ a {
     color: #fff;
     height: 65px;
 }
+@media(min-width: 320px){
+	header .sticky-wrapper .sticky-bar .logo a img {
+    color: #fff;
+    height: 45px;
+}
+ .sticky-bar .is-sticky .logo img {
+    height: 45px;
+}
+button.navbar-toggle {
+    margin-top: -5px;
+}
+}
+@media(min-width: 1200px){
+		header .logo .to-top img{
+height: 65px !important;
+		}
+		header.header.sticky-wrapper.sticky-bar.is-sticky {
+    height: 84px !important;
+}
+}
 .header .logo a {
     color: #fff;
 }
@@ -323,6 +343,28 @@ a {
 .is-sticky .logo img {
     height: 65px;
 }
+@media(min-width: 320px){
+	 .is-sticky button.navbar-toggle {
+    margin-top: 10px;
+}
+	.is-sticky .logo img {
+    height: 45px;
+}
+header.header.sticky-wrapper.sticky-bar.is-sticky {
+    padding-bottom: 0px;
+    height: 71px;
+}
+}
+@media(min-width: 1200px){
+	.is-sticky .logo img {
+    height: 65px;
+}
+		header .sticky-wrapper .sticky-bar .logo a img {
+    color: #fff;
+    height: 65px;
+}
+}
+
 .is-sticky.navbar { min-height: 40px; }
 
 .header-transform {
@@ -8319,6 +8361,109 @@ li.slider img{
     min-height: 28em;
     background: rgba(0, 0, 0, 0.82);
 }
+.layer.footer-1 .logo img{
+	position: absolute;
+	height: 150px;
+}
+.footer{
+	height:418px;
+	padding: 55px 0;
+}
+h3.w3pvt_title {
+    margin-top: 30px;
+}
+/*footer responsive part*/
+@media (min-width: 320px){
+.logo a img {
+    color: #fff;
+    height: 41px;
+}
+	footer.footer{
+		height: 520px;
+	}
+	.layer.footer-1 {
+    margin-top: -53px;
+}
+.layer.footer-1 .logo img{
+	height: 50px;
+	margin-left: -25px;
+}
+.layer.footer-1 p.my-3 {
+    margin-top: 29px;
+}
+.layer.footer-1 h3.w3pvt_title {
+    margin-top: 13px;
+}
+.layer.footer-1 hr {
+    margin-top: 10px;
+}
+.footer-text p {
+    margin-top: -12px;
+}
+ul.list-info-w3pvt {
+    list-style: none;
+}
+}
+@media (min-width: 400px){
+	footer.footer {
+    height: 470px;
+}
+	.layer.footer-1 {
+		margin-top: -43px;
+	}
+	.layer.footer-1 .logo img{
+		position: relative;
+		height: 50PX;
+	}
+	.footer p.my-3 {
+    margin-top: -16px;
+    font-size: 10px;
+}
+.footer h3.w3pvt_title {
+    margin-top: 14px;
+    font-size: 15px;
+}
+hr {
+    margin-top: 9px;
+}
+ul.list-info-w3pvt.last-w3ls-contact.mt-lg-4 {
+    margin-top: -10px;
+    margin-bottom: 18px;
+}
+.footer-text p {
+    margin-top: -12px;
+    font-size: 11px;
+}
+}
+@media (min-width: 1200px){
+	header.logo a img {
+    color: #fff;
+    height: 41px;
+}
+	footer.footer{
+		height: 390px;
+	}
+	.layer.footer-1 .logo img{
+		height: 150px;
+	}
+	h3.w3pvt_title {
+    margin-top: 30px;
+}
+.footer h3.w3pvt_title {
+    margin-top: 14px;
+    font-size: 22px;
+}
+.footer-text p {
+    margin-top: -12px;
+    font-size: 12px;
+}
+.footer p.my-3{
+	font-size: 13px;
+}
+.footer p.copywrite{
+	margin-top: 19px;
+}
+}
 
 ul.list-info-w3pvt {
     list-style: none;
@@ -8757,11 +8902,20 @@ p {
 
 }
 
+
 .overlay {
   background: linear-gradient(to right, rgb(232, 232, 232), rgba(232, 232, 232, 1));
   padding: 4rem 0;
   margin: -76px;
   width: 1324px;
+}
+@media(min-width: 320px){
+	.signin-form .overlay{
+		width: 100%;
+		margin-left: -1px;
+	}
+
+
 }
 @media(min-width:400px){
 	section.signin-form{
@@ -8885,10 +9039,17 @@ a.brand-logo {
 
 /* The "Forgot password" text */
 span.psw {
-  float: right;
-  padding-top: 16px;
+    float: right;
+    padding-top: 16px;
+    /*margin-top: -51px;*/
 }
-
+@media(min-width: 1200px){
+	span.psw {
+    float: right;
+    padding-top: 16px;
+   /* margin-top: -51px;*/
+}
+}
 
 
 .signinbutton {
@@ -8896,7 +9057,7 @@ span.psw {
   color: var(--white-color);
   font-size: 16px;
   text-transform: capitalize;
-  margin-top: 30px;
+  margin-top: -20px;
   padding: 15px 25px;
   border: none;
   display: block;
@@ -9098,4 +9259,12 @@ span.pros span {
     font-size: 28px;
   }
 }*/
-/*===CSS login Ends*/*/
+/*===CSS login Ends*/
+/*footer*/
+
+
+@media (min-width: 320px){
+.is-sticky .logo img {
+    height: 40px;
+}
+}

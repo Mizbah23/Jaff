@@ -58,8 +58,8 @@
                        
                         <div class="form-group">
                             <label for="first-name-icon">Discount Eligibility</label>
-                            <select class="form-control" name="discount" id="discount">
-                                <option value="">Select Eligibility</option>
+                            <select class="form-control" name="discount" id="discountChange" >
+                                <option value="">Select Discount</option>
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
                             </select>
@@ -67,7 +67,7 @@
                     </div>
 
                     <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
+                        <div class="form-group" id="damountDiv" style="display:none;">
                             <label for="first-name-icon">Discount Amount(%)</label>
                             <div class="position-relative has-icon-left">
                                <input type="number" name="damount" id="damount" class="sClass form-control" placeholder="Discount Amount(%)" autocomplete="off">
@@ -75,8 +75,6 @@
                             </div>
                         </div>  
                     </div>
-
-
                 </div>
 
 
@@ -153,7 +151,7 @@
                     </div>
 
                     <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
+                        <div class="form-group" >
                             <label for="first-name-icon">Discount Amount(%)</label>
                             <div class="position-relative has-icon-left">
                                <input type="number" name="damount" id="damount" class="sClass form-control" placeholder="Discount Amount(%)" autocomplete="off">
@@ -260,7 +258,36 @@
 
 
 <script src="{{asset('public/js/back/datatable.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('public/js/back/bootstrap-fileupload.js')}}"></script>
+
+
+<script>
+// $(document).on('change', '#discountChange', function()
+// {
+//   console.log('change');
+//   if ($(this).val() == "yes") {
+    
+//     $('#damountDiv').show();
+    
+   
+//   } else {
+//     $('#damountDiv').hide();
+ 
+//   }
+// });
+    
+// $("#discount").change(function() {
+//     console.log("check");
+//   if ($(this).val() == "yes") {
+//     $('#damountDiv').show();
+//     $('#damount').attr('required', '');
+   
+//   } else {
+//     $('#damountDiv').hide();
+//     $('#otherField').removeAttr('required');
+//     // $('#otherField').removeAttr('data-error');
+//   }
+// });
+</script>
 
 <script>
     $(document).ready(function()
@@ -345,7 +372,7 @@ $("#editFrm").on('submit',function(event)
     $('.upbtn').addClass('spinner-border spinner-border-sm');
     $.ajax({
         type: 'POST',
-        url: "{{route('update.testimonial')}}",
+        url: "{{route('update.membership')}}",
         data:new FormData(this),
         dataType:'JSON',
         contentType: false,
@@ -387,7 +414,44 @@ $("#del").on('click',function(event)
          toastr[data.type](data.message);
       }
     });
-}); 
+});
+$("#discountChange").on('change',function(event)
+{  
+
+
+
+    
+     if ($(this).val() == 1) {
+    
+    $('#damountDiv').show();
+    
+   
+  } else {
+    $('#damountDiv').hide();
+ 
+  }
+    // event.preventDefault();
+
+    // $('.upbtn').addClass('spinner-border spinner-border-sm');
+    // $.ajax({
+    //     type: 'POST',
+    //     url: "{{route('update.testimonial')}}",
+    //     data:new FormData(this),
+    //     dataType:'JSON',
+    //     contentType: false,
+    //     cache: false,
+    //     processData: false,
+    //     success:function(data)
+    //     {
+    //         table.ajax.reload( null, false );
+    //         $('.editMdl').modal('hide');
+    //         toastr[data.type](data.message);
+    //         document.getElementById("editFrm").reset();
+    //         $('.upbtn').removeClass('spinner-border spinner-border-sm');
+    //     }
+    // });
+});   
     
 </script>
+
 @stop

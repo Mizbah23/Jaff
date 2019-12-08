@@ -144,6 +144,7 @@ class RegisterController extends Controller
 
     public function getOTP(Request $request,$phone)
     {
+        
         $user=User::where('phone',$phone)->first();
          // dd($user);
         return view('user.auth.otp')->with('user',$user);

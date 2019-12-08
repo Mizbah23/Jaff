@@ -673,7 +673,7 @@ class ProgramController extends Controller
         public function getMembership(Request $request) 
     
     {
-        $columns = array(0 =>'id',1=> 'name',2=> 'duration',3=> 'fee',4=> 'discount',5=> 'amount',6=>'status',7=>'action');
+        $columns = array(0 =>'id',1=> 'name',2=> 'duration',3=> 'fee',4=> 'discount',5=> 'damount',6=>'status',7=>'action');
         $totalData = Membership::count();
         $limit = $request->input('length');
         $start = $request->input('start');
@@ -687,11 +687,13 @@ class ProgramController extends Controller
         else{
             $search = $request->input('search.value');
             $posts = Membership::where('name', 'like', "%{$search}%")
-                    ->orwhere('designation', 'like', "%{$search}%")
+                    ->orwhere('fee', 'like', "%{$search}%")
+                    ->orwhere('duration','like',"%{$search}")
                     ->offset($start)->limit($limit)
                     ->orderBy($order, $dir)->get();
             $totalFiltered = Membership::where('name', 'like', "%{$search}%")
-                            ->orwhere('designation', 'like', "%{$search}%")
+                            ->orwhere('fee', 'like', "%{$search}%")
+                            ->orwhere('duration','like',"%{$search}")
                             ->count();
         }
     $data = array();
@@ -782,6 +784,18 @@ class ProgramController extends Controller
                  'type' => 'error'
              );
         return Response::json($notification);
+    }
+
+    public function statusMembership(Request $request)
+    {
+        $membership= Membership::find($request->id);
+        $membership->status = $request->status;
+        $membership->save();
+        $notification = array(
+                'message' => ($request->status==1)?'Status Activated':'Status Disabled',
+                'type' => ($request->status==1)?'success':'warning',
+            );
+        return Response::json($notification); 
     }
     
     
