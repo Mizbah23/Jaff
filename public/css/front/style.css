@@ -2987,10 +2987,18 @@ body.boxed .classes-slider .flex-control-nav.flex-control-paging {
 }
 
 .statistics-section .statistic.statistic-bg-2 {
-    background: url("images/blog-3.html") top right no-repeat;
+    background: url(images/blog-3.html) top right no-repeat;
     background-size: cover;
+    height: 234px;
 }
 
+@media(min-width:1200px){
+	.statistics-section .statistic.statistic-bg-2{
+background: url(images/blog-3.html) top right no-repeat;
+    background-size: cover;
+    height: 234px
+	}
+}
 .statistics-section .statistic.statistic-bg-3 {
     background: url("images/blog-2.html") top right no-repeat;
     background-size: cover;
@@ -3023,16 +3031,27 @@ body.boxed .classes-slider .flex-control-nav.flex-control-paging {
     font-size: 100px;
     text-align: right;
     position: relative;
-    font-style: italic;
+    /*font-style: italic;*/
     z-index: 4;
     margin: -30px 0 40px;
     font-weight: 400;
     font-family: 'Playfair Display', serif;
+    font-size: 30px;
 }
-
+@media(min-width: 320px){
+	.statistics-section .statistic h3{
+		font-size: 20px;
+		margin-top: 10px;
+	}
+}
+@media(min-width: 1200px){
+	.statistics-section .statistic h3{
+		font-size: 30px;
+	}
+}
 .statistics-section .statistic h6 {
     margin: 0;
-    font-size: 30px;
+    font-size: 27px;
     position: relative;
     z-index: 4;
     color: #fff;
@@ -3040,6 +3059,12 @@ body.boxed .classes-slider .flex-control-nav.flex-control-paging {
     line-height: 1em;
 	padding-left: 30px;
     font-weight: 700;
+    margin-top: -20px;
+}
+@media(min-width: 1200px){
+	.statistics-section .statistic h6{
+
+	}
 }
 /* =========================== END STATISTICS SECTION ===================== */
 

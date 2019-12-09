@@ -69,7 +69,7 @@
 					<h4>Contact Info</h4>
 					<ul class="ul-contact">
 						<li class="ul-contact-1">
-							<p>Bashundhara Main Gate,<br />Opposite of Jamuna Future Park Sidegate,Dhaka<br />
+							<p>Bashundhara Main Gate,<br>Opposite of Jamuna Future Park Sidegate,Dhaka<br>
 							</p>
 						</li>
 						<li class="ul-contact-2">
@@ -131,24 +131,24 @@
 							  <div class="statistic statistic-bg-2" style="background-image: url('public/img/blog-1.jpg');">
 								<div class="bg-cover"></div>
 								<div class="statistic-cut"></div>
-								<h3 class="d-text-c counter-all" id="statistics_count-1" data-statistics_percent="9">&nbsp;</h3>
-								<h6>TRAINING ROOMS</h6>
+								<h3  style="color:white;">5/6</h3>
+								<h6>A SIDE</h6>
 							</div>
 						</div>
 							<div class="col-md-4">
 							  <div class="statistic statistic-bg-2" style="background-image: url('public/img/blog-2.jpg');">
 								<div class="bg-cover"></div>
 								<div class="statistic-cut"></div>
-								<h3 class="d-text-c counter-all" id="statistics_count-2" data-statistics_percent="18">&nbsp;</h3>
-								<h6>SKILLED TRAINERS</h6>
+								<h3 style="color:white;" >ENGINEERED</h3>
+								<h6> LIGHTING</h6>
 							</div>
 						</div>
 							<div class="col-md-4">
 							  <div class="statistic statistic-bg-2" style="background-image: url('public/img/blog-3.jpg');">
 								<div class="bg-cover"></div>
 								<div class="statistic-cut"></div>
-								<h3 class="d-text-c counter-all" id="statistics_count-3" data-statistics_percent="10">&nbsp;</h3>
-								<h6>TRAINING CLASSES</h6>
+								<h3 style="color:white;" >FIFA</h3>
+								<h6> CERTIFIED TURF</h6>
 							</div>
 						</div>
 				</div>
@@ -210,7 +210,7 @@
                                 <li><a target="_blank" href="{{$c->mail}}"><i class="fa fa-envelope-o"></i></a></li>								
                                 <li><a target="_blank" href="{{$c->phone}}"><i class="fa fa-phone"></i></a></li>							
                             </ul>
-                            <img src="{{asset($c->image)}}" alt="Bodybuilding instructor" style="height: 300px;"/>
+                            <img src="{{asset($c->image)}}" alt="Coach Photo" style="height: 300px;"/>
                             <div class="trainer-info">
                                 <h4>{{$c->name}}<span>{{$c->designation}}</span></h4>
                                 <p>{{$c->details}}</p>

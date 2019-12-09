@@ -430,26 +430,7 @@ $("#discountChange").on('change',function(event)
     $('#damountDiv').hide();
  
   }
-    // event.preventDefault();
 
-    // $('.upbtn').addClass('spinner-border spinner-border-sm');
-    // $.ajax({
-    //     type: 'POST',
-    //     url: "{{route('update.testimonial')}}",
-    //     data:new FormData(this),
-    //     dataType:'JSON',
-    //     contentType: false,
-    //     cache: false,
-    //     processData: false,
-    //     success:function(data)
-    //     {
-    //         table.ajax.reload( null, false );
-    //         $('.editMdl').modal('hide');
-    //         toastr[data.type](data.message);
-    //         document.getElementById("editFrm").reset();
-    //         $('.upbtn').removeClass('spinner-border spinner-border-sm');
-    //     }
-    // });
 });   
     
 </script>

@@ -123,15 +123,15 @@ Route::prefix('admin')->group(function()
        Route::post('/delete','ProgramController@deleteTestimonial')->name('delete.testimonial');
         // Route::post('/sts','ProgramController@statusProgram')->name('status.program');
     });
-
-    Route::prefix('membership')->group(function()
+    
+    Route::prefix('notices')->group(function()
     {
-       Route::get('/','ProgramController@membershipList')->name('membership');
-       Route::post('/save','ProgramController@saveMembership')->name('save.membership');
-       Route::post('/list','ProgramController@getMembership')->name('membership.list');
-       Route::post('/update','ProgramController@updateMembership')->name('update.membership');
-       Route::post('/delete','ProgramController@deleteMembership')->name('delete.membership');
-       Route::post('/status','ProgramController@statusMembership')->name('status.membership');
+       Route::get('/','ProgramController@noticeList')->name('notices');
+       // Route::post('/save','ProgramController@saveTestimonial')->name('save.testimonial');
+       // Route::post('/list','ProgramController@getTestimonial')->name('testimonials.list');
+       // Route::post('/update','ProgramController@updateTestimonial')->name('update.testimonial');
+       // Route::post('/delete','ProgramController@deleteTestimonial')->name('delete.testimonial');
+        // Route::post('/sts','ProgramController@statusProgram')->name('status.program');
     });
     
     
@@ -259,6 +259,19 @@ Route::prefix('admin')->group(function()
    Route::post('/get-bookingSlotlist','BookingController@getBookSlot')->name('bookSlotPro');
    Route::post('/save-book', 'BookingController@saveBook')->name('save.book');
    Route::get('/test','CalendarController@showTest');
+
+   //**************Membership**************//
+
+    Route::prefix('membership')->group(function()
+    {
+       Route::get('/','ProgramController@membershipList')->name('membership');
+       Route::post('/save','ProgramController@saveMembership')->name('save.membership');
+       Route::post('/list','ProgramController@getMembership')->name('membership.list');
+       Route::post('/update','ProgramController@updateMembership')->name('update.membership');
+       Route::post('/delete','ProgramController@deleteMembership')->name('delete.membership');
+       Route::post('/status','ProgramController@statusMembership')->name('status.membership');
+    });
+
    Route::prefix('reports')->group(function(){
   
    /*****************Reports route****************/

@@ -79,9 +79,9 @@
                         <span class="menu-title" data-i18n="Email">Testimonials</span></a>
                     </li>
 
-                    <li class=" nav-item membership">
-                        <a href="{{route('membership')}}"><i class="fa fa-dribbble"></i>
-                        <span class="menu-title" data-i18n="Email">Membership</span></a>
+                    <li class=" nav-item notices">
+                        <a href="{{route('notices')}}"><i class="feather icon-clipboard"></i>
+                        <span class="menu-title" data-i18n="Email">Notices</span></a>
                     </li>
                 </ul>
             </li>
@@ -186,6 +186,11 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+
+                <li class=" nav-item membership">
+                        <a href="{{route('membership')}}"><i class="fa fa-dribbble"></i>
+                        <span class="menu-title" data-i18n="Email">Membership</span></a>
                 </li>
             
             
