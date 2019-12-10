@@ -26,8 +26,9 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form method="post" id="addFrm" enctype="">    
+            
             <div class="modal-body" style="padding-top: 23px;">
+                <form method="post" id="addFrm" enctype="">    
                 <div class="row" >  
                     <div class="col-md-12 col-xl-12">
                         <div class="form-label-group position-relative has-icon-left">
@@ -46,7 +47,7 @@
                     </div>
                         <div class="col-md-12 col-12">
                           <div class="form-label-group position-relative has-icon-left">
-                            <textarea id="phone-floating-icon" class="form-control" name="message" placeholder="Message"></textarea>
+                            <textarea id="phone-floating-icon" class="form-control" name="message" rows="4" placeholder="Message"></textarea>
                             <div class="form-control-position"><i class="feather icon-file"></i></div>
                             <label for="phone-floating-icon">Message</label>
                           </div>
@@ -95,7 +96,7 @@
 <!--*************edit Hour***************-->
 
 <div class="modal fade text-left editMdl" tabindex="-1" role="dialog" aria-labelledby="myModalLabel130" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header bg-success white">
                 <h5 class="modal-title" id="myModalLabel130" style="text-align: center;">Update Testimonial</h5>
@@ -125,7 +126,7 @@
                     </div>
                     <div class="col-md-12 col-12">
                         <div class="form-label-group position-relative has-icon-left">
-                            <textarea id="umessage" class="form-control" name="umessage" placeholder="Message"></textarea>
+                            <textarea id="umessage" class="form-control" name="umessage" rows="4" placeholder="Message"></textarea>
                             <div class="form-control-position"><i class="feather icon-file"></i></div>
                             <label for="phone-floating-icon">Message</label>
                         </div>
@@ -179,7 +180,7 @@
         <div class="modal-content">
             
         <div class="modal-header bg-primary">
-            <h5 class="modal-title" id="exampleModalScrollableTitle">Delete Program</h5>
+            <h5 class="modal-title" id="exampleModalScrollableTitle">Delete Testimonial</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>

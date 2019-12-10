@@ -3,7 +3,6 @@
 
 @section('link')
    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/datatables.min.css')}}">
-   <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/select2.min.css')}}">
    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
    <link href="{{asset('public/css/back/bootstrap-fileupload.css')}}" rel="stylesheet" />
    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/pickadate.css')}}">
@@ -33,7 +32,7 @@
 
 <!-- *****************************add model**********************************-->
 
-<div class="modal fade addModel" id="exampleModalScrollable" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+<div class="modal fade addModel" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header bg-info white">
@@ -63,29 +62,18 @@
                     </div>
                     <div class="col-md-6 col-xs-6">
                         <div class="form-group">
-                            <label for="first-name-icon">Day</label>
-                            <select name="dayid" id="dayid" class="select2 form-control" placeholder="Type">
-                                @foreach($days as $day)
-                                <option value="{{$day->id}}">{{$day->day}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xs-6">
-                        <div class="form-group">
                             <label for="first-name-icon">Slots</label>
                             <select name="slot_id" id="slot_id" class="select2 form-control" placeholder="Type">
 
                             </select>
                         </div>
                     </div>
-                     <div class="col-md-6 col-xs-6">
+                    <div class="col-md-6 col-xs-6">
                         <div class="form-group">
                             <label for="first-name-icon">Person</label>
                             <input name="seat" id="seat" class=" form-control" placeholder="Total Seat availability ">
                         </div>
                     </div>
-                    
                      <div class="col-md-6 col-xs-6">
                         <div class="form-group">
                             <label for="first-name-icon">Price</label>
@@ -108,7 +96,7 @@
 
 
 <!-- *****************************edit model**********************************-->
-<div class="modal fade upModel" id="exampleModalScrollable" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+<div class="modal fade upModel" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-success white">
@@ -211,20 +199,20 @@
             </div>
             <div class="modal-body" style="padding-top: 23px;">
                   <div class="table-responsive">
-                                    <table class="table table-striped mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Applied date</th>
-                                                <th scope="col">Slot</th>
-                                                <th scope="col">Discount</th>
-                                                <th scope="col">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="offerlist">
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
+                        <table class="table table-striped mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Applied date</th>
+                                    <th scope="col">Slot</th>
+                                    <th scope="col">Discount</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="offerlist">
+
+                            </tbody>
+                        </table>
+                    </div>
             </div>   
 <!--            <div class="modal-footer">
                 <button type="reset" class="btn btn-outline-warning mr-1 mb-1 waves-effect waves-light">Reset</button>
@@ -276,8 +264,8 @@
                         <div class="row">
                             <div class="col-xl-6 col-md-6 col-12 mb-1">
                                 <div>
-                            <h2 class="text-bold-700 dayCount">0</h2>
-                            <p class="mb-0">Total Days</p>
+                            <h2 class="text-bold-700 dayCont">0</h2>
+                            <p class="mb-0">Total Slots</p>
                         </div>
                             </div>
                             <div class="col-xl-6 col-md-6 col-12 mb-1">
@@ -327,12 +315,14 @@
                 <div class="card-content">
                     <div class="card-body card-dashboard"  style="padding-top:0px;">
                         <div class="table-responsive">
-                            <table id="fdayTbl" class="table zero-configuration ">
+                            <table id="dropTbl" class="table zero-configuration ">
                                 <thead>
                                     <tr style="background-color: #3973ac;color: white;">
-                                        <th>Pick Date</th>
+                                        <th>Date</th>
+                                        <th>Slot</th>
                                         <th>Price</th>
-                                        <th>Details</th>
+                                        <th>Seats</th>
+                                        <th>Booked</th>
                                         <th>Ground</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -359,8 +349,6 @@
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script src="{{asset('public/js/back/picker.js')}}"></script>
 <script src="{{asset('public/js/back/picker.date.js')}}"></script>
-<script src="{{asset('public/js/back/select2.full.min.js')}}"></script>
-<script src="{{asset('public/js/back/form-select2.js')}}"></script> 
 <script>
     $(document).ready(function()
     {
@@ -375,7 +363,7 @@
 //       ,max: [2019,11,28]
         });
     });
-    var table = $('#fdayTbl').DataTable(
+    var table = $('#dropTbl').DataTable(
     {
         "responsive" : true,"autoWidth"  : false,
 //      "ordering": false,"paging" : true,
@@ -383,7 +371,7 @@
 //       "columnDefs": [{ responsivePriority: 1, targets: 0 }],
         "ajax":
         {
-            "url":"<?= route('list.fday') ?>",
+            "url":"<?= route('list.dropin') ?>",
             "dataType":"json",
             "type":"POST",
             "data": function ( d )
@@ -395,9 +383,11 @@
         },
         "columns":[
         {"data":"date"},
+        {"data":"slot"},
         {"data":"price"},
-        {"data":"details"},
-        {"data":"ground"},
+        {"data":"person"},
+        {"data":"taken"},
+        {"data":"name"},
         {"data":"sts"},
         {"data":"action","searchable":false,"orderable":false}
     ],
@@ -431,15 +421,15 @@ function countOffer()
 }
 
 
-    $('#dayid').on('change', function()
+    $('#date').on('change', function()
     {      	
-            var dayid=$(this).val();
+            var date=$(this).val();
             var div=$('.addModel').parent();
             var op=" ";
             $.ajax({
                 type:'get',
                 url:'{{route('fetchDropSlot')}}',
-                data:{'dayid':dayid},
+                data:{'date':date},
                 success:function(data)
                 {
                     console.log(data);

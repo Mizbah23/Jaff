@@ -226,10 +226,10 @@
                                 <thead>
                                     <tr class="bg-info">
                                         <th>Name</th>
-                                        <th>Duration</th>
+                                        <th>Duration(month)</th>
                                         <th>Fee</th>
                                         <th>Discountable</th>
-                                        <th>Discount Amount</th>
+                                        <th>Discount Amount(%)</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>

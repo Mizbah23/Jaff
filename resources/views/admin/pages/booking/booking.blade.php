@@ -47,31 +47,56 @@
                             <tbody class="cartlist">
                                 @php $i=0;$total=0;$discount=0;@endphp
                                 
-                                @if(Cart::count()>0)
-                                    @foreach(Cart::content() as $cart)
+                            @if(Cart::count()>0)
+                            @foreach(Cart::content() as $cart)
                                     <tr>
                                         <td>{{$cart->options->date}}</td>
                                         <td>{{date('D',strtotime($cart->options->date))}}</td>
                                         <td>{{$cart->options->time}}</td>
-                                        <td>{{$cart->options->price}}</td>
-                                    @if(array_key_exists($cart->options->date, $lists) && array_key_exists($cart->options->slot, $slots))
+                                        
+                                @if(array_key_exists($cart->options->date, $fdays))
+                                    <td>{{$cart->options->price}}</td>
+                                    <td>{{$cart->options->price-$fdays[$cart->options->date]}} </td>
+                                    <td>{{$fdays[$cart->options->date]}}</td>
+                                    @php $discount+=($cart->options->price-$fdays[$cart->options->date]);
+                                         $total+=$cart->options->price;
+                                    @endphp
+                                @else
+                                
+                                    @if(array_key_exists($cart->options->date, $drops) && array_key_exists($cart->options->slot, $dslot))
+                                        <td>{{$drops[$cart->options->date]}}</td>
+                                        <td>0</td>
+                                        <td>{{$drops[$cart->options->date]}}</td>
+                                        @php $discount+=0;$total+=$drops[$cart->options->date]; @endphp
+                                    @else
+                                        @if(array_key_exists($cart->options->date, $lists) && array_key_exists($cart->options->slot, $slots))
+                                            <td>{{$cart->options->price}}</td>    
                                             <td>{{$lists[$cart->options->date].'%'}} </td>
                                             <td>{{$cart->options->price-(($lists[$cart->options->date]/100)*$cart->options->price)}}</td>
-                                            @php $discount+=($lists[$cart->options->date]/100)*$cart->options->price; @endphp
-                                    @else
-                                        <td><i class="fa fa-times font-small-3 text-danger"></i></td>
-                                        <td>{{$cart->options->price}}</td>
-                                         @php $discount+=0; @endphp
+                                            @php $discount+=($lists[$cart->options->date]/100)*$cart->options->price;
+                                                 $total+=$cart->options->price;
+                                            @endphp
+                                        @else
+                                            <td>{{$cart->options->price}}</td>
+                                            <td><i class="fa fa-times font-small-3 text-danger"></i></td>
+                                            <td>{{$cart->options->price}}</td>
+                                             @php $discount+=0;$total+=$cart->options->price; @endphp
+                                        @endif
+                                    
                                     @endif
+                                @endif
+                                        
+                                        
+                                    
                                     <td><a href="#" class="rmv" data-rowid="{{$cart->rowId}}"><i class="fa fa-trash font-small-3 text-danger" ></i></a></td>
-                                    @php $i++;$total+=$cart->options->price;@endphp
+                                    @php $i++;@endphp
                                     </tr>
-                                    @endforeach
-                                @else
+                            @endforeach
+                            @else
                                     <tr>
                                         <td colspan="7" class="text-center"> No slot in cart</td>
                                     </tr>
-                                @endif
+                            @endif
                                 
                                 
                             </tbody>

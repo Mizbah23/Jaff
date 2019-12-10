@@ -1,0 +1,435 @@
+@extends('admin.master')
+@section('title')
+    {{$title}}
+@stop
+@section('link')
+   <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/datatables.min.css')}}">
+   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/select2.min.css')}}">
+@stop
+@section('content')
+<!-- *****************************add model**********************************-->
+<div class="modal fade text-left addModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel130" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info white">
+                <h5 class="modal-title" id="myModalLabel130" style="text-align: center;">Add Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            
+        <form method="post" id="addForm" enctype="multipart/form-data">    
+            <div class="modal-body" style="padding-top: 23px;">
+                <div class="row" >
+                    <div class="col-md-12 col-12">
+                        <div class="form-group checkphn">
+                         <label for="first-name-icon">Parent Account</label>
+                         <select name="secid" id="secid" class="form-control select2">
+                            @foreach($secs as $sec)
+                             <option value="{{$sec->secid}}">{{$sec->sec_name}}</option>
+                            @endforeach
+                         </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12 col-12">
+                        <div class="form-group checkphn">
+                         <label for="first-name-icon">Child Account</label>
+                         <select name="grpid" id="grpid" class="form-control select2">
+                         </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12 ">
+                        <div class="form-group checkacc">
+                        <label for="first-name-icon">Account</label><span> 
+                            <input type="text" class="form-control emark" id="checkacc" name="acc_name" required="" placeholder="Enter Account Name">
+                        <div class="valid-feedback evtxt"></div><div class="invalid-feedback eitxt"></div>
+                         </div>
+                    </div> 
+                    <div class="col-md-12 col-12">
+                        <div class="form-group checkphn">
+                         <label for="first-name-icon">Account Type</label>
+                         <select name="type" class="form-control select2">
+                             <option value="1">Income</option>
+                             <option value="2">Expense</option>
+                         </select>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="col-md-12 col-12">
+                        <div class="form-group checkphn">
+                         <label for="first-name-icon">Details</label>
+                         <textarea class="form-control" name="details"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           <!--data-dismiss="modal"-->        
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-outline-warning mr-1 mb-1 waves-effect waves-light">Reset</button>
+                <button type="submit" class="btn btn-outline-info mr-1 mb-1 waves-effect waves-light">
+                    Save <span class="addbtn" role="status" aria-hidden="true"></span>
+                </button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- *****************************edit model**********************************-->
+<div class="modal fade text-left upModel"  role="dialog" aria-labelledby="myModalLabel130" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-success white">
+                <h5 class="modal-title" id="myModalLabel130" style="text-align: center;">Update Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            
+        <form method="post" id="upForm" enctype="multipart/form-data">  
+            <input type="hidden" name="accid" id="accid">
+            <div class="modal-body" style="padding-top: 23px;">
+                <div class="row" >
+                    <div class="col-md-12 col-12">
+                        <div class="form-group checkphn">
+                         <label for="first-name-icon">Parent Account</label>
+                         <select name="usecid" id="usecid" class="form-control select2">
+                            @foreach($secs as $sec)
+                             <option value="{{$sec->secid}}">{{$sec->sec_name}}</option>
+                            @endforeach
+                         </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12 col-12">
+                        <div class="form-group checkphn">
+                         <label for="first-name-icon">Child Account</label>
+                         <select name="ugrpid" id="ugrpid" class="form-control select2">
+                         </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12 ">
+                        <div class="form-group checkacc">
+                        <label for="first-name-icon">Account Name</label><span> 
+                            <input type="text" class="form-control emark" id="ucheckacc" name="uacc_name" required="" placeholder="Enter Account Name">
+                        <div class="valid-feedback evtxt"></div><div class="invalid-feedback eitxt"></div>
+                         </div>
+                    </div> 
+                    <div class="col-md-12 col-12">
+                        <div class="form-group checkphn">
+                         <label for="first-name-icon">Account Type</label>
+                         <select name="utype" id="utype" class="form-control select2">
+                             <option value="1">Income</option>
+                             <option value="2">Expense</option>
+                         </select>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="col-md-12 col-12">
+                        <div class="form-group checkphn">
+                         <label for="first-name-icon">Details</label>
+                         <textarea class="form-control" name="udetails" id="udetails"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           <!--data-dismiss="modal"-->        
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-outline-warning mr-1 mb-1 waves-effect waves-light">Reset</button>
+                <button type="submit" class="btn btn-outline-success mr-1 mb-1 waves-effect waves-light">
+                    Update <span class="upbtn" role="status" aria-hidden="true"></span>
+                </button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade delMdl" id="animation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel6" aria-modal="true">
+    <div class="modal-dialog modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            
+        <div class="modal-header bg-primary">
+            <h5 class="modal-title" id="exampleModalScrollableTitle">Delete Account</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <input type="hidden" value="" id="delid">                                        
+        <div class="modal-body">
+            Are You Sure You want to delete <span class="ttl" style="color:red;"></span>?
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="delAccount" class="btn btn-outline-danger  waves-effect waves-light">
+                Delete <span class="delbtn" role="status" aria-hidden="true"></span>
+            </button>
+        </div>
+            </div>
+        </div>
+</div>
+
+<!-- *****************************delete model**********************************-->
+
+<section id="basic-datatable" style="margin-top: -20px;">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header" style="padding-top:3px;">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active"><b> Accounts</b>
+                            <a class="addnew" style="padding: 8px;">
+                                <i class="ficon feather icon-plus-circle info "></i>
+                            </a>
+                        </li>
+                    </ol>
+<!--<button type="button" class="addnew btn btn-outline-primary waves-effect waves-light" data-toggle="modal">
+                    <i class="feather icon-plus-circle"></i> add User</button>-->
+                </div>
+                <div class="card-content">
+                    <div class="card-body card-dashboard"  style="padding-top:0px;">
+                        <div class="table-responsive">
+                            <table id="accTbl" class="table zero-configuration ">
+                                <thead>
+                                    <tr style="background-color: #33001a;color: white;">
+                                        <th>Parent Account</th>
+                                        <th>Child Account</th>
+                                        <th>Account</th>
+                                        <th>Type</th>
+                                        <th>Details</th>
+<!--                                        <th>Created By</th>-->
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>           
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+@stop
+@section('script')
+<script src="{{asset('public/js/back/datatables.min.js')}}"></script>
+<script src="{{asset('public/js/back/datatables.bootstrap4.min.js')}}"></script>
+
+<script src="{{asset('public/js/back/datatable.min.js')}}"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="{{asset('public/js/back/bootstrap-fileupload.js')}}"></script>
+<script src="{{asset('public/js/back/select2.full.min.js')}}"></script>
+<script src="{{asset('public/js/back/form-select2.min.js')}}"></script>
+<script>
+    $(document).ready(function()
+    {
+       $('.ac').addClass('active');
+       $('.acc').addClass('has-sub sidebar-group-active open');
+    });
+    var table = $('#accTbl').DataTable(
+    {
+        "responsive" : true,
+        "autoWidth"  : false,
+//      "ordering": false,
+//      "paging" : true,
+        "processing" : true,"serverSide": true,
+//        "columnDefs": [{ responsivePriority: 1, targets: 0 }],
+        "ajax":
+            {
+                "url":"<?= route('list.acc') ?>",
+                "dataType":"json",
+                "type":"POST",
+                "data": function ( d )
+                {
+                    d._token= $('meta[name="csrf-token"]').attr('content');
+                }
+            },
+        "columns":[
+        {"data":"secname"},
+        {"data":"grpname"},
+        {"data":"accname"},
+        {"data":"type"},
+        {"data":"details"},
+//        {"data":"created"},
+        {"data":"sts"},
+        {"data":"action","searchable":false,"orderable":false}
+    ],
+        "order": [[1, 'desc']]   
+});
+//******************************add*********************************************
+$(".addnew").on('click',function(){
+    document.getElementById("addForm").reset();
+    $('.addModel').modal('show');
+});
+$("#addForm").on('submit',function(event)
+{  
+    event.preventDefault();
+    $('.addbtn').addClass('spinner-border spinner-border-sm');
+    var formData = new FormData(this);
+    formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+    $.ajax({
+        type: 'POST',
+        url: "{{route('save.acc')}}",
+        data:formData,
+        dataType:'JSON',contentType: false,
+        cache: false,processData: false,
+        success:function(data)
+        {
+            table.ajax.reload( null, false );
+            $('.addModel').modal('hide');
+            toastr[data.type](data.message);
+            document.getElementById("addForm").reset();
+            $('.addbtn').removeClass('spinner-border spinner-border-sm');
+        }
+    });
+});
+//******************************edit*********************************************
+  
+$("#upForm").on('submit',function(event)
+{  
+    event.preventDefault();
+    $('.upbtn').addClass('spinner-border spinner-border-sm');
+    var formData = new FormData(this);
+    formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+    $.ajax({
+        type: 'POST',
+        url: "{{route('update.acc')}}",
+        data:formData,
+        dataType:'JSON',contentType: false,
+        cache: false,processData: false,
+        success:function(data)
+        {
+            table.ajax.reload( null, false );
+            $('.upModel').modal('hide');
+            toastr[data.type](data.message);
+            document.getElementById("upForm").reset();
+            $('.upbtn').removeClass('spinner-border spinner-border-sm');
+        }
+    });
+});
+$(document).on('keyup', '#checkacc', function()
+{
+    var sec_name = $('#checkacc').val();
+    check("sec_name",sec_name,".checkacc");
+});
+function check(key,value,cls,id)
+{
+    $.ajax({
+        type: 'POST',
+        url: "{{route('check.account')}}",
+        data: {
+         _token: $('meta[name="csrf-token"]').attr('content'),
+         key: key,
+         val: value,
+         id:id
+        },
+       success: function(data)
+       {
+            if(data.error){
+              $(cls).find('.emark').removeClass('is-valid').addClass('is-invalid');
+              $(cls).find('.eitxt').html(data.error);
+           }else if(data.success){
+              $(cls).find('.emark').removeClass('is-invalid').addClass('is-valid');;
+              $(cls).find('.evtxt').html(data.success);
+           }
+       }
+    });
+}
+$(document).on('click', '.csts', function()
+{
+    $.ajax({
+      type: 'POST',url: "{{route('status.acc')}}",
+      data: {
+        _token: $('meta[name="csrf-token"]').attr('content'),
+        sid: $(this).data('sid'),sts: $(this).data('sts')},
+      success: function(data){
+      table.ajax.reload( null, false );
+      toastr[data.type](data.message);}
+    });
+});
+$(document).on('click', '.delmdl', function()
+{
+    $('.delbtn').removeClass('spinner-border spinner-border-sm');
+    $('#delid').val($(this).data('delid'));
+    $('.ttl').html($(this).data('ttl'));
+    $('.delMdl').modal('show');
+}); 
+
+$("#delAccount").on('click',function(event)
+{ 
+    event.preventDefault();
+    $('.delbtn').addClass('spinner-border spinner-border-sm');
+    $.ajax({
+      type: 'POST',
+      url: "{{route('delete.acc')}}",
+      data: {
+        _token: $('meta[name="csrf-token"]').attr('content'),
+        delid: $('#delid').val()
+      },
+      success: function(data){
+         table.ajax.reload( null, false );
+         $('.delMdl').modal('hide');
+         toastr[data.type](data.message);
+      }
+    });
+});
+
+//===========================================================================
+    $('#secid').on('change', function()
+    {    
+        var route = "{{route('findgrp')}}";
+        changeSection($(this).val(),'.addModel','#grpid',route);
+    });
+    $('#usecid').on('change', function()
+    {    
+        var route = "{{route('findgrp')}}";
+        changeSection($(this).val(),'.upModel','#ugrpid',route);
+    });
+    function changeSection(id,parent,target,route,old)
+    {
+        var div= $(parent).parent();var op=" ";
+        $.ajax({
+        type:'get', url:route,
+        data:{'secid':id},
+        success:function(data)
+        {
+            op+='<option value="" selected disabled>-chose-</option>';
+            for(var i=0;i<data.length;i++)
+            {
+                op+='<option value="'+data[i].grpid+'">'+data[i].grp_name+'</option>';
+            }
+            div.find(target).html(" ");
+            div.find(target).append(op);
+            if(old!=""){div.find(target).val(old);}
+        },
+        error:function(){}});
+    }
+    
+$(document).on('click', '.editmdl', function()
+{
+    document.getElementById("upForm").reset();
+    $('#accid').val($(this).data('accid'));$('#usecid').val($(this).data('secid'));$('#usecid').trigger('change');
+    var route = "{{route('findgrp')}}";changeSection($(this).data('secid'),'.upModel','#ugrpid',route,$(this).data('grpid'));
+    $('#ucheckacc').val($(this).data('acc_name'));
+    $('#udetails').val($(this).data('dtl'));
+    $('.upModel').modal('show');
+});
+   
+   
+   
+    
+</script>
+@stop

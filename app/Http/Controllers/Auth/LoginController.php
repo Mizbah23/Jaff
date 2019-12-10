@@ -43,14 +43,26 @@ class LoginController extends Controller
         return view('user.auth.login',$data);
         
     }
-        
     
     public function __construct()
     {
         $this->middleware('guest:web',['except'=>['logout','userLogout']]);
     }
     
-    public function login(Request $request)
+//    public function login(Request $request)
+//    {
+//        $this->validate($request,[
+//            'phone' => 'required',
+//            'password' => 'required|min:6'
+//        ]);
+//        if(Auth::guard('web')->attempt(['phone'=>$request->phone,'password'=>$request->password],$request->remember))
+//        {
+//            return redirect()->intended(route('home'));
+//        }
+//        return redirect()->back()->withInput($request->only('phone','remember'));
+//    }
+    
+        public function login(Request $request)
     {
          // dd($request);
         $this->validate($request,[
@@ -89,8 +101,6 @@ class LoginController extends Controller
            return redirect()->route('login');
        }
     }
-    
-    
 //    
 //    public function login(Request $request)
 //    {

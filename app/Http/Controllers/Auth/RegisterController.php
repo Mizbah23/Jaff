@@ -10,9 +10,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use illuminate\Support\Str;
 use Response;
-use Redirect;
 use Auth;
-
+use Redirect;
 class RegisterController extends Controller
 {
     /*
@@ -76,8 +75,6 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
-   
-    
     public function showRegistrationForm ()
     {
          $data = array();
@@ -85,7 +82,24 @@ class RegisterController extends Controller
          return view('user.auth.signup',$data);
     }
     
-    public function register(Request $request) 
+    
+//    public function register(Request $request) 
+//    {
+//        $this->validator($request->all());
+//        $user = new User;
+//        $user->name = $request->name;
+//        $user->phone = $request->phone;
+//        $user->email = $request->email;
+//        $user->password = Hash::make($request->password);
+//        $user->sts = 0;
+//        $user->save();
+//
+//        session()->flash('success', 'A verification code has been sent to '.$request->phone);
+//        return Redirect::to('/login');
+//
+//    }
+    
+        public function register(Request $request) 
     {
 
          // dd($request->all());
@@ -141,16 +155,15 @@ class RegisterController extends Controller
         return redirect()->route('otp',['phone'=>$request->phone]);
 
     }
-
-    public function getOTP(Request $request,$phone)
+    
+        public function getOTP(Request $request,$phone)
     {
-        
         $user=User::where('phone',$phone)->first();
          // dd($user);
         return view('user.auth.otp')->with('user',$user);
     }
-
-    public function verifyOTP(Request $request,$phone){
+    
+        public function verifyOTP(Request $request,$phone){
         $enteredOtp = $request->input('otp');
         // $user=User::where('phone',$phone)->first();
         $exists=User::where('phone',$phone)->exists();
@@ -164,14 +177,15 @@ class RegisterController extends Controller
             }
         }
     }
-
-       public function showNewForm(Request $request,$phone)
+    
+        public function showNewForm(Request $request,$phone)
     {
          $user=User::where('phone',$phone)->first();
          return view('user.auth.newPassword');
     }
-
-    public function newLogin(Request $request,$phone){
+    
+        public function newLogin(Request $request,$phone)
+                {
             $this->validate($request,[
                'password'=>'min:2|required_with:cpass|same:cpass',
                'cpass'=>'min:2'

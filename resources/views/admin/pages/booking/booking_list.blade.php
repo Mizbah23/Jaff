@@ -166,7 +166,45 @@
 </div>
 
 <!-- *****************************delete model**********************************-->
+<div class="modal fade listModel" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-warning white">
+                <h5 class="modal-title listTitle" id="exampleModalScrollableTitle">Booked Slots</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding-top: 23px;">
+                <div class="table-responsive">
+                    <table class="table table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">Booked date</th>
+                                <th scope="col">Slot</th>
+                                <th scope="col">Regular Price</th>
+                                <th scope="col">Discount</th>
+                                <th scope="col">Booked Price</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="slotlist">
 
+                        </tbody>
+                    </table>
+                </div>
+            </div>   
+<!--            <div class="modal-footer">
+                <button type="reset" class="btn btn-outline-warning mr-1 mb-1 waves-effect waves-light">Reset</button>
+                <button type="submit" class="btn btn-outline-info mr-1 mb-1 waves-effect waves-light">
+                    Save <span class="addbtn" role="status" aria-hidden="true"></span>
+                </button>
+            </div>-->
+        </form>
+        </div>
+    </div>
+</div>
 
 
 
@@ -200,11 +238,13 @@
                             <table id="bookTbl" class="table zero-configuration ">
                                 <thead>
                                     <tr class="bg-gradient-primary">
+                                        <th>ID</th>
                                         <th>Book Date</th>
                                         <th>Name</th>
-         
                                         <th>Phone</th>
                                         <th>Email</th>
+                                        <th>Slots</th>
+                                        <th>Total</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -255,10 +295,13 @@
                 }
             },
         "columns":[
+        {"data":"code"},
         {"data":"date"},
         {"data":"name"},
         {"data":"email"},
         {"data":"phone"},
+        {"data":"slots"},
+        {"data":"total"},
         {"data":"sts"},
         {"data":"action","searchable":false,"orderable":false}
     ],
@@ -297,12 +340,48 @@ $("#addUserForm").on('submit',function(event)
 $(document).on('click', '.editmdl', function()
 {
     console.log($(this).data('nm'));
-
     $('#uname').val($(this).data('nm'));
     document.getElementById("upAminForm").reset();
     $('.upAminModel').modal('show');
 });  
-    
+ 
+$(document).on('click', '.listmdl', function()
+{
+    $.ajax({
+        type: 'POST',
+        url: "{{route('get.bookslots')}}",
+        data: {
+         _token: $('meta[name="csrf-token"]').attr('content'),
+         bookid : $(this).data('bookid')
+        },
+       success: function(data)
+       {
+            $('.listModel').modal('show');
+            $('.slotlist').html(data);
+       }
+    });
+}); 
+$(document).on('click', '.delbs', function()
+{
+    $.ajax({
+        type: 'POST',
+        url: "{{route('del.bookslots')}}",
+        data: {
+         _token: $('meta[name="csrf-token"]').attr('content'),
+         booksid : $(this).data('booksid'),bookid : $(this).data('bookid')
+        },
+       success: function(data)
+       {
+            table.ajax.reload( null, false );
+            $('.slotlist').html(data);
+       }
+    });
+});
+  
+   
+   
+   
+   
     
 </script>
 @stop

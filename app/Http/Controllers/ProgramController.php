@@ -9,6 +9,7 @@ use Jaff\About;
 use Jaff\Singleimg;
 use Jaff\Testimonial;
 use Jaff\Membership;
+use Jaff\Notice;
 use Response;
 class ProgramController extends Controller
 {
@@ -797,7 +798,105 @@ class ProgramController extends Controller
             );
         return Response::json($notification); 
     }
+
+    /*************** Route for Notice ********************/
+        public function noticeList()
+    {
+        $data = array();
+        $data['title'] = 'Notice';
+        return view('admin.pages.home.notices',$data);
+    }
+      
+        public function saveNotice(Request $request)
+    {
+
+        $notice = new Notice;
+        $notice->notice_date = $request->notice_date;
+        $notice->headline = $request->headline;
+        $notice->description = $request->description;
+        $notice->created_by = 1;
+
+        $notice->save();
+        $notification = array(
+                'message' => 'New notice added!',
+                'type' => 'success'
+        );
+        return Response::json($notification); 
+    }
+
+        public function getNotice(Request $request) 
     
+    {
+        $columns =array(0 =>'id',1=> 'notice_date',2=> 'headline',3=> 'description',4=> 'created_by',5=>'action');
+        $totalData = Notice::count();
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+        if(empty($request->input('search.value')))
+        {
+            $posts = Notice::offset($start)->limit($limit)->orderBy($order,$dir)->get();
+            $totalFiltered = Notice::count();
+        }
+        else{
+            $search = $request->input('search.value');
+            $posts = Notice::where('notice_date', 'like', "%{$search}%")
+                    ->orwhere('headline', 'like', "%{$search}%")
+                    ->offset($start)->limit($limit)
+                    ->orderBy($order, $dir)->get();
+            $totalFiltered = Notice::where('notice_date', 'like', "%{$search}%")
+                            ->orwhere('headline', 'like', "%{$search}%")
+                            ->count();
+        }
+    $data = array();
+
+    if($posts){
+        foreach($posts as $r)
+        {     
+            
+            $nestedData['notice_date'] = $r->notice_date;
+            $nestedData['headline'] = $r->headline;
+            $nestedData['description'] = $r->description;
+            $nestedData['action'] = '<a href="#" class="editmdl" data-id="'.$r->id.'" data-notice_date="'.$r->notice_date.'" data-headline="'.$r->headline.'" data-description="'.$r->description.'" 
+            style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a> '
+                    . '<a href="#" class="delmdl" data-delid="'.$r->id.'" data-ttl="'.$r->headline.'" style="padding: 4px;"><i class="ficon feather icon-trash-2 danger"></i></a>';
+            $data[] = $nestedData;
+        }
+    }     
+        $json_data = array(
+            "draw"        => intval($request->input('draw')),
+            "recordsTotal"    => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data"        => $data
+        );
+        echo json_encode($json_data);    
+    }
+
+    public function updateNotice(Request $request)
     
+    {
+        $notice = Notice::find($request->id);
+        $notice->notice_date = $request->notice_date;
+        $notice->headline = $request->headline;
+        $notice->description = $request->description;
+        $notice->save();
+        $notification = array(
+                'message' => 'Notice has been modified',
+                'type' => 'success'
+        );
+        return Response::json($notification);
+    }
+
+    public function deleteNotice(Request $request)
+    {
+      
+        $notice = Notice::find($request->delid);
+        $notice->delete();
+        $notification = array(
+                 'message' => 'Notice Deleted ',
+                 'type' => 'error'
+             );
+        return Response::json($notification);
+    }
 
 }

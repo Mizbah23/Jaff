@@ -4,12 +4,16 @@
 @section('header')
     @include('user.layout.home_header')
 @stop
-
+@section('page') home-page @stop
+@section('style')
+<link type="text/css" rel="stylesheet" href="public/css/front/slick.css"/>
+<style>
+    img.attachment-thumb-495-495.size-thumb-495-495.wp-post-image {
+    height: 290px;
+}
+</style>
+@stop
 @section('content')
-
-
-
-
 <div class="content">		
     <div class="blog-section">
         <div class="container-fluid shortcode-view">
@@ -66,25 +70,20 @@
 			</div>
 			<div class="col-md-4">
 				<div class="info-details d-bg-c">
-					<h4>Contact Info</h4>
-					<ul class="ul-contact">
-						<li class="ul-contact-1">
-							<p>Bashundhara Main Gate,<br>Opposite of Jamuna Future Park Sidegate,Dhaka<br>
-							</p>
-						</li>
-						<li class="ul-contact-2">
-							<span>+8801304229158</span>
-							<span>.</span>
-						</li>
-						<li class="ul-contact-3">
-							<a href="mailto:info@jaff.com.bd">info@jaff.com.bd</a>
-						</li>
-						
+					<h4>Notice Board</h4>
+					<ul class="ul-notice">
+                                            @foreach($notices as $notice)
+                                            <li>
+                                         
+                                            <span>{{date('D ,d M Y', strtotime($notice->notice_date))}}</span><br>
+                                             <span>{{$notice->headline}}</span>
+                                            </li>
+                                            @endforeach
 					</ul>
 				</div>
 				<div class="under-button">
 					<span></span>
-					<a href="#" class="d-border-c d-bg-c-h d-text-c">Contact Us</a>
+					<a href="#" class="d-border-c d-bg-c-h d-text-c">Details</a>
 				</div>
 			</div>
 		</div>
@@ -210,7 +209,7 @@
                                 <li><a target="_blank" href="{{$c->mail}}"><i class="fa fa-envelope-o"></i></a></li>								
                                 <li><a target="_blank" href="{{$c->phone}}"><i class="fa fa-phone"></i></a></li>							
                             </ul>
-                            <img src="{{asset($c->image)}}" alt="Coach Photo" style="height: 300px;"/>
+                            <img src="{{asset($c->image)}}" alt="Bodybuilding instructor" style="height: 300px;"/>
                             <div class="trainer-info">
                                 <h4>{{$c->name}}<span>{{$c->designation}}</span></h4>
                                 <p>{{$c->details}}</p>
@@ -243,29 +242,34 @@
                     <h1>Latest news and updates</h1>
                     <div class="site-dots d-text-c carousel-arrows"><i class="fa fa-times-2"></i><i class="fa fa-times-2"></i></div>
                 </div>
-                <div id="blog-post" class="trainers-slider blog-post">				
+                <div id="blog-post" class="trainers-slider blog-post latest">				
                     
-                    <div class="item">
-                        <div class="blog-entry">
-                            <div class="entry-date"><span class="d-text-c">24</span>Jan</div>
-                            <div class="entry-cover">
-                                <a href="working-abdominal-muscules/index.html">
-                                    <img width="495" height="495" src="public/img/blog-f1-495x495.jpg" class="attachment-thumb-495-495 size-thumb-495-495 wp-post-image" alt=""  />
-                                </a>
-                            </div>
-                            <div class="entry-hover d-bg-c">
-                                <i class="fa fa-eye"></i>
-                                <h2><a href="working-abdominal-muscules/index.html"> News</a></h2>
-                                <p>
-                                    </i><a href="category/fashion/index.html" rel="category tag">Read More</a>
-                                    <!--<a href="category/print/index.html" rel="category tag">print</a>-->
-                                </p>
+                    @foreach($latest as $li)
+                    
+                        <div class="item">
+                            <div class="blog-entry">
+                                <div class="entry-date"><span class="d-text-c">{{date('d',strtotime($li->created_at))}}</span>{{date('M',strtotime($li->created_at))}}</div>
+                                <div class="entry-cover">
+                                    <a href="working-abdominal-muscules/index.html">
+                                        <img width="289" height="290" src="{{asset($li->post_img)}}" class="attachment-thumb-495-495 size-thumb-495-495 wp-post-image" alt=""  />
+                                    </a>
+                                </div>
+                                <div class="entry-hover d-bg-c">
+                                    <i class="fa fa-eye"></i>
+                                    <h2><a href="{{route('user.snews', $li->slug)}}">{{$li->title}}</a></h2>
+                                    <p>
+                                        </i><a href="{{route('user.snews', $li->slug)}}" rel="category tag">Read More</a>
+                                        <!--<a href="category/print/index.html" rel="category tag">print</a>-->
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    
+                    @endforeach
                     
                     
-                    <div class="item">
+                    
+<!--                    <div class="item">
                         <div class="blog-entry">
                             <div class="entry-date"><span class="d-text-c">24</span>Jan</div>
                             <div class="entry-cover">
@@ -274,12 +278,12 @@
                                 </a>
                             </div>
                              <div class="entry-hover d-bg-c">
-                                <!--<i class="fa fa-eye"></i>-->
+                                <i class="fa fa-eye"></i>
                                 <h2><a href="working-abdominal-muscules/index.html"> Updates</a></h2>
-                                <!--<p>-->
-                                    <!--</i><a href="category/fashion/index.html" rel="category tag">Read More</a>-->
-                                    <!--<a href="category/print/index.html" rel="category tag">print</a>-->
-                                <!--</p>-->
+                                <p>
+                                    </i><a href="category/fashion/index.html" rel="category tag">Read More</a>
+                                    <a href="category/print/index.html" rel="category tag">print</a>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -304,7 +308,8 @@
                                 </p>
                             </div>
                         </div>
-                    </div>				
+                    </div>
+                    
                     <div class="item">
                         <div class="blog-entry">
                             <div class="entry-date"><span class="d-text-c">24</span>Jan</div>
@@ -319,7 +324,8 @@
                                 <p><a href="category/design/index.html" rel="category tag">design</a>, <a href="category/marketing/index.html" rel="category tag">marketing</a></p>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
+                    
                     
                     
                 </div>
@@ -343,8 +349,8 @@
                     <h4>{{$t->designation}}</h4>
                     <p>
                     <img src="public/img/quote-sign-left.png" class="quote-sign-left" alt="quote-sign-left" />
-                   {{$t->message}}<img src="public/img/quote-sign-right.png" class="quote-sign-right" alt="quote-sign-right" />
-                    
+                   {{$t->message}}
+                    <img src="public/img/quote-sign-right.png" class="quote-sign-right" alt="quote-sign-right" />
                     </p>
                 </div>
             </div>
@@ -405,4 +411,48 @@
 @section('footer')
     @include('user.layout.footer')
 @stop
-@section('script')@stop
+@section('script')
+<script type="text/javascript" src="public/js/front/slick.min.js"></script>
+<script>
+    
+
+         $('.post-wrapper').slick({
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 2000,
+  nextArrow: $('.next'),
+  prevArrow: $('.prev'),
+  
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
+    // You can unslick at a given breakpoint now by adding:
+    // settings: "unslick"
+    // instead of a settings object
+  ]
+});  
+
+</script>
+@stop

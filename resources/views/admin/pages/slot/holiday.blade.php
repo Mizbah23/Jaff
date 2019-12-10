@@ -3,7 +3,6 @@
 
 @section('link')
    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/datatables.min.css')}}">
-   <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/select2.min.css')}}">
    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
    <link href="{{asset('public/css/back/bootstrap-fileupload.css')}}" rel="stylesheet" />
    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/pickadate.css')}}">
@@ -19,10 +18,9 @@
 </style>
 
 <!-- *****************************add model**********************************-->
-<div class="modal fade addHolidayModel" id="exampleModalScrollable" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+<div class="modal fade addHolidayModel" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
         <div class="modal-content">
-          <form method="post" id="addHolidayForm" enctype="multipart/form-data"> 
             <div class="modal-header bg-info white">
                 <h5 class="modal-title" id="exampleModalScrollableTitle">Add Holiday</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -30,7 +28,7 @@
                 </button>
             </div>
             <div class="modal-body" style="padding-top: 23px;">
-                 
+                <form method="post" id="addHolidayForm" enctype="multipart/form-data">    
                 <div class="row" >  
                     <div class="col-md-8 col-xs-8 col-md-offset-2 col-xs-offset-2">
                         <fieldset class="form-group">
@@ -64,14 +62,14 @@
                     Save <span class="addbtn" role="status" aria-hidden="true"></span>
                 </button>
             </div>
-            </form>
+        </form>
         </div>
     </div>
 </div>
 
 
 <!-- *****************************edit model**********************************-->
-<div class="modal fade upHolidayModel" id="exampleModalScrollable" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+<div class="modal fade upHolidayModel" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header bg-info white">
@@ -152,6 +150,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body " style="padding-bottom: 0px;">
+                       
                         <form method="get" action="{{route('report.holidayPrint')}}" target="_blank">
                         <div class="row">
                             <div class="col-xl-4 col-md-6 col-12 mb-1">
@@ -268,8 +267,6 @@
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script src="{{asset('public/js/back/picker.js')}}"></script>
 <script src="{{asset('public/js/back/picker.date.js')}}"></script>
-<script src="{{asset('public/js/back/select2.full.min.js')}}"></script>
-<script src="{{asset('public/js/back/form-select2.js')}}"></script> 
 <script>
     $(document).ready(function()
     {

@@ -17,10 +17,11 @@
 
 
     <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/vendors.min.css')}}">
+
     <link rel="stylesheet" type="text/css" href="{{asset('/public/css/back/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/public/css/back/bootstrap-extended.min.css')}}">
     
-    
+
     <!--<link rel="stylesheet" type="text/css" href="{{asset('public/css/back/apexcharts.css')}}">-->
     <!--<link rel="stylesheet" type="text/css" href="{{asset('public/css/back/tether-theme-arrows.css')}}">-->
     <!--<link rel="stylesheet" type="text/css" href="{{asset('public/css/back/tether.min.css')}}">-->
@@ -91,19 +92,17 @@
     
     
     <script src="{{asset('public/js/back/vendors.min.js')}}"></script>
-    
-    
-   {{--  <script src="{{asset('public/js/back/tether.min.js')}}"></script> --}}
+   
+    <script src="{{asset('public/js/back/tether.min.js')}}"></script>
     <!--<script src="{{asset('public/js/back/shepherd.min.js')}}"></script>-->
     <script src="{{asset('public/js/back/app-menu.min.js')}}"></script>
     <script src="{{asset('public/js/back/app.min.js')}}"></script>
     <script src="{{asset('public/js/back/components.min.js')}}"></script>
-
     
+<script src="{{asset('public/js/back/sweetalert2.min.js')}}"></script>
+<!-- Toastr -->
+<script src="{{asset('public/js/back/toastr.min.js')}}"></script>
 
-    <script src="{{asset('public/js/back/sweetalert2.min.js')}}"></script>
-    <!-- Toastr -->
-    <script src="{{asset('public/js/back/toastr.min.js')}}"></script>
      @yield('script')
      <script type="text/javascript">
  Toast = Swal.mixin({

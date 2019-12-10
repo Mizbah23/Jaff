@@ -12,10 +12,6 @@ class Post extends Model
 
     protected $primaryKey = 'post_id';
     
-    public function category()
-    {
-        return $this->hasOne('Jaff\Category','category_id','id');
-    }
     public function sluggable()
     {
         return [

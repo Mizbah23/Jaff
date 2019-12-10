@@ -40,7 +40,7 @@
                     
                     <div class="col-md-12 col-12">
                         <div class="form-label-group position-relative has-icon-left">
-                            <textarea id="phone-floating-icon" class="form-control" name="details" placeholder="Details"></textarea>
+                            <textarea id="phone-floating-icon" class="form-control" name="details" rows="6" placeholder="Details"></textarea>
                             <div class="form-control-position"><i class="feather icon-file"></i></div>
                             <label for="phone-floating-icon">Details</label>
                         </div>
@@ -93,7 +93,7 @@
         <div class="modal-content">
             
         <div class="modal-header bg-primary">
-            <h5 class="modal-title" id="exampleModalScrollableTitle">Delete Program</h5>
+            <h5 class="modal-title" id="exampleModalScrollableTitle">Delete About's Info</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -116,19 +116,20 @@
 <!--*************edit Hour***************-->
 
 <div class="modal fade text-left editMdl" tabindex="-1" role="dialog" aria-labelledby="myModalLabel130" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header bg-success white">
-                <h5 class="modal-title" id="myModalLabel130" style="text-align: center;">Update Hour Type</h5>
+                <h5 class="modal-title" id="myModalLabel130" style="text-align: center;">Update About's Info</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form method="post" id="editFrm" enctype="">
-                <input type="hidden" name="id" id="id">
-                <input type="hidden" name="oldimg" id="oldimg">
+            
 
             <div class="modal-body" style="padding-top: 23px;">
+                <form method="post" id="editFrm" enctype="">
+                <input type="hidden" name="id" id="id">
+                <input type="hidden" name="oldimg" id="oldimg">
                 <div class="row" >  
                  <div class="col-md-12 col-xl-12">
                         <div class="form-label-group position-relative has-icon-left">
@@ -140,7 +141,7 @@
                                                     
                 <div class="col-md-12 col-12">
                         <div class="form-label-group position-relative has-icon-left">
-                            <textarea id="details" class="form-control" name="details" placeholder="Details"></textarea>
+                            <textarea id="details" class="form-control" name="details" rows="6" placeholder="Details"></textarea>
                             <div class="form-control-position"><i class="feather icon-file"></i></div>
                             <label for="phone-floating-icon">Details</label>
                         </div>

@@ -50,7 +50,10 @@
                                     <li id="menu-item-309" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-309">
                                         <a title="Trainers" href="#trainers-section">Coaches</a>
                                     </li>
-                                    <li id="menu-item-404" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-404 dropdown">
+                                    <li id="menu-item-309" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-309">
+                                        <a title="Trainers" href="{{route('user.news')}}">News</a>
+                                    </li>
+<!--                                    <li id="menu-item-404" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-404 dropdown">
                                         <a title="Blog" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true">News
                                             <span class="caret"></span>
                                         </a>
@@ -62,7 +65,7 @@
                                                 <a title="Blog Page" href="{{route('logout')}}">Blog Page</a>
                                             </li>
                                         </ul>
-                                    </li>
+                                    </li>-->
                                     <li id="menu-item-310" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-310">
                                         <a title="Contact" href="#contact-section">Contact</a>
                                     </li>
@@ -124,25 +127,25 @@
                             </li>
                                     
                                     
-<!--                             <li class="user-acc">
-                                <a href="my-account/index.html"><i class="user-icon"></i></a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="d-text-c-h" href="user-account/index.html">Login</a></li>
-                                </ul>
-                            </li>-->
-<!--                            <li class="cart-ddl">
-                                <a class="d-text-c-h" href="cart/index.html">
-                                    <i class="cart-icon"></i>
-                                </a>
-                                <ul class="dropdown-menu cart-dropdown">
-                                    <li>									
-                                        <span class="cart_details">0 items, Total of <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>0.00</span></span>
-                                        <a class="checkout" title="View your shopping cart" href="cart/index.html">
-                                                Checkout <span class="icon-chevron-right"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>-->
+                            <!-- <li class="user-acc">-->
+                            <!--    <a href="my-account/index.html"><i class="user-icon"></i></a>-->
+                            <!--    <ul class="dropdown-menu">-->
+                            <!--        <li><a class="d-text-c-h" href="user-account/index.html">Login</a></li>-->
+                            <!--    </ul>-->
+                            <!--</li>-->
+                            <!--<li class="cart-ddl">-->
+                            <!--    <a class="d-text-c-h" href="cart/index.html">-->
+                            <!--        <i class="cart-icon"></i>-->
+                            <!--    </a>-->
+                            <!--    <ul class="dropdown-menu cart-dropdown">-->
+                            <!--        <li>									-->
+                            <!--            <span class="cart_details">0 items, Total of <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>0.00</span></span>-->
+                            <!--            <a class="checkout" title="View your shopping cart" href="cart/index.html">-->
+                            <!--                    Checkout <span class="icon-chevron-right"></span>-->
+                            <!--            </a>-->
+                            <!--        </li>-->
+                            <!--    </ul>-->
+                            <!--</li>-->
 
                                 </ul>							
                             </div>

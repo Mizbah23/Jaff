@@ -1052,9 +1052,11 @@ class SlotController extends Controller
     }
     public function fetchDropSlot(Request $request)
     {
+        $dcode =  date('D', strtotime($request->date));
+        $dayid = Weekday::where('code',$dcode)->value('id');
         $data=Slot::select('slot_id','start','end')
-                ->where('day_id',$request->dayid)
-                ->orderBy('start', 'asc')->get();
+            ->where('day_id',$dayid)
+            ->orderBy('start', 'asc')->get();
 
         return response()->json($data);
     }
@@ -1076,28 +1078,36 @@ class SlotController extends Controller
     }
     public function getDropIn(Request $request) 
     {
-        $columns = array(0 =>'id',1=> 'name',2=> 'address',3=> 'details',4=> 'status',5=> 'action'
+        $columns = array(0 =>'date',1=> 'slot_id',2=> 'price',3=> 'seat',4=> 'taken',5=> 'ground_id',6=>'status'
         );
-        $totalData = Ground::count();
+        $totalData = Dropin::count();
         $limit = $request->input('length');
         $start = $request->input('start');
         $order = $columns[$request->input('order.0.column')];
         $dir = $request->input('order.0.dir');
         if(empty($request->input('search.value')))
         {
-            $posts = Ground::offset($start)->limit($limit)->orderBy($order,$dir)->get();
-            $totalFiltered =  Ground::count();
+            $posts = Dropin::join('slots','dropins.slot_id','=','slots.slot_id')
+                    ->join('grounds','dropins.ground_id','=','grounds.id')
+                    ->select('dropins.*','grounds.name','slots.start','slots.end',DB::raw("(SELECT count(bookdetails.id) FROM bookdetails WHERE "
+                            . "bookdetails.`slot_id`=dropins.`slot_id` AND bookdetails.`slot_date`=dropins.`date`) as booked"))
+                    ->offset($start)->limit($limit)->orderBy($order,$dir)->get();
+            $totalFiltered =  Dropin::count();
         }
         else{
             $search = $request->input('search.value');
-            $posts = Ground::where('name', 'like', "%{$search}%")
-                    ->orwhere('address', 'like', "%{$search}%")
-                    ->orwhere('details', 'like', "%{$search}%")
+            $posts = Dropin::join('slots','dropins.slot_id','=','slots.slot_id')
+                    ->join('grounds','dropins.ground_id','=','grounds.id')
+                    ->select('dropins.*','grounds.name','slots.start','slots.end',
+                            DB::raw("(SELECT count(bookdetails.id) FROM bookdetails WHERE "
+                            . "bookdetails.`slot_id`=dropins.`slot_id` AND bookdetails.`slot_date`=dropins.`date`) as booked"))
+                    ->where('dropins.date', 'like', "%{$search}%")
+                    ->where('grounds.name', 'like', "%{$search}%")
                     ->offset($start)->limit($limit)
                     ->orderBy($order, $dir)->get();
-            $totalFiltered = Ground::where('name', 'like', "%{$search}%")
-                    ->orwhere('address', 'like', "%{$search}%")
-                    ->orwhere('details', 'like', "%{$search}%")
+            $totalFiltered = Dropin::join('grounds','dropins.ground_id','=','grounds.id')
+                    ->where('dropins.date', 'like', "%{$search}%")
+                    ->where('grounds.name', 'like', "%{$search}%")
                     ->count();
         }
         $data = array();
@@ -1105,10 +1115,13 @@ class SlotController extends Controller
     if($posts){
         foreach($posts as $r)
         {     
-            $nestedData['gid'] = $r->id;
-            $nestedData['gname'] = $r->name;
-            $nestedData['gadd'] = $r->address;
-            $nestedData['gdtl'] = $r->details;
+            $nestedData['date'] = date('D ,d M Y', strtotime($r->date));
+            $nestedData['slot'] = date('h:ia', strtotime($r->start)).'-'.date('h:ia', strtotime($r->end));
+            $nestedData['price'] = $r->price;
+            $nestedData['person'] = $r->seat;
+            $nestedData['taken'] = $r->booked;
+            $nestedData['details'] = $r->details;
+            $nestedData['name'] = $r->name;
             $nestedData['sts']=($r->status==1)?'<div class="badge  badge-pill badge-success mr-1 badge-glow mb-1"><i class="feather icon-check"></i><span>Active</span></div>':
                 '<div class="badge badge-pill  badge-danger mr-1 badge-glow mb-1"><i class="feather icon-x"></i><span>Active</span></div>';
             $nestedData['action'] = '<a class="editmdl" data-id="'.$r->id.'" data-nm="'.$r->name.'" data-phn="'.$r->address.'" data-eml="'.$r->details.'" style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a> '

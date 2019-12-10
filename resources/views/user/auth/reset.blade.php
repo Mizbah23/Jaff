@@ -395,7 +395,7 @@
                     
                     
                         <button type="submit" class="signinbutton btn">Confirm</button>
-                        <p class="signup">Have you not get yet?<a href="#" onclick="resend()" class="signuplink">Resend</a></p>
+                        <p class="signup">Have you not get yet?<a href="#" class="signuplink">Resend</a></p>
                       
                     </form>
                   
@@ -556,7 +556,7 @@
 
 </div>
 
-<script type="text/javascript">
+ <script type="text/javascript">
 
         var c = document.body.className;
 
@@ -565,6 +565,7 @@
         document.body.className = c;
 
 </script>
+
 
 
 <script type='text/javascript' src='{{asset('/public/js/front/scripts1748.js')}}'></script>
@@ -618,24 +619,7 @@
 <script type='text/javascript' src='{{asset('/public/js/front/functions.js')}}'></script>
 
 <script type='text/javascript' src='{{asset('/public/js/front/wp-embed.min066b.js')}}'></script>
-<script>
-    function resend() {
-         console.log('submit');
-      jQuery.ajax({
-        url: "{{route('reset',[$user->phone])}}",
-        type:"get",
-        success: function (data) {
-          console.log(data);
-          
-          if(data=="success"){
-            alert("Verification code has been sent!");
-          }else{
-            alert("Something went wrong!");
-          }
-        }
-      });
-    }
-</script>
+
 </body>
 
 

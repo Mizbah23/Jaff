@@ -41,14 +41,18 @@
                         <div class="footer-text">
                           <ul class="ul-contact list-info-w3pvt last-w3ls-contact mt-lg-4" style="text-align: left;">
                             <li class="ul-contact-1">
+                                <img src="public/img/contact-1.png" />
+                             
                               <p>Jaff Street Bashundhara Main Gate,<br>Opposite of Jamuna Future Park Sidegate,Dhaka<br>
                               </p>
                            </li>
                            <li class="ul-contact-2">
+                            <img src="public/img/contact-2.png" />
                             <span>+8801304229158</span>
                             <span>.</span>
                            </li>
                           <li class="ul-contact-3">
+                            <img src="public/img/contact-3.png" />
                             <a href="mailto:info@jaff.com.bd">info@jaff.com.bd</a>
                           </li>
                         

@@ -6,14 +6,12 @@ use Illuminate\Http\Request;
 use Jaff\Slot;
 use Jaff\Holiday;
 use Illuminate\Support\Facades\Input;
-use PDF;
 use DB;
-
+use PDF;
 
 
 class ReportController extends Controller
 {
-    /*********Slot Print ************/
     public function slotPrint(Request $request)
     {
         
@@ -41,13 +39,14 @@ class ReportController extends Controller
             
         return $pdf->stream('Slot-Pdf.pdf');
     }
-
+    
+    
     /*********Holiday Print ************/
 
-        public function holidayPrint(Request $request)
+     public function holidayPrint(Request $request)
     {
         
-        $from= Input::get('from');;
+        $from= Input::get('from');
         $to=   Input::get('to');
     
         $total= Holiday::count();

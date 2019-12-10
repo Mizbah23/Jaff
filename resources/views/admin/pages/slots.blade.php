@@ -6,8 +6,8 @@
    <link href="{{asset('public/css/back/bootstrap-fileupload.css')}}" rel="stylesheet" />
 <!--   <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/dataTables.checkboxes.css')}}">
    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/data-list-view.css')}}">-->
- <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/select2.min.css')}}">
- <link rel="stylesheet" href="{{asset('public/css/back/bootstrap-timepicker.css')}}">
+         <link rel="stylesheet" type="text/css" href="{{asset('public/css/select2.min.css')}}">
+   <link rel="stylesheet" href="{{asset('public/css/back/bootstrap-timepicker.css')}}">
 @stop
 @section('content')
 <style>
@@ -18,7 +18,7 @@
 </style>
 
 <!--***********************************addhour*******************************-->
-<div class="modal fade addSlotMdl" id="exampleModalScrollable"  role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+<div class="modal fade addSlotMdl" id="exampleModalScrollable" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
     <div class="modal-content">
             
@@ -49,14 +49,15 @@
                         <div class="col-sm-6 col-md-12">
                         <div class="form-group">
                             <label for="first-name-icon">Day</label>
-                            <div class="position-relative has-icon-left">
-                                <select name="day_id" id="day_id" class="select2 form-control" >
+                            <!--<div class="position-relative has-icon-left">-->
+                                <select name="day_id" id="day_id" class="select2 form-control">
+                                    <!--<select name="day_id" id="day_id" class="max-length form-control" multiple="multiple" id="max_length">-->
                                     <option value="">select</option>
                                     @foreach($weekdays as $wd)
                                     <option value="{{$wd->id}}">{{$wd->day}}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            <!--</div>-->
                         </div>  
                     </div>
     
@@ -115,7 +116,7 @@
                 </div>     
             </div>
                 <div class="col-xl-6">
-    <div class="table-responsive">
+  <div class="table-responsive">
                                     <table class="table table-striped mb-0">
                                         <thead>
                                             <tr>
@@ -147,7 +148,7 @@
 
 
 
-<div class="modal fade upSlotMdl" id="exampleModalScrollable" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+<div class="modal fade upSlotMdl" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
     <div class="modal-content">
             
@@ -337,6 +338,33 @@
     </div>
             </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -543,7 +571,6 @@
         
         <div class="col-xl-9 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
-                
                 <div class="card-content">
                     <div class="card-body " style="padding-bottom: 0px;">
                         <form method="get" action="{{route('report.slotPrint')}}" target="_blank">
@@ -714,15 +741,22 @@
 <script src="{{asset('public/js/back/datatables.min.js')}}"></script>
 
 <script src="{{asset('public/js/back/datatables.bootstrap4.min.js')}}"></script>
+
+
 <script type="text/javascript" src="{{asset('public/js/back/bootstrap-fileupload.js')}}"></script>
-<script src="{{asset('public/js/back/select2.full.min.js')}}"></script>
-<script src="{{asset('public/js/back/form-select2.js')}}"></script> 
+  <script src="{{asset('public/js/select2.full.min.js')}}"></script>
+
+<script src="{{asset('public/js/back/form-select2.min.js')}}"></script>
+
 
 <script src="{{asset('public/js/back/bootstrap-timepicker.js')}}"></script>
 
 
 
 <script>
+//    $("#day_id").select2({
+//    maximumSelectionLength: 1
+//});
     $(document).ready(function()
     {
        $('.slt').addClass('active');
@@ -1070,5 +1104,4 @@ $('#uendTime').on('change', function()
     }); 
 });
 </script>
-
 @stop

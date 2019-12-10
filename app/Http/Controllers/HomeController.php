@@ -9,9 +9,11 @@ use Jaff\Slider;
 use Jaff\Coach;
 use Jaff\Offer;
 use Jaff\Program;
+use Jaff\Post;
 use Jaff\About;
 use Jaff\Singleimg;
 use Jaff\Testimonial;
+use Jaff\Notice;
 use DB;
 use Response;
 
@@ -41,8 +43,11 @@ class HomeController extends Controller
         $data['programs'] = Program::where('status',1)->get();
         $data['coaches']=Coach::where('status',1)->get();
         $data['abouts']=About::orderBy('id','asc')->get();
-        $data['offers'] = Offer::where('status',1)->get();
         $data['testimonials'] = Testimonial::orderBy('id','desc')->limit(5)->get();
+        $data['latest'] = Post::where('status',1)->select('title','slug','post_img')
+                ->orderBy('post_id','desc')->limit(6)->get();
+        $data['offers'] = Offer::where('status',1)->get();
+        $data['notices'] = Notice::orderby('notice_date','desc')->limit(3)->get();
         $data['weeks'] = Weekday::select('weekdays.day','weekdays.id','weekdays.sts',DB::raw("(SELECT count(slots.slot_id) FROM slots WHERE "
                             . "slots.`day_id`=weekdays.`id`) as total_slot"),DB::raw("(SELECT MIN(slots.start) FROM slots WHERE "
                             . "slots.`day_id`=weekdays.`id`) as start"),DB::raw("(SELECT MAX(slots.end) FROM slots WHERE "
@@ -92,6 +97,20 @@ class HomeController extends Controller
         $data['title'] = 'Slot Time Table';
         return view('user.pages.timetable',$data);
     }
-    
+    public function showAllNews()
+    {
+        $data = array();
+        $data['title'] = 'News & Updates';
+        $data['list'] = Post::where('status',1)->get();
+        $data['recent'] = Post::where('status',1)->select('title','slug','post_img')
+                ->orderBy('post_id','desc')->limit(4)->get();
+        return view('user.pages.news',$data);
+    }
+    public function showSingleNews($slug) 
+    {
+        $data = array();
+        $data['info'] = Post::findBySlug($slug);
+        return view('user.pages.single_news',$data);
+    }  
     
 }

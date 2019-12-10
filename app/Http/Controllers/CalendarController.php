@@ -12,6 +12,7 @@ use Jaff\Offerdetail;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use DB;
 use Response;
+use Jaff\Slot;
 
 class CalendarController extends Controller
 {
@@ -136,10 +137,6 @@ class CalendarController extends Controller
                 {
                     $active_slots = Weekday::join('slots','weekdays.id','=','slots.day_id')
                             ->where('weekdays.code',$cd)->where('slots.status',1)->get();
-                    
-                    
-
-                    
                     foreach($active_slots as $value)
                     {
                         $is_booked = DB::table('bookdetails')->where('slot_id',$value->slot_id)
@@ -155,8 +152,9 @@ class CalendarController extends Controller
                         }else{              
                         if(array_key_exists($d, $dropd) && array_key_exists($value->slot_id, $drops))
                         {
+                            $droped = Bookdetail::where(['slot_id'=>$value->slot_id,'slot_date'=>$d])->count('id');
                             $event['id'] = ($is_booked)?$value->id:'null';
-                            $avail = $dropd[$d]-$drops[$value->slot_id];
+                            $avail = $dropd[$d]-$droped;
                             $event['title'] = 'DropIn '.$avail.'('.$dropd[$d].')';
                             $event['start'] = $d."T".$value->start;
                             $event['end'] = $d."T".$value->end;
@@ -209,7 +207,8 @@ class CalendarController extends Controller
         
         $slts = array();
         $offers = Offerdetail::join('offers','offerdetails.offer_id','=','offers.id')
-                ->whereDate('offerdetails.offer_date','=',$request->date)->get();
+                ->whereDate('offerdetails.offer_date','=',$request->date)
+                ->where('offers.status',1)->get();
         foreach($offers as $ofr)
         {
             $slts[$ofr->slot_id] = $ofr->percentage;
@@ -251,17 +250,33 @@ class CalendarController extends Controller
                 
                 
               if(array_key_exists($request->date, $dropd) && array_key_exists($value->slot_id, $drops)){
-                    $avail = $dropd[$request->date]-$drops[$value->slot_id];
+                  
+                    
+                    $droped = Bookdetail::where(['slot_id'=>$value->slot_id,'slot_date'=>$request->date])->count('id');
+                    $avail = $dropd[$request->date]-$droped; 
                     $output .= '<tr class="table-light">
                                 <th scope="row">'.$i.'</th>';
                     $output .= (array_key_exists($value->slot_id, $slts))? 
                             '<td>'.$duration.' <i class="vs-icon feather icon-gift"></i></td>':
                             '<td>'.$duration.'</td>';
-                    $output .= '<td>Available <span class="badge badge-pill badge-glow bg-info">'.$avail.'</span></td>';
+                    
 //                    .$drops[$value->slot_id].'('.$dropd[$request->date].')
                     
                     if($avail>0){
-                        $output .= '<td>
+                        $output .= '<td>Available <span class="badge badge-pill badge-glow bg-info">'.$avail.'</span></td>';
+                        if(in_array($request->date.$value->slot_id, $cart)){
+                            $output .= '<td>
+                               <div class="vs-checkbox-con vs-checkbox-success">
+                                        <input type="checkbox" class="cartslot" checked data-price="'.$value->price.'" data-date="'.$request->date.'" data-time='.date( "h:iA", strtotime($value->start)).'-'.date( "h:iA", strtotime($value->end)).' data-slot_id="'.$value->slot_id.'">
+                                        <span class="vs-checkbox">
+                                            <span class="vs-checkbox--check">
+                                                <i class="vs-icon feather icon-check"></i>
+                                            </span>
+                                        </span>
+                                    </div>
+                           </td>';
+                        }else{
+                            $output .= '<td>
                                <div class="vs-checkbox-con vs-checkbox-success">
                                         <input type="checkbox" class="cartslot" data-price="'.$value->price.'" data-date="'.$request->date.'" data-time='.date( "h:iA", strtotime($value->start)).'-'.date( "h:iA", strtotime($value->end)).' data-slot_id="'.$value->slot_id.'">
                                         <span class="vs-checkbox">
@@ -271,7 +286,10 @@ class CalendarController extends Controller
                                         </span>
                                     </div>
                            </td>';
+                        }
+                        
                     }else{
+                        $output .= '<td>Full <span class="badge badge-pill badge-glow bg-info">'.$avail.'</span></td>';
                         $output .='<td></td>';
                     }
                     $output .= '</tr>';
@@ -349,5 +367,32 @@ class CalendarController extends Controller
     }
         
         return $output;
+    }
+
+
+
+    public function showTest()
+    {
+        // echo "show";
+        // $list = Slot::select('start')->get();
+        // foreach ($list as  $slot) {
+        //     // echo strtotime($slot->start).'<br>';
+        // }
+        // echo date('Y-m-d',strtotime(1575796189)).'<br>';
+        $second = 0;
+        $list = explode(":","4");
+                      foreach($list as $key=>$li)
+                      {
+                            if($key==0)
+                            {
+                                $second+=$li*3600;
+                            }else if($key==1){
+                                $second+=$li*60;
+                            }else{
+                                $second+=$li;
+                            }
+                      }
+        echo $second;
+
     }
 }

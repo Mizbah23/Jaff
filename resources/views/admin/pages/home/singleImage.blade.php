@@ -95,7 +95,7 @@
                                     </div>
                                 </div>
                  <div>
-                
+                <button type="reset" class="btn btn-outline-warning mr-1 mb-1 waves-effect waves-light">Reset</button>
                 <button type="submit" class="btn btn-outline-info mr-1 mb-1 waves-effect waves-light">
                     Save <span class="addbtn" role="status" aria-hidden="true"></span>
                     

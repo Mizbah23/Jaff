@@ -2,7 +2,6 @@
 
 namespace Jaff\Http\Controllers\Auth;
 
-use Jaff\User;
 use Jaff\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
@@ -12,6 +11,7 @@ use illuminate\Support\Str;
 use Response;
 use Redirect;
 use Auth;
+use Jaff\User;
 
 class ForgotPasswordController extends Controller
 {
@@ -37,20 +37,20 @@ class ForgotPasswordController extends Controller
     {
         $this->middleware('guest');
     }
-
+    
     public function forgotPassword()
     {
       $data = array();
       $data['title'] = 'varification Code'; 
       return view('user.auth.forgetPassword',$data);
     }
-
+    
     public function postForgotPassword(Request $request)
     {
 
        $users=User::wherePhone($request->phone)->first();
        
-       if(count($users!=null)){
+       if($users!=null){
         $users->vcode= Str::random(6);
         $users->save();
          // dd($users);
@@ -71,7 +71,7 @@ class ForgotPasswordController extends Controller
            <text>$smsbody</text>
            </message>
            <recipients>
-           <gsm>88.$request->phone</gsm>
+           <gsm>$request->phone</gsm>
            </recipients>
            </SMS>
            ";
@@ -83,8 +83,11 @@ class ForgotPasswordController extends Controller
            curl_exec($ch);
            curl_close($ch);
            session()->flash('success', 'A verification code has been sent to '.$request->phone);
+           return redirect()->route('reset',['phone'=>$request->phone]);
+         } else {
+            return redirect()->back();    
          }
 
-         return redirect()->route('reset',['phone'=>$request->phone]);
+//         
    }
 }

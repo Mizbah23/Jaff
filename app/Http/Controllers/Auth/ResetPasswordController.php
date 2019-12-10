@@ -2,13 +2,13 @@
 
 namespace Jaff\Http\Controllers\Auth;
 
-use Jaff\User;
 use Jaff\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use illuminate\Support\Str;
+use Jaff\User;
 
 class ResetPasswordController extends Controller
 {
@@ -41,14 +41,16 @@ class ResetPasswordController extends Controller
     {
         $this->middleware('guest');
     }
-
-    public function resetCode(Request $request,$phone){
+    
+    public function resetCode(Request $request,$phone)
+    {
      $user=User::where('phone',$phone)->first();
          // dd($user);
     return view('user.auth.reset')->with('user',$user);
     }
-
-    public function verifyCode(Request $request,$phone){
+    
+    public function verifyCode(Request $request,$phone)
+    {
 
     $enteredOtp = $request->input('otp');
         // $user=User::where('phone',$phone)->first();
@@ -65,6 +67,6 @@ class ResetPasswordController extends Controller
             }
       }
     }
-
-
+    
+    
 }

@@ -3,17 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/xampp/htdocs/jaff/database/migrations/2019_11_27_081938_create_dropins_table.php</file>
-            <file>file:/D:/xampp/htdocs/jaff/app/Http/Controllers/SlotController.php</file>
-            <file>file:/D:/xampp/htdocs/jaff/database/migrations/2019_11_09_081753_create_offers_table.php</file>
-            <file>file:/D:/xampp/htdocs/jaff/resources/views/admin/pages/slots.blade.php</file>
-            <file>file:/D:/xampp/htdocs/jaff/app/Http/Controllers/CalendarController.php</file>
-            <file>file:/D:/xampp/htdocs/jaff/database/migrations/2019_11_17_080634_create_offerdetails_table.php</file>
-            <file>file:/D:/xampp/htdocs/jaff/database/migrations/2019_11_26_052729_create_fulldays_table.php</file>
-            <file>file:/D:/xampp/htdocs/jaff/database/migrations/2019_11_05_041005_create_holidays_table.php</file>
-            <file>file:/D:/xampp/htdocs/jaff/resources/views/admin/pages/slot/dropin.blade.php</file>
+            <file>file:/D:/xampp/htdocs/jaff/resources/views/admin/layout/sidenav.blade.php</file>
+            <file>file:/D:/xampp/htdocs/jaff/database/migrations/2019_12_10_061138_create_notices_table.php</file>
+            <file>file:/D:/xampp/htdocs/jaff/resources/views/user/pages/home.blade.php</file>
+            <file>file:/D:/xampp/htdocs/jaff/app/Http/Controllers/ProgramController.php</file>
+            <file>file:/D:/xampp/htdocs/jaff/resources/views/admin/pages/home/notices.blade.php</file>
+            <file>file:/D:/xampp/htdocs/jaff/app/Http/Controllers/HomeController.php</file>
             <file>file:/D:/xampp/htdocs/jaff/routes/web.php</file>
-            <file>file:/D:/xampp/htdocs/jaff/resources/views/admin/pages/slot/fullday.blade.php</file>
+            <file>file:/D:/xampp/htdocs/jaff/resources/views/user/layout/footer.blade.php</file>
         </group>
     </open-files>
 </project-private>

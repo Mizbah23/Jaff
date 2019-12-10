@@ -61,8 +61,7 @@
                                             <div class="card-body pt-1">
                                                 
                                                 <form id="app" @submit="checkForm" action="{{route('admin.login.submit')}}" method="post">
-
-                                            @if (session('message'))
+                                                     @if (session('message'))
                                             <div class="alert alert-primary alert-dismissible fade show" role="alert">
                                             <p class="mb-0">
                                             {{ session('message') }}
@@ -83,17 +82,12 @@
                                             </button>
                                             </div>
                                             @endif
-                                          
-                                          
-                                            
-
                                                     <fieldset class="form-label-group form-group position-relative has-icon-left">
                                                         <input type="text" v-model="email" class="form-control" name="email" placeholder="Enter Admin Email." value="{{old('email')}}" required>
                                                         <div class="form-control-position">
                                                             <i class="feather icon-mail"></i>
                                                         </div>
                                                         <label for="user-name">phone</label>
-                                                       
                                                     </fieldset>
 
                                                     <fieldset class="form-label-group position-relative has-icon-left">
@@ -103,15 +97,14 @@
                                                         </div>
                                                         <label for="user-password">Password</label>
                                                     </fieldset>
-                                    <div class="error alert-danger">{{$errors->first('password')}}</div>
-                                                   
-                                                
+                                            <div class="error alert-danger">{{$errors->first('password')}}</div>
+                                                    
                                                     {{csrf_field()}}
                                                     <div class="form-group d-flex justify-content-between align-items-center">
                                                         <div class="text-left">
                                                             <fieldset class="checkbox">
                                                                 
-                                                <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                <div class="vs-checkbox-con vs-checkbox-primary">
                                                                     <input type="checkbox" id="remember" {{old('remember') ? 'checked' : ''}} >
                                                                     <span class="vs-checkbox">
                                                                         <span class="vs-checkbox--check">

@@ -586,28 +586,7 @@
 
 <!-- *****************************delete model**********************************-->
 
-<div class="modal fade delAdminMdl" id="animation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel6" aria-modal="true">
-    <div class="modal-dialog modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            
-        <div class="modal-header bg-primary">
-            <h5 class="modal-title" id="exampleModalScrollableTitle">Delete Admin</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <input type="hidden" value="" id="delaid">                                        
-        <div class="modal-body">
-            Are You Sure You want to delete the user- <span class="ttl" style="color:red;"></span>?
-        </div>
-        <div class="modal-footer">
-            <button type="button" id="delAdmin" class="btn btn-outline-danger  waves-effect waves-light">
-                Delete <span class="delbtn" role="status" aria-hidden="true"></span>
-            </button>
-        </div>
-            </div>
-        </div>
-</div>
+
 
 
 

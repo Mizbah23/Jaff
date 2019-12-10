@@ -65,7 +65,7 @@
 
 
                         
-                    <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="first-name-icon">Email</label>
                             <div class="position-relative has-icon-left">
@@ -75,14 +75,14 @@
                         </div>  
                     </div>          
                         
-                    <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="first-name-icon">Phone</label>
                             <div class="position-relative has-icon-left">
                                <input type="text" name="phone" class="sClass form-control" placeholder="Coach Phone Number">
                                <div class="form-control-position"><i class="fa fa-mobile"></i></div>
                             </div>
-                    </div>  
+                        </div>  
             </div>    
                 <div class="col-sm-6 col-md-8">
                         <div class="form-group">
