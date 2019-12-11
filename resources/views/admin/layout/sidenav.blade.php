@@ -87,7 +87,18 @@
             </li>
                 
                 
-                
+                     <li class="n nav-item">
+                <a href="#">
+                    <i class="feather icon-message-square"></i>
+                    <span class="menu-title" data-i18n="Ecommerce">News & Updates</span>
+                </a>
+                <ul class="menu-content">
+                    <li class="nw nav-item">
+                        <a href="{{route('show.news')}}"><i class="feather icon-circle"></i>
+                        <span class="menu-title" data-i18n="Email">News</span></a>
+                    </li>
+                </ul>
+            </li>  
                 
                 
                 

@@ -5,7 +5,7 @@
                     <div class="col-lg-4 col-md-6 footer-top mt-md-0 mt-sm-5">
                         <div class="logo">
                         <h2>
-                           <img src="public/img/app-logo.png" alt="Jaff">
+                           <img src="{{asset('public/img/app-logo.png')}}" alt="Jaff">
                         </h2>
                          </div>
                         <p class="my-3">Donec consequat sam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus</p>
@@ -41,18 +41,18 @@
                         <div class="footer-text">
                           <ul class="ul-contact list-info-w3pvt last-w3ls-contact mt-lg-4" style="text-align: left;">
                             <li class="ul-contact-1">
-                                <img src="public/img/contact-1.png" />
+                                <img src="{{asset('public/img/contact-1.png')}}" />
                              
                               <p>Jaff Street Bashundhara Main Gate,<br>Opposite of Jamuna Future Park Sidegate,Dhaka<br>
                               </p>
                            </li>
                            <li class="ul-contact-2">
-                            <img src="public/img/contact-2.png" />
+                            <img src="{{asset('public/img/contact-2.png')}}" />
                             <span>+8801304229158</span>
                             <span>.</span>
                            </li>
                           <li class="ul-contact-3">
-                            <img src="public/img/contact-3.png" />
+                            <img src="{{asset('public/img/contact-3.png')}}" />
                             <a href="mailto:info@jaff.com.bd">info@jaff.com.bd</a>
                           </li>
                         
@@ -74,7 +74,7 @@
 
                         <a target="_blank" href="#" class="d-text-c-h d-border-c-h">
 
-                            <img src="public/img/fa-facebook.png" alt="Social Icon"/>
+                            <img src="{{asset('public/img/fa-facebook.png')}}" alt="Social Icon"/>
 
                         </a>
 
@@ -84,7 +84,7 @@
 
                         <a target="_blank" href="#" class="d-text-c-h d-border-c-h">
 
-                            <img src="public/img/fa-google-plus.png" alt="Social Icon"/>
+                            <img src="{{asset('public/img/fa-google-plus.png')}}" alt="Social Icon"/>
 
                         </a>
 
@@ -94,7 +94,7 @@
 
                         <a target="_blank" href="#" class="d-text-c-h d-border-c-h">
 
-                            <img src="public/img/fa-instagram.png" alt="Social Icon"/>
+                            <img src="{{asset('public/img/fa-instagram.png')}}" alt="Social Icon"/>
 
                         </a>
 
@@ -104,7 +104,7 @@
 
                         <a target="_blank" href="#" class="d-text-c-h d-border-c-h">
 
-                            <img src="public/img/fa-rss.png" alt="Social Icon"/>
+                            <img src="{{asset('public/img/fa-rss.png')}}" alt="Social Icon"/>
 
                         </a>
 
@@ -114,7 +114,7 @@
 
                         <a target="_blank" href="#" class="d-text-c-h d-border-c-h">
 
-                            <img src="public/img/fa-twitter.png" alt="Social Icon"/>
+                            <img src="{{asset('public/img/fa-twitter.png')}}" alt="Social Icon"/>
 
                         </a>
 

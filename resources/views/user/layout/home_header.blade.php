@@ -75,12 +75,12 @@
                                     </li>
 
                                     <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="fa fa-cart-plus"></i><span class="caret"></span><span class="badge badge-pill badge-primary badge-up">5</span></a>
-                                <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
-                                    <li class="dropdown-menu-header">
+                                    <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
+                                     <li class="dropdown-menu-header">
                                         <div class="dropdown-header m-0 p-2">
                                             <h3 class="white">5 New</h3><span class="notification-title">App Notifications</span>
                                         </div>
-                                    </li>
+                                     </li>
                                     <li class="scrollable-container media-list"><a class="d-flex justify-content-between" href="javascript:void(0)">
                                             <div class="media d-flex align-items-start">
                                                 <div class="media-left"><i class="feather icon-plus-square font-medium-5 primary"></i></div>

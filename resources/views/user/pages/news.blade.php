@@ -126,8 +126,21 @@
 
 
 
-            <aside id="social_icons-1" class="widget widget_social_icons"><i class="ulysses_widget_icon"></i><h3 class="widget-title">Social</h3><i class="bottom_border"></i>		<ul class="socials">
-                    <li><a class="d-bg-c-h" href="#"><i class="fa fa-facebook"></i></a></li>			<li><a class="d-bg-c-h" href="#"><i class="fa fa-twitter"></i></a></li>			<li><a class="d-bg-c-h" href="#"><i class="fa fa-instagram"></i></a></li>			<li><a class="d-bg-c-h" href="#"><i class="fa fa-google-plus"></i></a></li>			<li><a class="d-bg-c-h" href="#"><i class="fa fa-rss"></i></a></li>			<li><a class="d-bg-c-h" href="#"><i class="fa fa-pinterest"></i></a></li>			<li><a class="d-bg-c-h" href="#"><i class="fa fa-linkedin"></i></a></li>			<li><a class="d-bg-c-h" href="#"><i class="fa fa-vine"></i></a></li>			<li><a class="d-bg-c-h" href="#"><i class="fa fa-vk"></i></a></li>			<li><a class="d-bg-c-h" href="#"><i class="fa fa-skype"></i></a></li>		</ul>
+            <aside id="social_icons-1" class="widget widget_social_icons">
+            	<i class="ulysses_widget_icon"></i>
+            	<h3 class="widget-title">Social</h3><i class="bottom_border"></i>		
+            	<ul class="socials">
+                    <li><a class="d-bg-c-h" href="#"><i class="fa fa-facebook"></i></a></li>			
+                    <li><a class="d-bg-c-h" href="#"><i class="fa fa-twitter"></i></a></li>			
+                    <li><a class="d-bg-c-h" href="#"><i class="fa fa-instagram"></i></a></li>			
+                    <li><a class="d-bg-c-h" href="#"><i class="fa fa-google-plus"></i></a></li>			
+                    <li><a class="d-bg-c-h" href="#"><i class="fa fa-rss"></i></a></li>			
+                    <li><a class="d-bg-c-h" href="#"><i class="fa fa-pinterest"></i></a></li>			
+                    <li><a class="d-bg-c-h" href="#"><i class="fa fa-linkedin"></i></a></li>			
+                    <li><a class="d-bg-c-h" href="#"><i class="fa fa-vine"></i></a></li>			
+                    <li><a class="d-bg-c-h" href="#"><i class="fa fa-vk"></i></a></li>			
+                    <li><a class="d-bg-c-h" href="#"><i class="fa fa-skype"></i></a></li>		
+                </ul>
             </aside>
 
         <aside id="post_tabs-1" class="widget widget_post_tabs">
