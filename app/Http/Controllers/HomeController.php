@@ -101,9 +101,12 @@ class HomeController extends Controller
     {
         $data = array();
         $data['title'] = 'News & Updates';
-        $data['list'] = Post::where('status',1)->get();
+        $data['simg'] = Singleimg::where('id',1)->first();
+        $data['offers'] = Offer::where('status',1)->get();
+        $data['list'] = Post::where('status',1)->paginate(3);
         $data['recent'] = Post::where('status',1)->select('title','slug','post_img')
                 ->orderBy('post_id','desc')->limit(4)->get();
+        // $data['popular']=
 
         return view('user.pages.news',$data);
     }
@@ -111,8 +114,10 @@ class HomeController extends Controller
     {
         $data = array();
         $data['info'] = Post::findBySlug($slug);
-        $data['prev'] =Post::where('post_id')->orderBy('post_id','desc')->limit(1)->first();
-        $data['next'] =Post::where('post_id')->orderBy('post_id')->limit(1)->first();
+        $data['recent'] = Post::where('status',1)->select('title','slug','post_img')
+                ->orderBy('post_id','desc')->limit(4)->get();
+        // $data['prev'] =Post::where('post_id',$)->orderBy('post_id','desc')->limit(1)->first();
+        // $data['next'] =Post::where('post_id')->orderBy('post_id')->limit(1)->first();
         return view('user.pages.single_news',$data);
     }  
     

@@ -53,9 +53,11 @@
                 </div>
             </article>
         @endforeach
-				
+				<div class="text-center">{{ $list->links() }}</div>	
 		
-    </div>
+  </div>
+
+    
 				
 				
     <div class="col-md-3">
@@ -71,6 +73,7 @@
             </aside>
                 
             <!--=========================recent=================================-->
+
             <aside id="recent-posts-2" class="widget widget_recent_entries">		
                 <i class="ulysses_widget_icon"></i><h3 class="widget-title">Recent Posts</h3><i class="bottom_border"></i>
                 <ul>
@@ -81,8 +84,9 @@
                     @endforeach
                 </ul>
             </aside>
-               <!--=========================recent=================================--> 
-<!--                <aside id="recent-comments-2" class="widget widget_recent_comments">
+
+            <!--=========================recent=================================--> 
+               <!-- <aside id="recent-comments-2" class="widget widget_recent_comments">
                     <i class="ulysses_widget_icon"></i>
                     <h3 class="widget-title">Recent Comments</h3>
                     <i class="bottom_border"></i>
@@ -238,34 +242,21 @@
                 
                 
                 <aside id="whats_next-1" class="widget widget_whats_next">
-                    <i class="ulysses_widget_icon"></i><h3 class="widget-title">WHATS NEXT?</h3><i class="bottom_border"></i>
+                    <i class="ulysses_widget_icon"></i><i class="bottom_border"></i>
                     <div class="info-section">
-			<div class="info-details info-details-center d-bg-c">
-				<div class="info-image"><img src="img/favicon.png" alt="image" /></div>
-				<ul class="ul-calendar">
-					<li>
-							<span>90 Minutesd GameHour</span>
-							<span>Booking</span>
-							
-						</li>
-						<li>
-							<span>Tournament And Event Booking</span>
-							
-						</li>
-						<li>
-							<span>Drop In games</span>
-							
-						</li>
-						<li>
-							<span>Jaff Academy Programs</span>
-							
-						</li>
-						<li>
-							<span>Fitness Training</span>
-							
-						</li>
-				</ul>
-			</div>
+		<div class="info-details info-details-center d-bg-c">
+					<h4>WHAT We OFFER ?</h4>
+					<div class="info-image"><img src="{{$simg->offer_image}}" alt="image" style="width: 100%; height:251px" /></div>
+					<ul class="ul-calendar">
+                                            @foreach($offers as $off)
+                                            <li>
+                                                <span>{{$off->offer_title}}</span>
+                                                <span>{{$off->details}}</span>
+                                            </li>
+                                            @endforeach
+					</ul>
+				</div>
+
 			<div class="under-button">
 				<span></span>
 				<a href="#" class="d-border-c d-bg-c-h d-text-c">Call Now</a>

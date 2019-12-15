@@ -711,14 +711,14 @@ class ProgramController extends Controller
                 $discount = '<div class="btn-group"><div class="badge badge-danger dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Off</span></a>
                 <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
-                    <a class="dropdown-item csts" data-discount="'.$r->discount.'" data-discount="1" href="#">Activated</a></div>
+                    <a class="dropdown-item csts" data-discount="'.$r->discount.'" data-discount="0" href="#">Activated</a></div>
                 </div>
                  </div>';
             }else{
                  $discount = '<div class="btn-group"><div class="badge badge-success dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Live</span></a>
                 <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
-                    <a class="dropdown-item csts" data-discount="'.$r->discount.'" data-discount="0" href="#">Deactivated</a></div>
+                    <a class="dropdown-item csts" data-discount="'.$r->discount.'" data-discount="1" href="#">Deactivated</a></div>
                 </div>
                  </div>';
             }

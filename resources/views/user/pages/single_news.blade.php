@@ -96,13 +96,13 @@
 		
 		<li class="previous">
 			
-			<a href="{{$prev->slug}}" rel="prev">Previous Post</a>
+			<a href="" rel="prev">Previous Post</a>
 			
 		</li>
 		
 		<li class="next">
            
-			<a href="{{$next->slug}}" rel="next">Next Post</a>
+			<a href="" rel="next">Next Post</a>
 			
 		</li>	
 	</ul>
@@ -128,28 +128,16 @@
                         </aside>		
 
 
-        <aside id="recent-posts-2" class="widget widget_recent_entries">		
-        	<i class="ulysses_widget_icon"></i>
-        	<h3 class="widget-title">Recent Posts</h3>
-        	<i class="bottom_border"></i>		
-          <ul>
-			<li>
-			    <a href="details.html">Working abdominal muscules</a>
-			</li>
-			
-			<li>
-				<a href="index.html">Live like a god</a>
-			</li>
-			
-			<li>
-				<a href="../having-fun-at-the-lake-2/index.html">Having fun at the lake</a>
-			</li>
-			
-			<li>
-				<a href="../having-fun-at-the-lake/index.html">Having fun at the lake</a>
-			</li>
-		  </ul>
-		</aside>
+            <aside id="recent-posts-2" class="widget widget_recent_entries">		
+                <i class="ulysses_widget_icon"></i><h3 class="widget-title">Recent Posts</h3><i class="bottom_border"></i>
+                <ul>
+                    @foreach($recent as $rs)
+                    <li>
+                        <a href="{{route('user.snews', $rs->slug)}}">{{$rs->title}}</a>
+                    </li>
+                    @endforeach
+                </ul>
+            </aside>
 
 		<aside id="social_icons-1" class="widget widget_social_icons">
 					<i class="ulysses_widget_icon"></i>
@@ -194,30 +182,21 @@
 				</div>
 
 			  <div class="tab-pane fade" id="recent_posts">
-						<div class="mini-post">
-								<div class="mini-post-cover">
-									<a href="#">
-										<img width="221" height="221" src="../wp-content/uploads/2015/01/blog-f1-221x221.jpg" class="attachment-thumb-221-221 size-thumb-221-221 wp-post-image" alt="" srcset="http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f1-221x221.jpg 221w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f1-150x150.jpg 150w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f1-180x180.jpg 180w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f1-300x300.jpg 300w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f1-495x495.jpg 495w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f1-263x263.jpg 263w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f1-120x120.jpg 120w" sizes="(max-width: 221px) 100vw, 221px" />
-									</a>
-								</div>
-								
-								<h3>
-									<a href="../having-fun-at-the-lake/index.html" class="d-text-c-h">Having fun at the lake</a>
-								</h3>
-								<!--h6>5 days ago</h6-->
-						</div>
-														
-						<div class="mini-post">
-								<div class="mini-post-cover">
-									<a href="#"><img width="221" height="221" src="../wp-content/uploads/2015/01/blog-f2-221x221.jpg" class="attachment-thumb-221-221 size-thumb-221-221 wp-post-image" alt="" srcset="http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f2-221x221.jpg 221w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f2-150x150.jpg 150w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f2-180x180.jpg 180w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f2-300x300.jpg 300w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f2-495x495.jpg 495w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f2-263x263.jpg 263w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f2-120x120.jpg 120w" sizes="(max-width: 221px) 100vw, 221px" />
-									</a>
-								</div>
-								<h3>
-									<a href="../having-fun-at-the-lake-2/index.html" class="d-text-c-h">Having fun at the lake</a>
-								</h3>
-								<!--h6>5 days ago</h6-->
-			     		</div>
-				</div>
+	
+				@php $counter =0; @endphp
+                   @foreach($recent as $arr)
+                      @if($counter<2)
+                <div class="mini-post">
+                    <div class="mini-post-cover"><a href="#">
+                    <img width="221" height="221" src="{{asset($arr->post_img)}}" class="attachment-thumb-221-221 size-thumb-221-221 wp-post-image"
+                         alt="" sizes="(max-width: 221px) 100vw, 221px" /></a></div>
+                    <h3><a href="details.html" class="d-text-c-h">{{$arr->title}}</a></h3>
+             <!--h6>5 days ago</h6-->
+                </div>
+                 @endif
+                @php $counter++; @endphp
+                @endforeach 
+			  </div>
 			</div>
 		</div>
 		</aside>
