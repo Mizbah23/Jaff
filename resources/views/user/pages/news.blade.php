@@ -156,16 +156,21 @@
                 <div class="tab-content">
                     
                     <div class="tab-pane fade in active" id="popular_posts">
-                        <div class="mini-post">
-                            <div class="mini-post-cover"><a href="#"><img width="221" height="221" src="img/blog-f1-221x221.jpg" class="attachment-thumb-221-221 size-thumb-221-221 wp-post-image" alt="" 
-                                                                          srcset="http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f1-221x221.jpg 221w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f1-150x150.jpg 150w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f1-180x180.jpg 180w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f1-300x300.jpg 300w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f1-495x495.jpg 495w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f1-263x263.jpg 263w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f1-120x120.jpg 120w" sizes="(max-width: 221px) 100vw, 221px" /></a></div>
-                            <h3><a href="details.html" class="d-text-c-h">Working abdominal muscules</a></h3>
-                        </div>
-                        <div class="mini-post">
-                            <div class="mini-post-cover"><a href="#"><img width="221" height="221" src="img/latest-blog-new-221x221.jpg" class="attachment-thumb-221-221 size-thumb-221-221 wp-post-image" alt="" 
-                                                                          srcset="http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/latest-blog-new-221x221.jpg 221w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/latest-blog-new-150x150.jpg 150w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/latest-blog-new-300x300.jpg 300w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/latest-blog-new-180x180.jpg 180w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/latest-blog-new-495x495.jpg 495w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/latest-blog-new-263x263.jpg 263w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/latest-blog-new-120x120.jpg 120w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/latest-blog-new.jpg 600w" sizes="(max-width: 221px) 100vw, 221px" /></a></div>
-                            <h3><a href="details.html" class="d-text-c-h">Live like a god</a></h3>
-                        </div>
+                            @php $counter =0; @endphp
+                   @foreach($popular as $arr)
+                      @if($counter<2)
+                <div class="mini-post">
+                    <div class="mini-post-cover"><a href="#">
+                    <img width="221" height="221" src="{{asset($arr->post_img)}}" class="attachment-thumb-221-221 size-thumb-221-221 wp-post-image"
+                         alt="" sizes="(max-width: 221px) 100vw, 221px" /></a></div>
+                    <h3><a href="details.html" class="d-text-c-h">{{$arr->title}}</a></h3>
+             <!--h6>5 days ago</h6-->
+                </div>
+                 @endif
+                @php $counter++; @endphp
+                @endforeach 
+
+   
                     </div>
 
                     <div class="tab-pane fade" id="recent_posts">

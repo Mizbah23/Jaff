@@ -106,16 +106,22 @@ class HomeController extends Controller
         $data['list'] = Post::where('status',1)->paginate(3);
         $data['recent'] = Post::where('status',1)->select('title','slug','post_img')
                 ->orderBy('post_id','desc')->limit(4)->get();
-        // $data['popular']=
+        $data['popular'] = Post::where('status',1)->select('title','slug','post_img')
+                           ->orderby('view_count','desc')->limit(2)->get();
 
         return view('user.pages.news',$data);
     }
     public function showSingleNews($slug) 
     {
         $data = array();
-        $data['info'] = Post::findBySlug($slug);
+        $post = Post::findBySlug($slug);
+        $post->view_count = $post->view_count + 1;
+        $post->save();
+        $data['info'] = $post;
         $data['recent'] = Post::where('status',1)->select('title','slug','post_img')
                 ->orderBy('post_id','desc')->limit(4)->get();
+        $data['popular'] = Post::where('status',1)->select('title','slug','post_img')
+                           ->orderby('view_count','desc')->limit(2)->get();
         // $data['prev'] =Post::where('post_id',$)->orderBy('post_id','desc')->limit(1)->first();
         // $data['next'] =Post::where('post_id')->orderBy('post_id')->limit(1)->first();
         return view('user.pages.single_news',$data);

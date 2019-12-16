@@ -102,7 +102,7 @@
 			<div class="row">
 				<div class="col-md-4">
 					<div class="img-box">
-					  <img src="{{asset($simg->about_image)}}" style="width: 100%; height:251px" alt="presentation" />
+					  <img src="{{$simg->about_image}}" style="width: 100%; height:251px" alt="presentation" />
 					</div>
 				</div>
 				<div class="col-md-8">
