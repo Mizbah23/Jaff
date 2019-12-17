@@ -10,6 +10,8 @@
     }
    
 </style>
+ <link rel="stylesheet" type="text/css" href="public/css/front/jssocials.css" />
+ <link rel="stylesheet" type="text/css" href="public/css/front/jssocials-theme-flat.css" />
 @stop
 
 @section('header')
@@ -56,14 +58,15 @@
             </div>
 
 
-		<div class="entry-footer">
+		<div  class="entry-footer">
 			<h6>{{date('d M',strtotime($info->created_at))}}/ {{$info->view_count}} Views </h6>
 			
 	
            
 			<ul class="all-socials">
+				<div id="share"></div>
 				<li>Share Post</li>
-				<li>
+				{{-- <li>
 					<a href="" class="d-bg-c-h d-border-c-h"><i class="fa fa-facebook"></i>
 					</a>
 				</li>
@@ -86,7 +89,7 @@
 					<a href="http://www.newsvine.com/_tools/seed&amp;save?u=http://lolthemes.com/demo/geo/ulysses/live-like-a-god/&amp;h=Live%20like%20a%20god" class="d-bg-c-h d-border-c-h">
 						<i class="fa fa-vine"></i>
 					</a>
-				</li>
+				</li> --}}
 			</ul>
 			
 		</div>
@@ -217,6 +220,13 @@
 @include('user.layout.footer')
 @stop
 @section('script')
+<script src="jquery.js"></script>
+<script src="public/js/front/jssocials.min.js"></script>
+    <script>
+        $("#share").jsSocials({
+            shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
+        });
+    </script>
 @stop
 
 

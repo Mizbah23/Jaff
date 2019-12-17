@@ -14,12 +14,7 @@ class News extends Model
     use Shareable;
 
     protected $primaryKey = 'news_id';
-    protected $shareOptions = [
-    'columns' => [
-        'title' => 'title'
-    ],
-    'url' => "{{route('show.news')}}"
-     ];
+
     
     public function category()
     {
@@ -34,8 +29,5 @@ class News extends Model
         ];
     }
 
-        public function getUrlAttribute()
-    {
-        return route('show.news', $this->slug);
-    }
+
 }
