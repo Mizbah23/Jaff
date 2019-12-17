@@ -52,6 +52,7 @@ Route::prefix('news')->group(function()
 {
    Route::get('/', 'HomeController@showAllNews')->name('user.news');
    Route::get('/{slug}', 'HomeController@showSingleNews')->name('user.snews');
+   Route::get('/share', 'HomeController@showUrl')->name('share.snews');
 //   Route::post('/latest', 'HomeController@getLatest')->name('get.latestnews');
    
 });

@@ -308,7 +308,7 @@
                                 <span class="user-name text-bold-600">{{Auth::guard('admin')->user()->name}}</span>
                                 <span class="user-status">online</span>
                             </div>
-                            <span><img class="round" src="{{asset('/public/img/avatar.png')}}" alt="avatar" height="40" width="40" /></span>
+                            <span><img class="round" src="{{asset(Auth::guard('admin')->user()->image)}}" alt="avatar" height="40" width="40" /></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
 <!--                            <a class="dropdown-item" href="page-user-profile.html">

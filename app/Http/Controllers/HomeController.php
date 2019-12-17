@@ -14,6 +14,7 @@ use Jaff\About;
 use Jaff\Singleimg;
 use Jaff\Testimonial;
 use Jaff\Notice;
+use Jaff\User;
 use DB;
 use Response;
 
@@ -38,13 +39,14 @@ class HomeController extends Controller
     {
         $data = array();
         $data['title'] = 'Jaff Sports';
+        $data['users']=User::where('status',1)->get();
         $data['sliders'] = Slider::where('status',1)->get();
         $data['simg'] = Singleimg::where('id',1)->first();
         $data['programs'] = Program::where('status',1)->get();
         $data['coaches']=Coach::where('status',1)->get();
         $data['abouts']=About::orderBy('id','asc')->get();
         $data['testimonials'] = Testimonial::orderBy('id','desc')->limit(5)->get();
-        $data['latest'] = Post::where('status',1)->select('title','slug','post_img')
+        $data['latest'] = Post::where('status',1)->select('title','slug','post_img','created_at')
                 ->orderBy('post_id','desc')->limit(6)->get();
         $data['offers'] = Offer::where('status',1)->get();
         $data['notices'] = Notice::orderby('notice_date','desc')->limit(3)->get();
@@ -126,5 +128,12 @@ class HomeController extends Controller
         // $data['next'] =Post::where('post_id')->orderBy('post_id')->limit(1)->first();
         return view('user.pages.single_news',$data);
     }  
+
+    public function showUrl(){
+        $data= array();
+        $news=Post::first();
+        $data['news']=$news;
+        return view('user.pages.single_news',$data);
+    }
     
 }

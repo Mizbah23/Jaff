@@ -163,7 +163,7 @@
                     <div class="mini-post-cover"><a href="#">
                     <img width="221" height="221" src="{{asset($arr->post_img)}}" class="attachment-thumb-221-221 size-thumb-221-221 wp-post-image"
                          alt="" sizes="(max-width: 221px) 100vw, 221px" /></a></div>
-                    <h3><a href="details.html" class="d-text-c-h">{{$arr->title}}</a></h3>
+                    <h3><a href="{{route('user.snews', $arr->slug)}}" class="d-text-c-h">{{$arr->title}}</a></h3>
              <!--h6>5 days ago</h6-->
                 </div>
                  @endif
@@ -182,7 +182,7 @@
             <div class="mini-post-cover"><a href="#">
                     <img width="221" height="221" src="{{asset($arr->post_img)}}" class="attachment-thumb-221-221 size-thumb-221-221 wp-post-image"
                          alt="" sizes="(max-width: 221px) 100vw, 221px" /></a></div>
-            <h3><a href="details.html" class="d-text-c-h">{{$arr->title}}</a></h3>
+            <h3><a href="{{route('user.snews', $arr->slug)}}" class="d-text-c-h">{{$arr->title}}</a></h3>
              <!--h6>5 days ago</h6-->
         </div>
     @endif

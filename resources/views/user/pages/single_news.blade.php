@@ -5,6 +5,10 @@
 	img.attachment-thumb-900-500.size-thumb-900-500.wp-post-image {
     height: 400px;
 }
+    img.attachment-thumb-221-221.size-thumb-221-221.wp-post-image{
+    	height: 150px;
+    }
+   
 </style>
 @stop
 
@@ -37,7 +41,7 @@
     <article id="post-112" class="blog-entry post-112 post type-post status-publish format-standard has-post-thumbnail hentry category-art">
 	        <h2 class="sr-only">{{$info->title}}</h2>
             
-            <div class="entry-date"><span class="d-text-c">24</span>Jan</div>
+            <div class="entry-date"><span class="d-text-c">{{date('d',strtotime($info->created_at))}}</span>{{date('M',strtotime($info->created_at))}}</div>
 		    
 		    <div class="entry-cover">
 			    <img width="600" height="500" src="{{asset($info->post_img)}}" class="attachment-thumb-900-500 size-thumb-900-500 wp-post-image" alt="" />		
@@ -53,14 +57,14 @@
 
 
 		<div class="entry-footer">
-			<h6>Jan 24, 15 / 1012 Views </h6>
+			<h6>{{date('d M',strtotime($info->created_at))}}/ {{$info->view_count}} Views </h6>
 			
 	
-
+           
 			<ul class="all-socials">
 				<li>Share Post</li>
 				<li>
-					<a href="http://www.facebook.com/share.php?u=http://lolthemes.com/demo/geo/ulysses/live-like-a-god/&amp;title=Live%20like%20a%20god" class="d-bg-c-h d-border-c-h"><i class="fa fa-facebook"></i>
+					<a href="" class="d-bg-c-h d-border-c-h"><i class="fa fa-facebook"></i>
 					</a>
 				</li>
 				<li>
@@ -84,6 +88,7 @@
 					</a>
 				</li>
 			</ul>
+			
 		</div>
 	</article><!-- #post-## --> 
        
@@ -169,7 +174,7 @@
                     <div class="mini-post-cover"><a href="#">
                     <img width="221" height="221" src="{{asset($arr->post_img)}}" class="attachment-thumb-221-221 size-thumb-221-221 wp-post-image"
                          alt="" sizes="(max-width: 221px) 100vw, 221px" /></a></div>
-                    <h3><a href="details.html" class="d-text-c-h">{{$arr->title}}</a></h3>
+                    <h3><a href="{{route('user.snews', $arr->slug)}}" class="d-text-c-h">{{$arr->title}}</a></h3>
              <!--h6>5 days ago</h6-->
                 </div>
                  @endif
@@ -188,7 +193,7 @@
                     <div class="mini-post-cover"><a href="#">
                     <img width="221" height="221" src="{{asset($arr->post_img)}}" class="attachment-thumb-221-221 size-thumb-221-221 wp-post-image"
                          alt="" sizes="(max-width: 221px) 100vw, 221px" /></a></div>
-                    <h3><a href="details.html" class="d-text-c-h">{{$arr->title}}</a></h3>
+                    <h3><a href="{{route('user.snews', $arr->slug)}}" class="d-text-c-h">{{$arr->title}}</a></h3>
              <!--h6>5 days ago</h6-->
                 </div>
                  @endif
