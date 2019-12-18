@@ -43,11 +43,11 @@
 
 		
 <body class="home page-template-default page page-id-10 woocommerce-no-js @yield('page')" data-offset="200" data-spy="scroll" data-target=".navbar-custom">
-     <div id="loader">
+{{--      <div id="loader">
         <div class="spinner1"></div>
         <div class="spinner2"></div>
         <div class="spinner3"></div>
-    </div>  
+    </div>   --}}
   
     <a id="goto-top"></a>
     <div class="box-wide">
@@ -86,7 +86,7 @@
 <script type='text/javascript' src='{{asset('public/js/front/functions.js')}}'></script>
 <script type='text/javascript' src='{{asset('public/js/front/wp-embed.min066b.js')}}'></script>
 <!--slick slider-->
-    <script>
+{{--     <script>
           $(window).on("load", function (e) 
           {
             console.log("loaded");
@@ -95,7 +95,7 @@
 //                     setTimeout(function(){ $('#loader').attr('hidden',true); }, 80000);
                      
           });
-        </script>   
+        </script>    --}}
 @yield('script')
 
 

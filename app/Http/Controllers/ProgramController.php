@@ -879,7 +879,7 @@ class ProgramController extends Controller
         $notice->notice_date = $request->notice_date;
         $notice->headline = $request->headline;
         $notice->description = $request->description;
-        $notice->created_by= Auth::guard('admin')->user()->id
+        $notice->created_by= Auth::guard('admin')->user()->id;
         $notice->save();
         $notification = array(
                 'message' => 'Notice has been modified',

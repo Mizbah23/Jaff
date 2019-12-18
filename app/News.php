@@ -13,14 +13,7 @@ class News extends Model
     use SluggableScopeHelpers;
     use Shareable;
 
-    protected $primaryKey = 'news_id';
-    protected $shareOptions = [
-    'columns' => [
-        'title' => 'title'
-    ],
-    'url' => "{{route('show.news')}}"
-     ];
-    
+    protected $primaryKey = 'news_id';    
     public function category()
     {
         return $this->hasOne('Jaff\Category','category_id','id');
@@ -34,8 +27,5 @@ class News extends Model
         ];
     }
 
-        public function getUrlAttribute()
-    {
-        return route('show.news', $this->slug);
-    }
+
 }

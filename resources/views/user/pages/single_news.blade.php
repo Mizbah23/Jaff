@@ -41,7 +41,8 @@
     <article id="post-112" class="blog-entry post-112 post type-post status-publish format-standard has-post-thumbnail hentry category-art">
 	        <h2 class="sr-only">{{$info->title}}</h2>
             
-            <div class="entry-date"><span class="d-text-c">{{date('d',strtotime($info->created_at))}}</span>{{date('M',strtotime($info->created_at))}}</div>
+            <div class="entry-date"><span class="d-text-c">{{date('d',strtotime($info->created_at))}}</span>{{date('M',strtotime($info->created_at))}}
+            </div>
 		    
 		    <div class="entry-cover">
 			    <img width="600" height="500" src="{{asset($info->post_img)}}" class="attachment-thumb-900-500 size-thumb-900-500 wp-post-image" alt="" />		
@@ -124,7 +125,7 @@
 				<div class="col-md-3">
 					<div class="sidebar wow bounceInRight">
 						<aside id="search-2" class="widget widget_search">
-							<form role="search" method="get" id="searchform" class="search-form" action="http://lolthemes.com/demo/geo/ulysses/">
+							<form role="search" method="get" id="searchform" class="search-form" action="http://lolthemes.com/demo/geo/ulysses/" autocomplete="off">
 	<div>
 		<input type="text" class="search-line" placeholder="Search" value="" name="s" id="s" />
 		<input type="submit" class="search-button" id="searchsubmit" value="" />
