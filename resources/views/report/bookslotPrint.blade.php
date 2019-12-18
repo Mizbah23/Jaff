@@ -76,7 +76,7 @@ img {
         @foreach ($posts as $item)  
         <tr>
             <td>{{date('D ,d M Y',strtotime($item->slot_date))}}</td>
-            <td align="center">{{date("H:i:s", strtotime($item->fromTime))}}</td>
+            <td align="center">{{date("H:i a", strtotime($item->start))}}-{{date("H:i a", strtotime($item->end))}}</td>
             <td align="center"></td>
             <td align="center">{{$item->phone}}</td>
             <td align="center">{{$item->tslot}}</td>
