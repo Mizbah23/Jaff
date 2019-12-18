@@ -245,6 +245,8 @@ Route::prefix('admin')->group(function()
         Route::get('/slotlist','BookingController@bookedSlotList')->name('show.bookedslot');
         Route::post('/del-bookrow', 'BookingController@delBookRow')->name('del.bookrow');
         Route::post('/get-bookuser', 'BookingController@userDetails')->name('get.bookuser');
+       
+
    });
    Route::post('/get-bookinglist','BookingController@getbookList')->name('bookPro');
    Route::post('/get-bookingSlotlist','BookingController@getBookSlot')->name('bookSlotPro');
@@ -258,6 +260,9 @@ Route::prefix('admin')->group(function()
    {
         Route::get('/slot-list', ['as' => 'report.slotPrint', 'uses' => 'ReportController@slotPrint']);
         Route::get('/holiday-list', ['as' => 'report.holidayPrint', 'uses' => 'ReportController@holidayPrint']);
+        Route::get('/booking-list', ['as' => 'report.bookingPrint', 'uses' => 'ReportController@bookingListPrint']);
+        Route::get('/holiday-list', ['as' => 'report.bookslotPrint', 'uses' => 'ReportController@bookslotPrint']);
+        
    });
     Route::prefix('acounts')->group(function()
     {

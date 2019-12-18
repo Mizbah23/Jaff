@@ -5,6 +5,8 @@ namespace Jaff\Http\Controllers;
 use Illuminate\Http\Request;
 use Jaff\Slot;
 use Jaff\Holiday;
+use Jaff\Booking;
+use Jaff\Bookdetail;
 use Illuminate\Support\Facades\Input;
 use DB;
 use PDF;
@@ -58,4 +60,45 @@ class ReportController extends Controller
                 $pdf = PDF::loadView('report.holidayPrint',['posts'=>$posts,'total'=>count($posts),'from'=>$from,'to'=>$to]);
         return $pdf->stream('Holiday-Pdf.pdf');
     }
+
+    /********Booking List Print ************/
+    public function bookingListPrint(Request $request)
+    {
+        
+        $fromdate= Input::get('fromdate');
+        $todate=   Input::get('todate');
+    
+        $total= Booking::count();
+                $posts = Booking::join('users','bookings.booked_for','=','users.id')
+                 
+                    ->select('bookings.*','users.username','users.email','users.phone',DB::raw("(SELECT count(bookdetails.id) FROM bookdetails WHERE "
+                            . "bookdetails.`book_id`=bookings.`book_id`) as tslot"),DB::raw("(SELECT SUM(bookdetails.book_price) FROM bookdetails WHERE "
+                            . "bookdetails.`book_id`=bookings.`book_id`) as total"))->get();
+                $pdf = PDF::loadView('report.bookingPrint',['posts'=>$posts,'total'=>count($posts),'from'=>$fromdate,'to'=>$todate]);
+        return $pdf->stream('Booking-Pdf.pdf');
+    }
+
+    /******* Booking Slot Prrint **********/
+
+    public function bookslotPrint(Request $request)
+    {
+        $fromDate= Input::get('fromdate');
+        $toDate=   Input::get('todate');
+        $fromTime= Input::get('fromtime');
+        $toTime=   Input::get('totime');
+    
+        $total= Bookdetail::count();
+            $posts =Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')
+                ->when($fromDate, function ($query, $fromDate)
+                {return $query->whereDate('bookdetails.slot_date','>=',$fromDate);})
+                ->when($toDate, function ($query, $toDate)
+                {return $query->whereDate('bookdetails.slot_date','<=', $toDate);})
+                ->when($fromTime, function ($query, $fromTime)
+                {return $query->whereRaw("TIME(slots.start) >= ?", $fromTime); })
+                ->when($toTime, function ($query, $toTime)
+                {return $query->whereRaw("TIME(slots.end) <= ?", $toTime);})->get();
+                $pdf = PDF::loadView('report.bookslotPrint',['posts'=>$posts,'total'=>count($posts),'fromdate'=>$fromDate,'todate'=>$toDate,'fromtime'=>$fromTime,'totime'=>$toTime]);
+        return $pdf->stream('Booking_Slot-Pdf.pdf');
+    }
+
 }

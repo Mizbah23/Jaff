@@ -178,38 +178,46 @@
                                 
                                 <div class="card-content">
                                     <div class="card-body " style="padding-bottom: 0px;">
+                                     <form method="get" action="{{route('report.bookslotPrint')}}" target="_blank">
                                         <div class="row">
                                             
-                                            <div class="col-xl-3 col-md-6 col-12 mb-1">
+                                            <div class="col-xl-2 col-md-6 col-12 mb-1">
                                                 <fieldset class="form-group">
                                                     <label for="basicInput">From Date</label>
-                                                    <input type="text" class="form-control pickadate" id="fromdate" placeholder="From Date">
+                                                    <input type="text" class="form-control pickadate" name="fromdate" id="fromdate" placeholder="From Date">
                                                 </fieldset>
                                             </div>
                                             
-                                            <div class="col-xl-3 col-md-6 col-12 mb-1">
+                                            <div class="col-xl-2 col-md-6 col-12 mb-1">
                                                 <fieldset class="form-group">
                                                     <label for="basicInput">To Date</label>
-                                                    <input type="text" class="form-control pickadate" id="todate" placeholder="To Date">
+                                                    <input type="text" class="form-control pickadate" id="todate" name="todate" placeholder="To Date">
                                                 </fieldset>
                                             </div>
                                             
-                                            <div class="col-xl-3 col-md-6 col-12 mb-1">
+                                            <div class="col-xl-2 col-md-6 col-12 mb-1">
                                                 <fieldset class="form-group">
                                                     <label for="basicInput">From Time</label>
-                                                    <input type="text" class="form-control pickatime" id="fromtime" placeholder="From Time">
+                                                    <input type="text" class="form-control pickatime" id="fromtime" name="fromtime" placeholder="From Time">
                                                 </fieldset>
                                             </div>
                                             
-                                            <div class="col-xl-3 col-md-6 col-12 mb-1">
+                                            <div class="col-xl-2 col-md-6 col-12 mb-1">
                                                 <fieldset class="form-group">
                                                     <label for="basicInput">To Time</label>
-                                                    <input type="text" class="form-control pickatime" id="totime" placeholder="To Time">
+                                                    <input type="text" class="form-control pickatime" id="totime" name="totime" placeholder="To Time">
                                                 </fieldset>
                                             </div>
                                             
+                                           <div class="col-xl-2 col-md-6 col-12 mb-1" style="padding-top: 17px;">
+                                            <fieldset class="form-group" style="margin-bottom: 0px;">    
+                                            <button type="submit" class=" btn btn-outline-success mr-1 mb-1 waves-effect waves-light"><i class="feather icon-printer"></i> Print
+                                            </button>
+                                            </fieldset>               
+                                            </div>
                                             
                                         </div>
+                                    </form>
                                     </div>
                                 </div>
                             </div>

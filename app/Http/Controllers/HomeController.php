@@ -124,16 +124,11 @@ class HomeController extends Controller
                 ->orderBy('post_id','desc')->limit(4)->get();
         $data['popular'] = Post::where('status',1)->select('title','slug','post_img')
                            ->orderby('view_count','desc')->limit(2)->get();
-        // $data['prev'] =Post::where('post_id',$)->orderBy('post_id','desc')->limit(1)->first();
-        // $data['next'] =Post::where('post_id')->orderBy('post_id')->limit(1)->first();
+        $data['prev'] =Post::where('post_id','<',$post->post_id)->orderBy('post_id', 'desc')->first();
+        $data['next'] =Post::where('post_id','>',$post->post_id)->first();
         return view('user.pages.single_news',$data);
     }  
 
-    public function showUrl(){
-        $data= array();
-        $news=Post::first();
-        $data['news']=$news;
-        return view('user.pages.single_news',$data);
-    }
+
     
 }

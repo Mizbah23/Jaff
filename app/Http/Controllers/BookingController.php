@@ -54,9 +54,12 @@ class BookingController extends Controller
     }
     public function getbookList(Request $request)
     {
+        $fromdate= $request->fromdate;$todate=$request->todate;
         $columns = array(0 =>'created_at',1=> 'username',2=> 'phone',3=> 'email',4=> 'status',5=> 'action'
         );
-        $totalData = Booking::count();
+        $totalData = Booking::when($fromdate, function ($query, $fromdate){return $query->whereDate('created_at','>=',$fromdate);})
+                    ->when($todate, function ($query, $todate){return $query->whereDate('created_at','<=',$todate);})->count();
+        
         $limit = $request->input('length');
         $start = $request->input('start');
         $order = $columns[$request->input('order.0.column')];
@@ -64,15 +67,20 @@ class BookingController extends Controller
         if(empty($request->input('search.value')))
         {
             $posts = Booking::join('users','bookings.booked_for','=','users.id')
+                    ->when($fromdate, function ($query, $fromdate){return $query->whereDate('created_at','>=',$fromdate);})
+                    ->when($todate, function ($query, $todate){return $query->whereDate('created_at','<=',$todate);})
                     ->select('bookings.*','users.username','users.email','users.phone',DB::raw("(SELECT count(bookdetails.id) FROM bookdetails WHERE "
                             . "bookdetails.`book_id`=bookings.`book_id`) as tslot"),DB::raw("(SELECT SUM(bookdetails.book_price) FROM bookdetails WHERE "
                             . "bookdetails.`book_id`=bookings.`book_id`) as total"))
                     ->offset($start)->limit($limit)->orderBy($order,$dir)->get();
-            $totalFiltered =  Booking::count();
+            $totalFiltered = Booking::when($fromdate, function ($query, $fromdate){return $query->whereDate('bookings','>=',$fromdate);})
+                    ->when($todate, function ($query, $todate){return $query->whereDate('bookings','<=',$todate);})->count();;
         }
         else{
             $search = $request->input('search.value');
             $posts = Booking::join('users','bookings.booked_for','=','users.id')
+                    ->when($fromdate, function ($query, $fromdate){return $query->whereDate('created_at','>=',$fromdate);})
+                    ->when($todate, function ($query, $todate){return $query->whereDate('created_at','<=',$todate);})
                     ->select('bookings.*','users.username','users.email','users.phone',DB::raw("(SELECT count(bookdetails.id) FROM bookdetails WHERE "
                             . "bookdetails.`book_id`=bookings.`book_id`) as tslot"),DB::raw("(SELECT SUM(bookdetails.book_price) FROM bookdetails WHERE "
                             . "bookdetails.`book_id`=bookings.`book_id`) as total"))
@@ -82,6 +90,8 @@ class BookingController extends Controller
                     ->offset($start)->limit($limit)
                     ->orderBy($order, $dir)->get();
             $totalFiltered = Booking::where('name', 'like', "%{$search}%")
+                    ->when($fromdate, function ($query, $fromdate){return $query->whereDate('created_at','>=',$fromdate);})
+                    ->when($todate, function ($query, $todate){return $query->whereDate('created_at','<=',$todate);})
                     ->select('bookings.*','users.username','users.email','users.phone')
                     ->where('users.name', 'like', "%{$search}%")
                     ->orwhere('users.phone', 'like', "%{$search}%")
@@ -116,6 +126,8 @@ class BookingController extends Controller
         );
         echo json_encode($json_data);    
     }
+
+
     public function saveBook(Request $request)
     {
         $lists = $slots = $fdays = $drops = $dslot = array();

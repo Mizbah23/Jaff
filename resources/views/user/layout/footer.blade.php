@@ -12,7 +12,7 @@
                        
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        <div class="footer-w3pvt">
+                        <div class="footer-w3pvt footer-con-info">
                             <h3 class=" w3pvt_title">Office Hours</h3>
                             <hr>
                             <ul class="list-info-w3pvt last-w3ls-contact mt-lg-4">
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 mt-lg-0 mt-5">
-                        <div class="footer-w3pvt">
+                        <div class="footer-w3pvt footer-con-info1">
                             <h3 class="mb-3 w3pvt_title">Contact Info</h3>
                             <hr>
                             
@@ -43,7 +43,7 @@
                             <li class="ul-contact-1">
                                 <img src="{{asset('public/img/contact-1.png')}}" />
                              
-                              <p>Jaff Street Bashundhara Main Gate,<br>Opposite of Jamuna Future Park Sidegate,Dhaka<br>
+                              <p>Jaff Street Bashundhara Main Gate,</p><br><p class="para1">Opposite of Jamuna Future Park Sidegate,Dhaka<br>
                               </p>
                            </li>
                            <li class="ul-contact-2">

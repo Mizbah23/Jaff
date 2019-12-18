@@ -10,8 +10,7 @@
     }
    
 </style>
- <link rel="stylesheet" type="text/css" href="public/css/front/jssocials.css" />
- <link rel="stylesheet" type="text/css" href="public/css/front/jssocials-theme-flat.css" />
+ 
 @stop
 
 @section('header')
@@ -65,9 +64,9 @@
 	
            
 			<ul class="all-socials">
-				<div id="share"></div>
+				
 				<li>Share Post</li>
-				{{-- <li>
+				<li>
 					<a href="" class="d-bg-c-h d-border-c-h"><i class="fa fa-facebook"></i>
 					</a>
 				</li>
@@ -90,7 +89,8 @@
 					<a href="http://www.newsvine.com/_tools/seed&amp;save?u=http://lolthemes.com/demo/geo/ulysses/live-like-a-god/&amp;h=Live%20like%20a%20god" class="d-bg-c-h d-border-c-h">
 						<i class="fa fa-vine"></i>
 					</a>
-				</li> --}}
+				</li>
+				
 			</ul>
 			
 		</div>
@@ -102,18 +102,16 @@
 		<!--h1 class="screen-reader-text"></h1-->
 		 	
 	<ul class="pager">
-		
+		@if($prev)
 		<li class="previous">
-			
-			<a href="" rel="prev">Previous Post</a>
-			
+			<a href="{{route('user.snews', $prev->slug)}}" rel="prev">Previous Post</a>
 		</li>
-		
+        @endif
+		@if($next)
 		<li class="next">
-           
-			<a href="" rel="next">Next Post</a>
-			
-		</li>	
+           <a href="{{route('user.snews', $next->slug)}}" rel="next">Next Post</a>
+		</li>
+	    @endif
 	</ul>
 	</div>
                 
@@ -221,13 +219,8 @@
 @include('user.layout.footer')
 @stop
 @section('script')
-<script src="jquery.js"></script>
-<script src="public/js/front/jssocials.min.js"></script>
-    <script>
-        $("#share").jsSocials({
-            shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
-        });
-    </script>
+
+
 @stop
 
 

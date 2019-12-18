@@ -5,11 +5,13 @@
    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/datatables.min.css')}}">
    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
    <link href="{{asset('public/css/back/bootstrap-fileupload.css')}}" rel="stylesheet" />
+   <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/pickadate.css')}}">
 @stop
 @section('content')
 <style>
     .upimg{border: 1px solid gray;border-radius: 10px;width:180px; 
            height: 130px; line-height: 20px;}
+    .picker--opened .picker__holder{width: 245px;}
 </style>
 
 <!-- *****************************add model**********************************-->
@@ -205,10 +207,76 @@
         </div>
     </div>
 </div>
+                     {{-- End of delete modal --}}
 
 
+<section id="basic-input" style="margin-top: -20px;">
+    <div class="row">
+        <div class="col-xl-9 col-md-12 col-sm-12 col-xs-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body " style="padding-bottom: 0px;">
+                        <form method="get" action="{{route('report.bookingPrint')}}" target="_blank">
+                           
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6 col-12 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput">From Date</label>
+                                    <input type="text" class="form-control pickadate" name="fromdate" id="fromdate" placeholder="From Date">
+                                </fieldset>
+                            </div>
+                            <div class="col-xl-3 col-md-6 col-12 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput">To Date</label>
+                                    <input type="text" class="form-control pickadate" name="todate" id="todate" placeholder="To Date">
+                                </fieldset>
+                            </div>
+                            
+                            <div class="col-xl-3 col-md-6 col-12 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput">Phone</label>
+                                    <input type="number" class="form-control" id="phone" placeholder="Phone">
+                                </fieldset>
+                            </div>
 
+                            <div class="col-xl-3 col-md-6 col-12 mb-1" style="padding-top: 17px;">
+                                <fieldset class="form-group" style="margin-bottom: 0px;">    
+                                    <button type="submit" class=" btn btn-outline-success mr-1 mb-1 waves-effect waves-light"><i class="feather icon-printer"></i> Print
+                                    </button>
+                                </fieldset>               
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+          <div class="col-xl-3 col-sm-4 col-md-4 col-xs-4" style="margin-top: 0px;">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body ">
+                        <div class="row">
+                            <div class="col-xl-6 col-md-6 col-12 ">
+                                <div>
+                            <h2 class="text-bold-700 dayCount">2</h2>
+                            <p class="mb-0">Total Booking</p>
+                        </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6 col-12 mb-1">
+                                <div class="avatar bg-rgba-primary p-0">
+                            <div class="avatar-content">
+                                <i class="feather icon-activity text-info font-medium-5"></i>
+                            </div>
+                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+    </div>
+</section>
 
 
 
@@ -269,6 +337,11 @@
 
 <script src="{{asset('public/js/back/datatable.min.js')}}"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+
+<script src="{{asset('public/js/back/picker.js')}}"></script>
+<script src="{{asset('public/js/back/picker.date.js')}}"></script>
+<script src="{{asset('public/js/back/picker.time.js')}}"></script>
+
 <script type="text/javascript" src="{{asset('public/js/back/bootstrap-fileupload.js')}}"></script>
 <script>
     $(document).ready(function()
@@ -292,6 +365,8 @@
                 "data": function ( d )
                 {
                     d._token= $('meta[name="csrf-token"]').attr('content');
+                    d.fromdate= $('#fromdate').val();
+                    d.todate= $('#todate').val();
                 }
             },
         "columns":[
@@ -377,11 +452,32 @@ $(document).on('click', '.delbs', function()
        }
     });
 });
+
+    $(function () {
+        $('.pickadate').pickadate({
+        format: 'yyyy-m-d'
+//       ,min: [2019,10,20]
+//       ,max: [2019,11,28]
+        });
+        $('.pickatime').pickatime({
+            interval: 30
+        });
+    });
+  /***************** Count Booking ****************/
+
+//***************************************************
+
+$('#fromdate').change(function()
+{
+    table.ajax.reload( null, false );
+});   
+   
+$('#todate').change(function()
+{
+    table.ajax.reload( null, false );
+});    
   
-   
-   
-   
-   
-    
+ 
+
 </script>
 @stop
