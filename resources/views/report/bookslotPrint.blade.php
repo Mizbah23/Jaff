@@ -77,10 +77,10 @@ img {
         <tr>
             <td>{{date('D ,d M Y',strtotime($item->slot_date))}}</td>
             <td align="center">{{date("H:i a", strtotime($item->start))}}-{{date("H:i a", strtotime($item->end))}}</td>
-            <td align="center"></td>
-            <td align="center">{{$item->phone}}</td>
-            <td align="center">{{$item->tslot}}</td>
-            <td align="center">{{$item->total}}</td>
+            <td align="center">{{$item->price}}</td>
+            <td align="center">{{$item->discount}}</td>
+            <td align="center">{{$item->book_price}}</td>
+            
         
         </tr>
         @endforeach
