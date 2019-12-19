@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Slots</title>
+    <title>Booked Slots</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style type="text/css">
  
@@ -52,7 +52,15 @@ img {
     <div style="margin-top: -10px">Bashundhara Main Gate,
     Opposite of Jamuna Future Park Sidegate,<br>Bashundhara R/A,Dhaka.
     <br>Phone: +8801304229158, Email: info@jaff.com
-    <h4>Booking List</h4>
+       @if(!empty($fromdate && $todate))
+    <h4>List of Booked Slot(from {{date('d-m-Y',strtotime($fromdate))}} to {{date('d-m-Y',strtotime($todate))}})</h4>
+    @elseif(!empty($fromdate))
+    <h4>List of Booked Slot(from {{date('d-m-Y',strtotime($fromdate))}})</h4>
+    @elseif(!empty($todate))
+    <h4>List of Booked Slot(Till {{date('d-m-Y',strtotime($todate))}})</h4>
+    @else
+    <h4>List of Booked Slot</h4>
+    @endif
     <br>
   </div>
   </div>

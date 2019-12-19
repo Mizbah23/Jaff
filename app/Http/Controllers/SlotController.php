@@ -1010,8 +1010,23 @@ class SlotController extends Controller
             $nestedData['price'] = $r->price;
             $nestedData['details'] = $r->details;
             $nestedData['ground'] = $r->name;
-            $nestedData['sts']=($r->status==1)?'<div class="badge  badge-pill badge-success mr-1 badge-glow mb-1"><i class="feather icon-check"></i><span>Active</span></div>':
-                '<div class="badge badge-pill  badge-danger mr-1 badge-glow mb-1"><i class="feather icon-x"></i><span>Active</span></div>';
+
+            if( $r->status==1){
+                $sts ='<div class="btn-group"><div class="badge badge-success dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Active</span></a>
+                <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
+                    <a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="0" href="#">Deactive</a></div>
+                </div>
+                 </div>' ;
+            }else{
+               $sts = '<div class="btn-group"><div class="badge badge-danger dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Deactivated</span></a>
+                <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
+                    <a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="1" href="#">Active</a></div>
+                </div>
+                 </div>'; 
+            }
+            $nestedData['sts']=$sts;
             $nestedData['action'] = '<a class="editmdl" data-id="'.$r->id.'" data-nm="'.$r->name.'" data-phn="'.$r->address.'" data-eml="'.$r->details.'" style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a> '
                     . '<a href="#" class="delmdl" style="padding: 4px;"><i class="ficon feather icon-trash danger"></i></a>';
             $data[] = $nestedData;
@@ -1040,6 +1055,25 @@ class SlotController extends Controller
             );
         return Response::json($notification);
     }
+
+    public function StatusFday(Request $request)
+    {
+        $offer= Fullday::find($request->oid);
+        $offer->status = $request->sts;
+        $offer->save();
+        if($request->sts==1){
+            $msg= 'Activated Successfully';
+            $typ= 'success';
+        }else{
+            $msg= 'Offer Has Deactivated';
+            $typ= 'error';
+        }
+        $notification = array(
+                'message' => $msg,
+                'type' => $typ
+            );
+        return Response::json($notification); 
+    } 
     //*****************************Drop In*********************************
     public function showDropIn() 
     {
@@ -1122,8 +1156,22 @@ class SlotController extends Controller
             $nestedData['taken'] = $r->booked;
             $nestedData['details'] = $r->details;
             $nestedData['name'] = $r->name;
-            $nestedData['sts']=($r->status==1)?'<div class="badge  badge-pill badge-success mr-1 badge-glow mb-1"><i class="feather icon-check"></i><span>Active</span></div>':
-                '<div class="badge badge-pill  badge-danger mr-1 badge-glow mb-1"><i class="feather icon-x"></i><span>Active</span></div>';
+                if( $r->status==1){
+                $sts ='<div class="btn-group"><div class="badge badge-success dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Active</span></a>
+                <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
+                    <a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="0" href="#">Deactive</a></div>
+                </div>
+                 </div>' ;
+            }else{
+               $sts = '<div class="btn-group"><div class="badge badge-danger dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Deactivated</span></a>
+                <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
+                    <a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="1" href="#">Active</a></div>
+                </div>
+                 </div>'; 
+            }
+            $nestedData['sts']=$sts;
             $nestedData['action'] = '<a class="editmdl" data-id="'.$r->id.'" data-nm="'.$r->name.'" data-phn="'.$r->address.'" data-eml="'.$r->details.'" style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a> '
                     . '<a href="#" class="delmdl" style="padding: 4px;"><i class="ficon feather icon-trash danger"></i></a>';
             $data[] = $nestedData;
@@ -1138,6 +1186,23 @@ class SlotController extends Controller
         echo json_encode($json_data);    
     }
     
-    
+    public function statusDropin(Request $request)
+    {
+        $dropin= Dropin::find($request->oid);
+        $dropin->status = $request->sts;
+        $dropin->save();
+        if($request->sts==1){
+            $msg= 'Activated Successfully';
+            $typ= 'success';
+        }else{
+            $msg= 'Dropin Has Deactivated';
+            $typ= 'error';
+        }
+        $notification = array(
+                'message' => $msg,
+                'type' => $typ
+            );
+        return Response::json($notification); 
+    } 
     
 }

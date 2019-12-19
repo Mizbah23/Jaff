@@ -54,11 +54,11 @@ img {
     Opposite of Jamuna Future Park Sidegate,<br>Bashundhara R/A,Dhaka.
     <br>Phone: +8801304229158, Email: info@jaff.com
     @if(!empty($from && $to))
-    <h4>List of Holidays(from {{$from}} to {{$to}})</h4>
+    <h4>List of Holidays(from {{date('d-m-Y',strtotime($from))}} to {{date('d-m-Y',strtotime($to))}})</h4>
     @elseif(!empty($from))
-    <h4>List of Holidays(from {{$from}})</h4>
+    <h4>List of Holidays(from {{date('d-m-Y',strtotime($from))}})</h4>
     @elseif(!empty($to))
-    <h4>List of Holidays(Till {{$to}})</h4>
+    <h4>List of Holidays(Till {{date('d-m-Y',strtotime($to))}})</h4>
     @else
     <h4>List of Holidays(All)</h4>
     @endif

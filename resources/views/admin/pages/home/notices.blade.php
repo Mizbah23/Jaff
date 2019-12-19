@@ -91,7 +91,7 @@
 
 <!--*************edit Notice***************-->
 
-<div class="modal fade upModel" id="exampleModalScrollable" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+<div class="modal fade upModel" id="editmdl" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header bg-info white">
@@ -101,8 +101,8 @@
                 </button>
             </div>
             <div class="modal-body" style="padding-top: 23px;">
-                <form method="post" id="upForm" enctype="multipart/form-data">    
-                    <input type="hidden" class="form-control pickadate" name="id" id="id" placeholder="Holiday">
+                <form method="post" id="editFrm" enctype="multipart/form-data">    
+                    <input type="hidden" class="form-control" name="id" id="id" placeholder="Holiday">
                 <div class="row" >  
                     <div class="col-md-8 col-xs-8 col-md-offset-2 col-xs-offset-2">
                         <fieldset class="form-group">
@@ -292,9 +292,7 @@ $(document).on('click', '.editmdl', function()
     $('#unotice_date').val($(this).data('notice_date'));
     $('#uheadline').val($(this).data('headline'));
     $('#udescription').val($(this).data('description'));
-    
-   
-    $('.editMdl').modal('show');
+    $('#editmdl').modal('show');
 });
   
 $("#editFrm").on('submit',function(event)
@@ -312,7 +310,7 @@ $("#editFrm").on('submit',function(event)
         success:function(data)
         {
             table.ajax.reload( null, false );
-            $('.editMdl').modal('hide');
+            $('#editMdl').modal('hide');
             toastr[data.type](data.message);
             document.getElementById("editFrm").reset();
             $('.upbtn').removeClass('spinner-border spinner-border-sm');

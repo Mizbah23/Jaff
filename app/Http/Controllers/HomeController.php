@@ -49,7 +49,7 @@ class HomeController extends Controller
         $data['latest'] = Post::where('status',1)->select('title','slug','post_img','created_at')
                 ->orderBy('post_id','desc')->limit(6)->get();
         $data['offers'] = Offer::where('status',1)->get();
-        $data['notices'] = Notice::orderby('notice_date','desc')->limit(3)->get();
+        $data['notices'] = Notice::orderby('notice_date','desc')->limit(4)->get();
         $data['weeks'] = Weekday::select('weekdays.day','weekdays.id','weekdays.sts',DB::raw("(SELECT count(slots.slot_id) FROM slots WHERE "
                             . "slots.`day_id`=weekdays.`id`) as total_slot"),DB::raw("(SELECT MIN(slots.start) FROM slots WHERE "
                             . "slots.`day_id`=weekdays.`id`) as start"),DB::raw("(SELECT MAX(slots.end) FROM slots WHERE "
@@ -113,6 +113,7 @@ class HomeController extends Controller
 
         return view('user.pages.news',$data);
     }
+
     public function showSingleNews($slug) 
     {
         $data = array();
@@ -129,6 +130,20 @@ class HomeController extends Controller
         return view('user.pages.single_news',$data);
     }  
 
+    public function showAllNotice()
+    {
+        $data = array();
+        $data['title'] = 'Notice';
+        $data['simg'] = Singleimg::where('id',1)->first();
+        $data['offers'] = Offer::where('status',1)->get();
+        $data['list'] = Notice::orderby('notice_date','desc')->paginate(6);
+        $data['latest'] = Notice::select('headline')->orderBy('id','desc')->limit(4)->get();
+        $data['recent'] = Post::where('status',1)->select('title','slug','post_img')
+                ->orderBy('post_id','desc')->limit(4)->get();
+        $data['popular'] = Post::where('status',1)->select('title','slug','post_img')
+                           ->orderby('view_count','desc')->limit(2)->get();
 
+        return view('user.pages.notice',$data);
+    }
     
 }

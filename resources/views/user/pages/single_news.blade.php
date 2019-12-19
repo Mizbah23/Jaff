@@ -8,6 +8,9 @@
     img.attachment-thumb-221-221.size-thumb-221-221.wp-post-image{
     	height: 150px;
     }
+    .path-section .bg-cover {
+    padding: 130px 0 60px;
+}
    
 </style>
  

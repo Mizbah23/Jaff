@@ -10,6 +10,7 @@ use Jaff\Singleimg;
 use Jaff\Testimonial;
 use Jaff\Membership;
 use Jaff\Notice;
+use Auth;
 use Response;
 class ProgramController extends Controller
 {
@@ -853,7 +854,6 @@ class ProgramController extends Controller
     if($posts){
         foreach($posts as $r)
         {     
-            
             $nestedData['notice_date'] = $r->notice_date;
             $nestedData['headline'] = $r->headline;
             $nestedData['description'] = $r->description;

@@ -5,12 +5,14 @@
 	img.attachment-thumb-900-500.size-thumb-900-500.wp-post-image {
     height: 400px;
 }
-    img.attachment-thumb-221-221.size-thumb-221-221.wp-post-image{
-    height: 150px;
-    }
     .path-section .bg-cover {
     padding: 130px 0 60px;
 }
+
+    img.attachment-thumb-221-221.size-thumb-221-221.wp-post-image{
+    height: 150px;
+    }
+
 </style>
 @stop
 
@@ -24,7 +26,7 @@
 <div class="path-section" style='background-image: url(public/img/slide-1.jpg);'>
     <div class="bg-cover">
         <div class="container">
-            <h3>News & Updates</h3>
+            <h3>All Notices</h3>
         </div>
     </div>
 </div>
@@ -41,20 +43,13 @@
                     
         @foreach($list as $li)
             <article id="post-118" class="blog-entry post-118 post type-post status-publish format-standard has-post-thumbnail hentry category-fashion category-print tag-boxing tag-sport">
-                <h2 class="sr-only">{{$li->title}}</h2>	
-                <div class="entry-date"><span class="d-text-c">{{date('d',strtotime($li->created_at))}}</span>{{date('M',strtotime($li->created_at))}}</div>
-                <div class="entry-cover">
-                    <img width="900" height="500" src="{{asset($li->post_img)}}" class="attachment-thumb-900-500 size-thumb-900-500 wp-post-image" alt=""  sizes="(max-width: 900px) 100vw, 900px" />
-                </div>
+              
                 <div class="entry-hover d-bg-c">
-                    <i class="fa fa-camera"></i>
-                    <h2>
-                        <a href="{{route('user.snews', $li->slug)}}">{{$li->title}}</a>
-                    </h2>
+                    <h2> {{$li->headline}}</h2>
+                    <h2>{{date('d',strtotime($li->notice_date))}} {{date('M',strtotime($li->notice_date))}} {{date('Y',strtotime($li->notice_date))}}</h3>
                 </div>
                 <div class="entry-summary">
-                    <p>{!!strlen($li->details) > 300 ? substr($li->details,0,300)." [&hellip;]" : $li->details!!} </p>
-                    <a href="{{route('user.snews', $li->slug)}}" class="read-more d-border-c-h d-text-c">Continue reading...</a>
+                    <p>{!! $li->description!!} </p>
                 </div>
             </article>
         @endforeach
@@ -80,11 +75,11 @@
             <!--=========================recent=================================-->
 
             <aside id="recent-posts-2" class="widget widget_recent_entries">		
-                <i class="ulysses_widget_icon"></i><h3 class="widget-title">Recent Posts</h3><i class="bottom_border"></i>
+                <i class="ulysses_widget_icon"></i><h3 class="widget-title">Recent Notices</h3><i class="bottom_border"></i>
                 <ul>
-                    @foreach($recent as $rs)
+                    @foreach($latest as $ls)
                     <li>
-                        <a href="{{route('user.snews', $rs->slug)}}">{{$rs->title}}</a>
+                        {{$ls->headline}}
                     </li>
                     @endforeach
                 </ul>
@@ -153,6 +148,7 @@
             </aside>
 
         <aside id="post_tabs-1" class="widget widget_post_tabs">
+            <h3 class="widget-title">Get News</h3>
             <div class="tab-widget">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#popular_posts" class="d-text-c-h" data-toggle="tab">Popular</a></li>

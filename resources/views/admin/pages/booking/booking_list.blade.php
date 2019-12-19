@@ -348,6 +348,7 @@
     {
        $('.bk').addClass('active');
        $('.b').addClass('has-sub sidebar-group-active open');
+       countslot();
     });
     var table = $('#bookTbl').DataTable(
     {
@@ -408,6 +409,11 @@ $("#addUserForm").on('submit',function(event)
             $('.addbtn').removeClass('spinner-border spinner-border-sm');
         }
     });
+
+    $(document).on('change', '#fromdate', function()
+    {countslot();table.ajax.reload( null, false ); });
+    $(document).on('change', '#todate', function()
+    {countslot();table.ajax.reload( null, false ); }); 
     $('#title').val('');
     $('#body').val('');
 });
@@ -476,7 +482,22 @@ $('#todate').change(function()
 {
     table.ajax.reload( null, false );
 });    
-  
+
+function countBooking()
+{
+    $.ajax({
+        type: 'POST',
+        url: "{{route('count.bookings')}}",
+        data: {
+         _token: $('meta[name="csrf-token"]').attr('content'),
+         fromdate : $('#fromdate').val(),
+         todate : $('#todate').val(),
+        },
+       success: function(data){
+        $('.dayCount').html(data);
+       }
+    });
+}  
  
 
 </script>

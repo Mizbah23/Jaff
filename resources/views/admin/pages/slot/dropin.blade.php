@@ -576,5 +576,18 @@ $(document).on('click', '.ofslt', function()
        }
     });
 });
+
+$(document).on('click', '.csts', function()
+{
+    $.ajax({
+      type: 'POST',url: "{{route('sts.dropin')}}",
+      data: {
+        _token: $('meta[name="csrf-token"]').attr('content'),
+        oid: $(this).data('id'),sts: $(this).data('sts')},
+      success: function(data){
+      table.ajax.reload( null, false );
+      toastr[data.type](data.message);}
+    });
+}); 
 </script>
 @stop

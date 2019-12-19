@@ -56,6 +56,13 @@ Route::prefix('news')->group(function()
 //   Route::post('/latest', 'HomeController@getLatest')->name('get.latestnews');
    
 });
+Route::prefix('notice')->group(function()
+{
+   Route::get('/', 'HomeController@showAllNotice')->name('user.notice');
+ 
+//   Route::post('/latest', 'HomeController@getLatest')->name('get.latestnews');
+   
+});
 //
 Route::prefix('admin')->group(function()
 {
@@ -164,6 +171,8 @@ Route::prefix('admin')->group(function()
         Route::post('/sts', 'SlotController@StatusDropIn')->name('sts.dropin');
         Route::post('/del','SlotController@delDropIn')->name('del.dropin');
         Route::get('/fetch','SlotController@fetchDropSlot')->name('fetchDropSlot');
+        // Route::post('/sts','SlotController@StatusDropIn')->name('status.dropin');
+
     });
     Route::prefix('grounds')->group(function()
     {
@@ -245,7 +254,7 @@ Route::prefix('admin')->group(function()
         Route::get('/slotlist','BookingController@bookedSlotList')->name('show.bookedslot');
         Route::post('/del-bookrow', 'BookingController@delBookRow')->name('del.bookrow');
         Route::post('/get-bookuser', 'BookingController@userDetails')->name('get.bookuser');
-       
+        Route::post('/count','BookingController@countBooking')->name('count.bookings');
 
    });
    Route::post('/get-bookinglist','BookingController@getbookList')->name('bookPro');
@@ -261,7 +270,7 @@ Route::prefix('admin')->group(function()
         Route::get('/slot-list', ['as' => 'report.slotPrint', 'uses' => 'ReportController@slotPrint']);
         Route::get('/holiday-list', ['as' => 'report.holidayPrint', 'uses' => 'ReportController@holidayPrint']);
         Route::get('/booking-list', ['as' => 'report.bookingPrint', 'uses' => 'ReportController@bookingListPrint']);
-        Route::get('/holiday-list', ['as' => 'report.bookslotPrint', 'uses' => 'ReportController@bookslotPrint']);
+        Route::get('/booked-slot-list', ['as' => 'report.bookslotPrint', 'uses' => 'ReportController@bookslotPrint']);
         
    });
     Route::prefix('acounts')->group(function()

@@ -57,10 +57,12 @@ class UserController extends Controller
             $nestedData['email'] = $r->email;
             $nestedData['img'] = '<img class="rounded-circle" src="'.asset($r->img).'" alt="'.$r->name.'" height="60" width="60">';
             if( $r->status==0){
-                $sts = '<div class="btn-group"><div class="badge badge-warning dropdown">
+                $sts = '<div class="btn-group">
+                <div class="badge badge-warning dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Hold</span></a>
                 <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
-                    <a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="1" href="#">Active</a><a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="2" href="#">Block</a></div>
+                    <a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="1" href="#">Active</a><a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="2" href="#">Block</a>
+                </div>
                 </div>
                  </div>';
             }else if($r->status==1){

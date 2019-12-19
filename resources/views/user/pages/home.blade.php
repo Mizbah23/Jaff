@@ -83,7 +83,7 @@
 				</div>
 				<div class="under-button">
 					<span></span>
-					<a href="#" class="d-border-c d-bg-c-h d-text-c">Details</a>
+					<a href="{{route('user.notice')}}" class="d-border-c d-bg-c-h d-text-c">Details</a>
 				</div>
 			</div>
 		</div>
