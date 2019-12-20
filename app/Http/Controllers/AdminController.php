@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Jaff\Admin;
 use Jaff\Post;
 use Jaff\Category;
+use Jaff\User;
 use Illuminate\Support\Facades\Hash;
 use Response;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 class AdminController extends Controller
 {
     public function __construct()
@@ -17,8 +19,23 @@ class AdminController extends Controller
     }
     public function index()
     {
+        // $fromDate = new Carbon('last week'); 
+        // $toDate = new Carbon('now');
+        // dd($fromDate, $toDate); 
         $data = array();
         $data['title'] = 'Dashboard';
+        $data['usersCount']=User::where( 'created_at', '>=', Carbon::now()->subDays(7))->get();
+        // dd($data['usersCount']);
+        $data['users']=User::where( 'created_at', '>=', Carbon::now()->subDays(7))->orderBy('created_at','desc')->groupBy(DB::raw('Date(created_at)'))->get(array(
+                                DB::raw('Date(created_at) as date'),
+                                DB::raw('COUNT(*) as "count"')
+                            ));
+        // dd(Carbon::now()->subDays(7));
+        // foreach($data['users'] as $user)
+        // {
+
+        // }
+        // dd($data['users']);
         return view('admin.dashboard',$data);
     }
     public function UserList()
@@ -251,6 +268,12 @@ class AdminController extends Controller
              );
         return Response::json($notification);
     }
-
+    public function dashboardChart()
+    {
+       $data = array();
+       dd($data);
+       $data['title']='Jaff|Dashboard';
+       return view('admin.pages.dashboard',$data);
+    }
     
 }

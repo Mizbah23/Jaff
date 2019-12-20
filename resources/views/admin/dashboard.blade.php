@@ -28,13 +28,15 @@
         <div class="col-lg-3 col-md-6 col-12">
             <div class="card">
                 <div class="card-header d-flex flex-column align-items-start pb-0">
+                   
                     <div class="avatar bg-rgba-primary p-50 m-0">
                         <div class="avatar-content">
                             <i class="feather icon-users text-primary font-medium-5"></i>
                         </div>
                     </div>
-                    <h2 class="text-bold-700 mt-1 mb-25">92.6k</h2>
-                    <p class="mb-0">Subscribers Gained</p>
+                    <h2 class="text-bold-700 mt-1 mb-25">{{$users->count()}}</h2>
+                    <p class="mb-0">subscribe-gain-chartrs Gained</p>
+                    
                 </div>
                 <div class="card-content">
                     <div id="subscribe-gain-chart"></div>
@@ -460,5 +462,89 @@
        $('.db').addClass('active');
     });
     
+</script>
+
+<script>
+        var e = "#7367F0",
+        s = {
+         chart:
+         {
+             height: 100,
+             type: "area",
+             toolbar:
+             {
+                 show: !1
+             },
+             sparkline:
+             {
+                 enabled: !0
+             },
+             grid:
+             {
+                 show: !1,
+                 padding:
+                 {
+                     left: 0,
+                     right: 0
+                 }
+             }
+         },
+         colors: [e],
+         dataLabels:
+         {
+             enabled: !1
+         },
+         stroke:
+         {
+             curve: "smooth",
+             width: 2.5
+         },
+         fill:
+         {
+             type: "gradient",
+             gradient:
+             {
+                 shadeIntensity: .9,
+                 opacityFrom: .7,
+                 opacityTo: .5,
+                 stops: [0, 80, 100]
+             }
+         },
+         series: [
+         {
+             name: "Subscribers",
+             data: [28, 40, 100, 52, 38, 60, 55]
+         }],
+         xaxis:
+         {
+             labels:
+             {
+                 show: !1
+             },
+             axisBorder:
+             {
+                 show: !1
+             }
+         },
+         yaxis: [
+         {
+             y: 0,
+             offsetX: 0,
+             offsetY: 0,
+             padding:
+             {
+                 left: 0,
+                 right: 0
+             }
+         }],
+         tooltip:
+         {
+             x:
+             {
+                 show: !1
+             }
+         }
+        };
+        new ApexCharts(document.querySelector("#subscribe-gain-chart"), s).render();
 </script>
 @stop

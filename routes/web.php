@@ -33,6 +33,8 @@ Route::post('/reset_code/{phone}','Auth\ResetPasswordController@verifyCode')->na
 Route::get('/Reset_Password/{phone}','Auth\RegisterController@showNewForm')->name('newPassword');
 Route::post('/Reset_Password/{phone}','Auth\RegisterController@newLogin');
 
+
+
 //Route::get('/', 'HomeController@index')->name('home');
 //Route::get('/search', 'HomeController@search')->name('search');
 //Route::get('/about', 'HomeController@about')->name('about');
@@ -64,6 +66,9 @@ Route::prefix('notice')->group(function()
    
 });
 //
+
+
+
 Route::prefix('admin')->group(function()
 {
    Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
