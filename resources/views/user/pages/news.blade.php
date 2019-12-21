@@ -2,15 +2,7 @@
 @section('title'){{$title}}@stop
 @section('style')
 <style type="text/css">
-	img.attachment-thumb-900-500.size-thumb-900-500.wp-post-image {
-    height: 400px;
-}
-    img.attachment-thumb-221-221.size-thumb-221-221.wp-post-image{
-    height: 150px;
-    }
-    .path-section .bg-cover {
-    padding: 130px 0 60px;
-}
+
 </style>
 @stop
 
@@ -44,7 +36,7 @@
                 <h2 class="sr-only">{{$li->title}}</h2>	
                 <div class="entry-date"><span class="d-text-c">{{date('d',strtotime($li->created_at))}}</span>{{date('M',strtotime($li->created_at))}}</div>
                 <div class="entry-cover">
-                    <img width="900" height="500" src="{{asset($li->post_img)}}" class="attachment-thumb-900-500 size-thumb-900-500 wp-post-image" alt=""  sizes="(max-width: 900px) 100vw, 900px" />
+                    <img width="900px" src="{{asset($li->post_img)}}" class="attachment-thumb-900-500 size-thumb-900-500 wp-post-image" alt=""  sizes="(max-width: 900px) 100vw, 900px" />
                 </div>
                 <div class="entry-hover d-bg-c">
                     <i class="fa fa-camera"></i>

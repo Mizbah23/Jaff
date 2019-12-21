@@ -34,10 +34,11 @@
                             <i class="feather icon-users text-primary font-medium-5"></i>
                         </div>
                     </div>
-                    <h2 class="text-bold-700 mt-1 mb-25">{{$users->count()}}</h2>
+                    
+                    <h2 class="text-bold-700 mt-1 mb-25">{{$total->count()}}</h2>
                     <p class="mb-0">subscribe-gain-chartrs Gained</p>
                     
-                </div>
+                </div> 
                 <div class="card-content">
                     <div id="subscribe-gain-chart"></div>
                 </div>
@@ -466,6 +467,7 @@
 
 <script>
         var e = "#7367F0",
+        var data= @json($users),
         s = {
          chart:
          {
@@ -512,8 +514,8 @@
          },
          series: [
          {
-             name: "Subscribers",
-             data: [28, 40, 100, 52, 38, 60, 55]
+             name: "subscribers",
+             data: $users
          }],
          xaxis:
          {

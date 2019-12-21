@@ -1,129 +1,77 @@
-    <footer class="footer">
-        <div class="layer footer-1">
-            <div class="row">
-                
-                    <div class="col-lg-4 col-md-6 footer-top mt-md-0 mt-sm-5">
-                        <div class="logo">
-                        <h2>
-                           <img src="{{asset('public/img/app-logo.png')}}" alt="Jaff">
-                        </h2>
-                         </div>
-                        <p class="my-3">Donec consequat sam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus</p>
-                       
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="footer-w3pvt footer-con-info">
-                            <h3 class=" w3pvt_title">Office Hours</h3>
-                            <hr>
-                            <ul class="list-info-w3pvt last-w3ls-contact mt-lg-4">
-                                <li>
-                                    <p> Monday - Friday 9.00 am - 8.00 pm</p>
-
-                                </li>
-                                <li class="my-2">
-                                    <p style="margin-right: 40px">Saturday 9.00 am - 5.00 pm</p>
-
-                                </li>
-                                <li class="my-2">
-                                    <p style="margin-right: 45px">Sunday 10.00 am - 2.00 pm</p>
-
-                                </li>
-
-
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 mt-lg-0 mt-5">
-                        <div class="footer-w3pvt footer-con-info1">
-                            <h3 class="mb-3 w3pvt_title">Contact Info</h3>
-                            <hr>
-                            
-                        <div class="footer-text">
-                          <ul class="ul-contact list-info-w3pvt last-w3ls-contact mt-lg-4" style="text-align: left;">
-                            <li class="ul-contact-1">
-                                <img src="{{asset('public/img/contact-1.png')}}" />
-                             
-                              <p>Jaff Street Bashundhara Main Gate,</p><br><p class="para1">Opposite of Jamuna Future Park Sidegate,Dhaka<br>
-                              </p>
-                           </li>
-                           <li class="ul-contact-2">
-                            <img src="{{asset('public/img/contact-2.png')}}" />
-                            <span>+8801304229158</span>
-                            <span>.</span>
-                           </li>
-                          <li class="ul-contact-3">
-                            <img src="{{asset('public/img/contact-3.png')}}" />
-                            <a href="mailto:info@jaff.com.bd">info@jaff.com.bd</a>
-                          </li>
-                        
-                    </ul>
-                        </div>
-                    </div>
-                           
-                           
-                        </div>
-                  
-
-                </div>
-
-                <p class="copywrite">© Copyright 2019 by BSD. All rights reserved.</p>
-                <div class="w3ls-footer text-center mt-4">
-                      <ul class="socials">
-
-                    <li>
-
-                        <a target="_blank" href="#" class="d-text-c-h d-border-c-h">
-
-                            <img src="{{asset('public/img/fa-facebook.png')}}" alt="Social Icon"/>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a target="_blank" href="#" class="d-text-c-h d-border-c-h">
-
-                            <img src="{{asset('public/img/fa-google-plus.png')}}" alt="Social Icon"/>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a target="_blank" href="#" class="d-text-c-h d-border-c-h">
-
-                            <img src="{{asset('public/img/fa-instagram.png')}}" alt="Social Icon"/>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a target="_blank" href="#" class="d-text-c-h d-border-c-h">
-
-                            <img src="{{asset('public/img/fa-rss.png')}}" alt="Social Icon"/>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a target="_blank" href="#" class="d-text-c-h d-border-c-h">
-
-                            <img src="{{asset('public/img/fa-twitter.png')}}" alt="Social Icon"/>
-
-                        </a>
-
-                    </li>
-
-                </ul>
-                </div>
-               
+  <!--  </footer> -->
+<footer id="footer">
+    <div class="footer-top">
+        <div class="container">
+           <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 footer-info text-center">
+                <img src="{{asset('public/img/app-logo.png')}}" alt="footer-logo" />
+                <p>Play, experience and live 90 minutes of ultimate futsal with your team. JAFF provides unique futsal experience where you can enjoy team dugouts, free drinking water and LED display for scorings.</p>
             </div>
-            <!-- //footer bottom -->
-       
-    </footer>
+               <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 footer-time text-center">
+                   <h5 class="text-center">Quick Links</h5>
+                     <hr>
+                   <li><i class="fa fa-angle-right"></i><a href="">Home</a></li>
+                   <li><i class="fa fa-angle-right"></i><a href="{{route('time')}}">Book Slot</a></li>
+                   <li><i class="fa fa-angle-right"></i><a href="{{route('user.notice')}}">Notices</a></li>
+                  
+                   <li><i class="fa fa-angle-right"></i><a href="{{route('user.news')}}">News</a></li>
+                   <li><i class="fa fa-angle-right"></i><a href="{{route('home')}}#trainers-section">Coaches</a></li>
+                 </div>
+               <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 footer-contact text-center">
+                   <h5 class="text-center">NEWS LETTER</h5>
+                   <hr>
+                 <!--  <div class="loc text-center">
+                   <img src="img/contact-1.png" alt="footer-con" class="con1" />
+                   <p class="text-center">Jaff Street Bashundhara Main Gate,Opposite of Jamuna Future Park Sidegate,Dhaka</p>
+                   </div>
+                   <div class="con-left">
+                   <img src="img/contact-2.png" class="call" alt="footer-con" />
+                   <span>+8801304229158</span><br>
+                   <img src="img/contact-3.png"class="mail" alt="footer-con" />
+                   <a href="mailto:info@jaff.com.bd" >info@jaff.com.bd</a>
+               </div>
+               </div>-->
+                   <div class="loc justifed">
+                       <div class="loc-img">
+                           <img src="{{asset('public/img/contact-1.png')}}" alt="loc-image" />
+                       </div>
+                       <p class="">Jaff Street Bashundhara Main Gate,Opposite  of Jamuna Future Park Sidegate,Dhaka</p>
+                   </div>
+                   <div class="con text-center">
+                       <div class="con-img">
+                           <img src="{{asset('public/img/contact-2.png')}}" alt="con-image" />
+                       </div>
+                       <p>+8801304229158</p>
+                   </div>
+                   <div class="mess text-center">
+                       <div class="mess-img">
+                           <img src="{{asset('public/img/contact-3.png')}}" alt="message-image" />
+                       </div>
+                       <p> <a href="mailto:info@jaff.com.bd">info@jaff.com.bd</a></p>
+                   </div>
+        </div>
+    </div>
+    </div>
+    <div class="footer-end text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 footer-social">
+                    <li class="fbook"><a href=""><i class="fa fa-facebook"></i></a></li>
+                    <li><a href=""><img src="{{asset('public/img/fa-google-plus.png')}}"></a></li>
+                    <li><a href=""><i class="fa fa-instagram"></i></a></li>
+                    <li><a href=""><i class="fa fa-rss"></i></a></li>
+                    <li><a href=""><i class="fa fa-twitter"></i></a></li>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-end1">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <p>Copyright &copy; 2019.All right recieved. Designed By <a href=""><img src="{{asset('public/img/logo_bsd.png')}}" alt="bsd logo"></a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

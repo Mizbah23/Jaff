@@ -45,7 +45,7 @@
                                         <a title="About" href="{{route('home')}}#about_us-section">About</a>
                                     </li>
                                     <li id="menu-item-308" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-308">
-                                        <a title="Classes" href="{{route('home')}}#classes-section">Classes</a>
+                                        <a title="Classes" href="{{route('home')}}#classes-section">Program</a>
                                     </li>
                                     <li id="menu-item-309" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-309">
                                         <a title="Coaches" href="{{route('home')}}#trainers-section">Coaches</a>

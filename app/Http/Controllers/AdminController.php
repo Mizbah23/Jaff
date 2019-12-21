@@ -22,20 +22,32 @@ class AdminController extends Controller
         // $fromDate = new Carbon('last week'); 
         // $toDate = new Carbon('now');
         // dd($fromDate, $toDate); 
+
         $data = array();
         $data['title'] = 'Dashboard';
-        $data['usersCount']=User::where( 'created_at', '>=', Carbon::now()->subDays(7))->get();
-        // dd($data['usersCount']);
-        $data['users']=User::where( 'created_at', '>=', Carbon::now()->subDays(7))->orderBy('created_at','desc')->groupBy(DB::raw('Date(created_at)'))->get(array(
+        // $data['users']=User::whereRaw('DATE(created_at) = DATE_SUB(CURDATE(), INTERVAL 7 DAY)')->get();
+        $data['total']=User::where( 'created_at', '>=', Carbon::now()->subDays(7))->orderBy('created_at','desc')->get();
+        // dd($data['total']);
+        $dates = collect();
+        foreach( range( 0, 6 ) as $i ) {
+        $date = Carbon::now()->subDays( $i )->format( 'Y-m-d' );
+        $dates->put( $date, 0);
+         }
+
+         $data['users']=User::where( 'created_at', '>=', Carbon::now()->subDays(7))->orderBy('created_at','desc')->groupBy(DB::raw('Date(created_at)'))->get(array(
                                 DB::raw('Date(created_at) as date'),
                                 DB::raw('COUNT(*) as "count"')
-                            ));
-        // dd(Carbon::now()->subDays(7));
+                            ))->pluck( 'count', 'date' );
+         // dd($data['users']);
+         $dates = $dates->merge( $data['users'] );
+         $data['dates']=$dates;
+         //dd(Carbon::now()->subDays(7)->startOfDay());
         // foreach($data['users'] as $user)
         // {
 
         // }
-        // dd($data['users']);
+        //  dd($data['users']);
+         // dd($data);
         return view('admin.dashboard',$data);
     }
     public function UserList()
@@ -268,12 +280,6 @@ class AdminController extends Controller
              );
         return Response::json($notification);
     }
-    public function dashboardChart()
-    {
-       $data = array();
-       dd($data);
-       $data['title']='Jaff|Dashboard';
-       return view('admin.pages.dashboard',$data);
-    }
+
     
 }
