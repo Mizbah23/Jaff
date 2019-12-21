@@ -467,6 +467,8 @@
 
 <script>
         var e = "#7367F0",
+            a = "#FF9F43",
+            t = "#EA5455",
         // var data= @json($users),
         s = {
          chart:
@@ -547,6 +549,155 @@
              }
          }
         };
+            var i = {
+        chart:
+        {
+            height: 100,
+            type: "area",
+            toolbar:
+            {
+                show: !1
+            },
+            sparkline:
+            {
+                enabled: !0
+            },
+            grid:
+            {
+                show: !1,
+                padding:
+                {
+                    left: 0,
+                    right: 0
+                }
+            }
+        },
+        colors: [a],
+        dataLabels:
+        {
+            enabled: !1
+        },
+        stroke:
+        {
+            curve: "smooth",
+            width: 2.5
+        },
+        fill:
+        {
+            type: "gradient",
+            gradient:
+            {
+                shadeIntensity: .9,
+                opacityFrom: .7,
+                opacityTo: .5,
+                stops: [0, 80, 100]
+            }
+        },
+        series: [
+        {
+            name: "Orders",
+            data: [{{$bookings}}]
+        }],
+        xaxis:
+        {
+            labels:
+            {
+                show: !1
+            },
+            axisBorder:
+            {
+                show: !1
+            }
+        },
+        yaxis: [
+        {
+            y: 0,
+            offsetX: 0,
+            offsetY: 0,
+            padding:
+            {
+                left: 0,
+                right: 0
+            }
+        }],
+        tooltip:
+        {
+            x:
+            {
+                show: !1
+            }
+        }
+    };
         new ApexCharts(document.querySelector("#subscribe-gain-chart"), s).render();
+        new ApexCharts(document.querySelector("#orders-received-chart"), i).render();
+
+        var d = {
+        chart:
+        {
+            height: 325,
+            type: "radialBar"
+        },
+        colors: [e, a, t],
+        fill:
+        {
+            type: "gradient",
+            gradient:
+            {
+                shade: "dark",
+                type: "vertical",
+                shadeIntensity: .5,
+                gradientToColors: ["#8F80F9", "#FFC085", "#f29292"],
+                inverseColors: !1,
+                opacityFrom: 1,
+                opacityTo: 1,
+                stops: [0, 100]
+            }
+        },
+        stroke:
+        {
+            lineCap: "round"
+        },
+        plotOptions:
+        {
+            radialBar:
+            {
+                size: 165,
+                hollow:
+                {
+                    size: "20%"
+                },
+                track:
+                {
+                    strokeWidth: "100%",
+                    margin: 15
+                },
+                dataLabels:
+                {
+                    name:
+                    {
+                        fontSize: "18px"
+                    },
+                    value:
+                    {
+                        fontSize: "16px"
+                    },
+                    total:
+                    {
+                        show: !0,
+                        label: "Total",
+                        formatter: function (e)
+                        {
+                            return {{$total_count}}
+                        }
+                    }
+                }
+            }
+        },
+        series: [{{$paid_count}}, {{$partial_count}}, {{$due_count}}],
+        labels: ["Paid", "Partial", "Due"]
+    };
+    // series: [70, 52, 26],
+    // labels: ["Finished", "Pending", "Rejected"]
+    new ApexCharts(document.querySelector("#product-order-chart"), d).render();
 </script>
 @stop

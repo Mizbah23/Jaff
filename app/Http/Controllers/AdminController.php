@@ -7,6 +7,8 @@ use Jaff\Admin;
 use Jaff\Post;
 use Jaff\Category;
 use Jaff\User;
+use Jaff\Booking;
+use Jaff\Bookdetail;
 use Illuminate\Support\Facades\Hash;
 use Response;
 use Illuminate\Support\Facades\DB;
@@ -19,13 +21,9 @@ class AdminController extends Controller
     }
     public function index()
     {
-        // $fromDate = new Carbon('last week'); 
-        // $toDate = new Carbon('now');
-        // dd($fromDate, $toDate); 
-
+    
         $data = array();
         $data['title'] = 'Dashboard';
-        // $data['users']=User::whereRaw('DATE(created_at) = DATE_SUB(CURDATE(), INTERVAL 7 DAY)')->get();
         $data['total']=User::where( 'created_at', '>=', Carbon::now()->subDays(7))->orderBy('created_at','desc')->get();
         // dd($data['total']);
         $dates = collect();
@@ -41,14 +39,7 @@ class AdminController extends Controller
          // dd($data['users']);
          $dates = $dates->merge( $data['users'] );
          $data['dates']=$dates;
-         //dd(Carbon::now()->subDays(7)->startOfDay());
-        // foreach($data['users'] as $user)
-        // {
-
-        // }
-        //  dd($data['users']);
-         // $array = (array) $data['dates'];
-        $dates = [];
+         $dates = [];
          foreach ($data['dates'] as $date) {
              // dd($date);
             array_push($dates, $date);
@@ -56,6 +47,35 @@ class AdminController extends Controller
          $dates = implode(",",$dates);
          // dd($dates);
          $data['dates'] = $dates;
+         //bookings date chart
+         $book_dates = collect();
+        foreach( range( 0, 6 ) as $i ) {
+            $date = Carbon::now()->subDays( $i )->format( 'Y-m-d' );
+            $book_dates->put( $date, 0);
+         }
+         $data['books']=Bookdetail::where( 'slot_date', '>=', Carbon::now()->subDays(7))->orderBy('slot_date','desc')->groupBy(DB::raw('Date(slot_date)'))->get(array(
+                                DB::raw('Date(slot_date) as date'),
+                                DB::raw('COUNT(*) as "count"')
+                            ))->pluck( 'count', 'date' );
+
+        $bookings = $book_dates->merge($data['books']);
+        $data['bookings']=$bookings;
+        //dd($bookings);
+        $bookings = [];
+        foreach ($data['bookings'] as $bdate) {
+             // dd($date);
+            array_push($bookings, $bdate);
+         }
+        $bookings = implode(",",$bookings);
+         
+        $data['bookings'] = $bookings;
+       // dd($bookings);
+        $data['total_count'] = Booking::where( 'created_at', '>=', Carbon::now()->subDays(30))->count();
+        $data['paid_count'] = Booking::where( [['created_at', '>=', Carbon::now()->subDays(30)], ['status', '=', '1' ]])->count();
+        $data['due_count'] = Booking::where( [['created_at', '>=', Carbon::now()->subDays(30)], ['status', '=', '0' ]])->count();
+        $data['partial_count'] = Booking::where( [['created_at', '>=', Carbon::now()->subDays(30)], ['status', '=', '2' ]])->count();
+        // dd($data);
+        
         return view('admin.dashboard',$data);
     }
     public function UserList()
