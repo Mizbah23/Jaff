@@ -451,7 +451,7 @@
         </div>
         
     </div>
-              
+     {{-- dfsdf {{$dates}}          --}}
 </section>
 
 @stop
@@ -467,7 +467,7 @@
 
 <script>
         var e = "#7367F0",
-        var data= @json($users),
+        // var data= @json($users),
         s = {
          chart:
          {
@@ -514,8 +514,8 @@
          },
          series: [
          {
-             name: "subscribers",
-             data: $users
+             name: "users",
+             data: [{{$dates}}]
          }],
          xaxis:
          {

@@ -30,8 +30,8 @@ class AdminController extends Controller
         // dd($data['total']);
         $dates = collect();
         foreach( range( 0, 6 ) as $i ) {
-        $date = Carbon::now()->subDays( $i )->format( 'Y-m-d' );
-        $dates->put( $date, 0);
+            $date = Carbon::now()->subDays( $i )->format( 'Y-m-d' );
+            $dates->put( $date, 0);
          }
 
          $data['users']=User::where( 'created_at', '>=', Carbon::now()->subDays(7))->orderBy('created_at','desc')->groupBy(DB::raw('Date(created_at)'))->get(array(
@@ -47,7 +47,15 @@ class AdminController extends Controller
 
         // }
         //  dd($data['users']);
-         // dd($data);
+         // $array = (array) $data['dates'];
+        $dates = [];
+         foreach ($data['dates'] as $date) {
+             // dd($date);
+            array_push($dates, $date);
+         }
+         $dates = implode(",",$dates);
+         // dd($dates);
+         $data['dates'] = $dates;
         return view('admin.dashboard',$data);
     }
     public function UserList()
