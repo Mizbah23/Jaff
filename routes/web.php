@@ -155,6 +155,16 @@ Route::prefix('admin')->group(function()
        Route::post('/delete','ProgramController@deleteNotice')->name('delete.notice');
         // Route::post('/sts','ProgramController@statusProgram')->name('status.program');
     });
+
+    Route::prefix('message settings')->group(function()
+    {
+      Route::get('/','ProgramController@get')->name('message');
+      // Route::post('/save','ProgramController@saveNotice')->name('save.notice');
+      // Route::post('/list','ProgramController@getNotice')->name('notice.list');
+      // Route::post('/update','ProgramController@updateNotice')->name('update.notice');
+      // Route::post('/delete','ProgramController@deleteNotice')->name('delete.notice');
+        // Route::post('/sts','ProgramController@statusProgram')->name('status.program');
+    });
     
     
    //=================================Slot Setting==============================

@@ -40,14 +40,16 @@ class AdminController extends Controller
          $dates = $dates->merge( $data['users'] );
          $data['dates']=$dates;
          $dates = [];
-         foreach ($data['dates'] as $key=>$date) {
-             array_push($dates, $date);
+         $counts = [];
+         foreach ($data['dates'] as $key=>$count) {
+            // dd($key);
+            array_push($counts, $count);
+            array_push($dates, $key);
             
-         }
-         
-         $dates = implode(",",$dates);
+         }         
+         $counts = implode(",",$counts);
          // dd($dates);
-         $data['dates'] = $dates;
+         $data['counts'] = $counts;
          //******bookings date chart************//
 
          $data['total_books']=Bookdetail::where( 'slot_date', '>=', Carbon::now()->subDays(7))->orderBy('slot_date','desc')->get();
@@ -95,13 +97,13 @@ class AdminController extends Controller
         $data['full_count']=Bookdetail::where( [['slot_date', '>=', Carbon::now()->subDays(30)], ['type', '=', '3' ]])->count();
         $data['drop_count']=Bookdetail::where( [['slot_date', '>=', Carbon::now()->subDays(30)], ['type', '=', '4' ]])->count();
 
-        // Last 12 Month Income Expense
+        //Last 12 Month Income Expense
         
-        // $months = collect();
-        // foreach( range( 0, 11 ) as $i ) {
-        //     $date = Carbon::now()->subMonths( $i )->format( 'M' );
-        //     $months->put( $date, 0);
-        //  }
+        $months = collect();
+        foreach( range( 0, 11 ) as $i ) {
+            $date = Carbon::now()->subMonths( $i )->format( 'M' );
+            $months->put( $date, 0);
+         }
         // dd($months);
      
         return view('admin.dashboard',$data);

@@ -467,7 +467,7 @@
          series: [
          {
              name: "users",
-             data: [{{$dates}}]
+             data: [{{$counts}}]
          }],
          xaxis:
          {
