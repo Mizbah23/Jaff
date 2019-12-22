@@ -9,16 +9,16 @@
             <div class="card bg-analytics text-white">
                 <div class="card-content">
                     <div class="card-body text-center">
-                        <img src="../../../app-assets/images/elements/decore-left.png" class="img-left" alt="card-img-left">
-                        <img src="../../../app-assets/images/elements/decore-right.png" class="img-right" alt="card-img-right">
+                       {{--  <img src="../../../app-assets/images/elements/decore-left.png" class="img-left" alt="card-img-left">
+                        <img src="../../../app-assets/images/elements/decore-right.png" class="img-right" alt="card-img-right"> --}}
                         <div class="avatar avatar-xl bg-primary shadow mt-0">
                             <div class="avatar-content">
                                 <i class="feather icon-award white font-large-1"></i>
                             </div>
                         </div>
                         <div class="text-center">
-                            <h1 class="mb-2 text-white">Congratulations John,</h1>
-                            <p class="m-auto w-75">You have done <strong>57.6%</strong> more sales today. Check your new badge in your profile.</p>
+                            <h2 class="mb-2 text-white">Welcome {{ucfirst(trans(Auth::guard('admin')->user()->name))}} to Jaff Admin Dashboard,</h2>
+                            <p class="m-auto w-75">You have total <strong>{{$total->count()}}</strong> users registered this week.</p>
                         </div>
                     </div>
                 </div>
@@ -35,8 +35,8 @@
                         </div>
                     </div>
                     
-                    <h2 class="text-bold-700 mt-1 mb-25">{{$total->count()}}</h2>
-                    <p class="mb-0">subscribe-gain-chartrs Gained</p>
+                    <h2 class="text-bold-700 mt-1 mb-25">Total {{$total->count()}} users</h2>
+                    <p class="mb-0">User-gain-per-week</p>
                     
                 </div> 
                 <div class="card-content">
@@ -52,8 +52,8 @@
                             <i class="feather icon-package text-warning font-medium-5"></i>
                         </div>
                     </div>
-                    <h2 class="text-bold-700 mt-1 mb-25">97.5K</h2>
-                    <p class="mb-0">Orders Received</p>
+                    <h2 class="text-bold-700 mt-1 mb-25">Total {{$total_books->count()}}</h2>
+                    <p class="mb-0">Booking-graph(per week)</p>
                 </div>
                 <div class="card-content">
                     <div id="orders-received-chart"></div>
@@ -64,112 +64,66 @@
     </div>
                     
                     
-    <div class="row">
+    <div class="row match-height">
         
         <div class="col-md-6 col-12">
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-body">
-                        <div class="row pb-50">
-                            <div class="col-lg-6 col-12 d-flex justify-content-between flex-column order-lg-1 order-2 mt-lg-0 mt-2">
-                                <div>
-                                    <h2 class="text-bold-700 mb-25">2.7K</h2>
-                                    <p class="text-bold-500 mb-75">Avg Sessions</p>
-                                    <h5 class="font-medium-2">
-                                        <span class="text-success">+5.2% </span>
-                                        <span>vs last 7 days</span>
-                                    </h5>
+                             <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Last 30 Days Booked Slot(Type Wise)</h4>
                                 </div>
-                                <a href="#" class="btn btn-primary shadow">View Details <i class="feather icon-chevrons-right"></i></a>
-                            </div>
-                            <div class="col-lg-6 col-12 d-flex justify-content-between flex-column text-right order-lg-2 order-1">
-                                <div class="dropdown chart-dropdown">
-                                    <button class="btn btn-sm border-0 dropdown-toggle p-0" type="button" id="dropdownItem5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Last 7 Days
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownItem5">
-                                        <a class="dropdown-item" href="#">Last 28 Days</a>
-                                        <a class="dropdown-item" href="#">Last Month</a>
-                                        <a class="dropdown-item" href="#">Last Year</a>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div id="donut-chart" class="mx-auto"></div>
                                     </div>
                                 </div>
-                                <div id="avg-session-chart"></div>
                             </div>
-                        </div>
-                        <hr/>
-                        <div class="row avg-sessions pt-50">
-                            <div class="col-6">
-                                <p class="mb-0">Goal: $100000</p>
-                                <div class="progress progress-bar-primary mt-25">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="50" aria-valuemax="100" style="width:50%"></div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <p class="mb-0">Users: 100K</p>
-                                <div class="progress progress-bar-warning mt-25">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="60" aria-valuemax="100" style="width:60%"></div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <p class="mb-0">Retention: 90%</p>
-                                <div class="progress progress-bar-danger mt-25">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="70" aria-valuemax="100" style="width:70%"></div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <p class="mb-0">Duration: 1yr</p>
-                                <div class="progress progress-bar-success mt-25">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="90" aria-valuemax="100" style="width:90%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="col-md-6 col-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between pb-0">
-                    <h4 class="card-title">Support Tracker</h4>
-                    <div class="dropdown chart-dropdown">
-                        <button class="btn btn-sm border-0 dropdown-toggle p-0" type="button" id="dropdownItem4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Last 7 Days
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownItem4">
-                            <a class="dropdown-item" href="#">Last 28 Days</a>
-                            <a class="dropdown-item" href="#">Last Month</a>
-                            <a class="dropdown-item" href="#">Last Year</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <div class="card-body pt-0">
-                        <div class="row">
-                            <div class="col-sm-2 col-12 d-flex flex-column flex-wrap text-center">
-                                <h1 class="font-large-2 text-bold-700 mt-2 mb-0">163</h1>
-                                <small>Tickets</small>
+                                      <div class="card">
+                                <div class="card-header d-flex justify-content-between pb-0">
+                                    <h4 class="card-title">Booked Slot(Peak-Off Peak-Normal)</h4>
+                                    <div class="dropdown chart-dropdown">
+                                        <button class="btn btn-sm border-0 dropdown-toggle px-0" type="button" id="dropdownItem3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Last 30 Days
+                                        </button>
+                          
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body py-0">
+                                        <div id="customer-chart"></div>
+                                    </div>
+                                    <ul class="list-group list-group-flush customer-info">
+                                        <li class="list-group-item d-flex justify-content-between ">
+                                            <div class="series-info">
+                                                <i class="fa fa-circle font-small-3 text-primary"></i>
+                                                <span class="text-bold-600">Peak</span>
+                                            </div>
+                                            <div class="product-result">
+                                                <span>{{$peak_count}}</span>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between ">
+                                            <div class="series-info">
+                                                <i class="fa fa-circle font-small-3 text-warning"></i>
+                                                <span class="text-bold-600">Off-Peak</span>
+                                            </div>
+                                            <div class="product-result">
+                                                <span>{{$offpeak_count}}</span>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between ">
+                                            <div class="series-info">
+                                                <i class="fa fa-circle font-small-3 text-danger"></i>
+                                                <span class="text-bold-600">Normal</span>
+                                            </div>
+                                            <div class="product-result">
+                                                <span>{{$normal_count}}</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="col-sm-10 col-12 d-flex justify-content-center">
-                                <div id="support-tracker-chart"></div>
-                            </div>
-                        </div>
-                        <div class="chart-info d-flex justify-content-between">
-                            <div class="text-center">
-                                <p class="mb-50">New Tickets</p>
-                                <span class="font-large-1">29</span>
-                            </div>
-                            <div class="text-center">
-                                <p class="mb-50">Open Tickets</p>
-                                <span class="font-large-1">63</span>
-                            </div>
-                            <div class="text-center">
-                                <p class="mb-50">Response Time</p>
-                                <span class="font-large-1">1d</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         
     </div>
@@ -181,16 +135,11 @@
         <div class="col-lg-4 col-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between pb-0">
-                    <h4>Product Orders</h4>
+                    <h4>Booking Payment Status Chart</h4>
                     <div class="dropdown chart-dropdown">
                         <button class="btn btn-sm border-0 dropdown-toggle p-0" type="button" id="dropdownItem2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Last 7 Days
+                            Last 30 Days
                         </button>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownItem2">
-                            <a class="dropdown-item" href="#">Last 28 Days</a>
-                            <a class="dropdown-item" href="#">Last Month</a>
-                            <a class="dropdown-item" href="#">Last Year</a>
-                        </div>
                     </div>
                 </div>
                 <div class="card-content">
@@ -199,28 +148,28 @@
                         <div class="chart-info d-flex justify-content-between mb-1">
                             <div class="series-info d-flex align-items-center">
                                 <i class="fa fa-circle-o text-bold-700 text-primary"></i>
-                                <span class="text-bold-600 ml-50">Finished</span>
+                                <span class="text-bold-600 ml-50">Paid</span>
                             </div>
                             <div class="product-result">
-                                <span>23043</span>
+                                <span>{{$paid_count}}</span>
                             </div>
                         </div>
                         <div class="chart-info d-flex justify-content-between mb-1">
                             <div class="series-info d-flex align-items-center">
                                 <i class="fa fa-circle-o text-bold-700 text-warning"></i>
-                                <span class="text-bold-600 ml-50">Pending</span>
+                                <span class="text-bold-600 ml-50">Partial</span>
                             </div>
                             <div class="product-result">
-                                <span>14658</span>
+                                <span>{{$partial_count}}</span>
                             </div>
                         </div>
                         <div class="chart-info d-flex justify-content-between mb-75">
                             <div class="series-info d-flex align-items-center">
                                 <i class="fa fa-circle-o text-bold-700 text-danger"></i>
-                                <span class="text-bold-600 ml-50">Rejected</span>
+                                <span class="text-bold-600 ml-50">Due</span>
                             </div>
                             <div class="product-result">
-                                <span>4758</span>
+                                <span>{{$due_count}}</span>
                             </div>
                         </div>
                     </div>
@@ -243,7 +192,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-12">
+{{--         <div class="col-lg-4 col-12">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Activity Timeline</h4>
@@ -305,7 +254,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         
     </div>
                     
@@ -457,7 +406,11 @@
 @stop
 @section('script')
   <script src="{{asset('public/js/back/apexcharts.min.js')}}"></script>
-    <script src="{{asset('public/js/back/dashboard-analytics.min.js')}}"></script>
+  <script src="{{asset('public/js/back/dashboard-analytics.min.js')}}"></script>
+  <script src="{{asset('public/js/back/dashboard-ecommerce.min.js')}}"></script>
+  <script src="{{asset('public/js/back/shepherd.min.js')}}"></script>
+  <script src="{{asset('public/js/back/chart-apex.min.js')}}"></script>
+
 <script>
     $(document).ready(function(){
        $('.db').addClass('active');
@@ -469,7 +422,8 @@
         var e = "#7367F0",
             a = "#FF9F43",
             t = "#EA5455",
-        // var data= @json($users),
+            r = "#e7eef7";
+        
         s = {
          chart:
          {
@@ -595,7 +549,7 @@
         },
         series: [
         {
-            name: "Orders",
+            name: "Booked",
             data: [{{$bookings}}]
         }],
         xaxis:
@@ -693,11 +647,104 @@
                 }
             }
         },
-        series: [{{$paid_count}}, {{$partial_count}}, {{$due_count}}],
+        series: [{{$paid_percent}}, {{$partial_percent}}, {{$due_percent}}],
         labels: ["Paid", "Partial", "Due"]
     };
     // series: [70, 52, 26],
     // labels: ["Finished", "Pending", "Rejected"]
     new ApexCharts(document.querySelector("#product-order-chart"), d).render();
+
+</script>
+
+<script>
+            var e = "#7367F0",
+            t = "#28C76F",
+            a = "#EA5455",
+            o = "#FF9F43",
+            r = "#A9A2F6",
+            s = "#f29292",
+            i = "#ffc085",
+            l = "#b9c3cd",
+            n = "#e7e7e7",
+            f = {
+            chart:
+            {
+                type: "pie",
+                height: 330,
+                dropShadow:
+                {
+                    enabled: !1,
+                    blur: 5,
+                    left: 1,
+                    top: 1,
+                    opacity: .2
+                },
+                toolbar:
+                {
+                    show: !1
+                }
+            },
+            labels: ["Peak", "Off-Peak", "Normal"],
+            series: [{{$peak_count}},{{$offpeak_count}},{{$normal_count}}],
+            dataLabels:
+            {
+                enabled: !1
+            },
+            legend:
+            {
+                show: !1
+            },
+            stroke:
+            {
+                width: 5
+            },
+            colors: [e, o, a],
+            fill:
+            {
+                type: "gradient",
+                gradient:
+                {
+                    gradientToColors: [r, i, s]
+                }
+            }
+        };
+        new ApexCharts(document.querySelector("#customer-chart"), f).render();
+
+</script>
+<script>
+        var a = [e, "#28C76F", "#EA5455", "#FF9F43", "#00cfe8"],
+         y = {
+        chart:
+        {
+            type: "donut",
+            height: 350
+        },
+        colors: a,
+        labels:['Regular','Offer','Full','Drop'],
+        series: [{{$reg_count}}, {{$offer_count}}, {{$full_count}}, {{$drop_count}}],
+        legend:
+        {
+            itemMargin:
+            {
+                horizontal: 2
+            }
+        },
+        responsive: [
+        {
+            breakpoint: 480,
+            options:
+            {
+                chart:
+                {
+                    width: 350
+                },
+                legend:
+                {
+                    position: "bottom"
+                }
+            }
+        }]
+    };
+    new ApexCharts(document.querySelector("#donut-chart"), y).render();
 </script>
 @stop

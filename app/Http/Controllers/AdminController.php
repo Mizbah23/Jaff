@@ -47,7 +47,9 @@ class AdminController extends Controller
          $dates = implode(",",$dates);
          // dd($dates);
          $data['dates'] = $dates;
-         //bookings date chart
+         //******bookings date chart************//
+
+         $data['total_books']=Bookdetail::where( 'slot_date', '>=', Carbon::now()->subDays(7))->orderBy('slot_date','desc')->get();
          $book_dates = collect();
         foreach( range( 0, 6 ) as $i ) {
             $date = Carbon::now()->subDays( $i )->format( 'Y-m-d' );
@@ -70,12 +72,31 @@ class AdminController extends Controller
          
         $data['bookings'] = $bookings;
        // dd($bookings);
+        //*********Slot date-wise booking chart************////
         $data['total_count'] = Booking::where( 'created_at', '>=', Carbon::now()->subDays(30))->count();
         $data['paid_count'] = Booking::where( [['created_at', '>=', Carbon::now()->subDays(30)], ['status', '=', '1' ]])->count();
         $data['due_count'] = Booking::where( [['created_at', '>=', Carbon::now()->subDays(30)], ['status', '=', '0' ]])->count();
         $data['partial_count'] = Booking::where( [['created_at', '>=', Carbon::now()->subDays(30)], ['status', '=', '2' ]])->count();
+        $data['paid_percent']=number_format($data['paid_count']/($data['total_count'])*100, 0, '.', '');
+        $data['partial_percent']=number_format($data['partial_count']/($data['total_count'])*100, 0, '.', '');
+        $data['due_percent']=number_format($data['due_count']/($data['total_count'])*100, 0, '.', '');
+
         // dd($data);
-        
+        ///**********Slot type wise booking*********'///
+        $data['peak_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '2' ]])->count();
+        $data['offpeak_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '3' ]])->count();
+        $data['normal_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '4' ]])->count();
+        // dd($data['normal_count']);
+        ///**********User type wise booking*********'///
+        $data['total_btcount'] = Bookdetail::where( 'slot_date', '>=', Carbon::now()->subDays(30))->count();
+        $data['reg_count']=Bookdetail::where( [['slot_date', '>=', Carbon::now()->subDays(30)], ['type', '=', '1' ]])->count();
+        $data['offer_count']=Bookdetail::where( [['slot_date', '>=', Carbon::now()->subDays(30)], ['type', '=', '2' ]])->count();
+        $data['full_count']=Bookdetail::where( [['slot_date', '>=', Carbon::now()->subDays(30)], ['type', '=', '3' ]])->count();
+        $data['drop_count']=Bookdetail::where( [['slot_date', '>=', Carbon::now()->subDays(30)], ['type', '=', '4' ]])->count();
+
+        // dd($data['total_btcount']);
+        // dd($booking_types);
+
         return view('admin.dashboard',$data);
     }
     public function UserList()

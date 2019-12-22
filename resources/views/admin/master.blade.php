@@ -22,10 +22,11 @@
     <link rel="stylesheet" type="text/css" href="{{asset('/public/css/back/bootstrap-extended.min.css')}}">
     
 
-    <!--<link rel="stylesheet" type="text/css" href="{{asset('public/css/back/apexcharts.css')}}">-->
+    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/apexcharts.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/dashboard-ecommerce.css')}}">
     <!--<link rel="stylesheet" type="text/css" href="{{asset('public/css/back/tether-theme-arrows.css')}}">-->
     <!--<link rel="stylesheet" type="text/css" href="{{asset('public/css/back/tether.min.css')}}">-->
-    <!--<link rel="stylesheet" type="text/css" href="{{asset('public/css/back/shepherd-theme-default.css')}}">-->
+    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/shepherd-theme-default.css')}}">
     
     <link rel="stylesheet" type="text/css" href="{{asset('/public/css/back/colors.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/public/css/back/components.min.css')}}">
