@@ -31,7 +31,7 @@ class AdminController extends Controller
             $date = Carbon::now()->subDays( $i )->format( 'Y-m-d' );
             $dates->put( $date, 0);
          }
-
+        // dd($dates);
          $data['users']=User::where( 'created_at', '>=', Carbon::now()->subDays(7))->orderBy('created_at','desc')->groupBy(DB::raw('Date(created_at)'))->get(array(
                                 DB::raw('Date(created_at) as date'),
                                 DB::raw('COUNT(*) as "count"')
@@ -40,10 +40,11 @@ class AdminController extends Controller
          $dates = $dates->merge( $data['users'] );
          $data['dates']=$dates;
          $dates = [];
-         foreach ($data['dates'] as $date) {
-             // dd($date);
-            array_push($dates, $date);
+         foreach ($data['dates'] as $key=>$date) {
+             array_push($dates, $date);
+            
          }
+         
          $dates = implode(",",$dates);
          // dd($dates);
          $data['dates'] = $dates;
@@ -94,9 +95,15 @@ class AdminController extends Controller
         $data['full_count']=Bookdetail::where( [['slot_date', '>=', Carbon::now()->subDays(30)], ['type', '=', '3' ]])->count();
         $data['drop_count']=Bookdetail::where( [['slot_date', '>=', Carbon::now()->subDays(30)], ['type', '=', '4' ]])->count();
 
-        // dd($data['total_btcount']);
-        // dd($booking_types);
-
+        // Last 12 Month Income Expense
+        
+        // $months = collect();
+        // foreach( range( 0, 11 ) as $i ) {
+        //     $date = Carbon::now()->subMonths( $i )->format( 'M' );
+        //     $months->put( $date, 0);
+        //  }
+        // dd($months);
+     
         return view('admin.dashboard',$data);
     }
     public function UserList()

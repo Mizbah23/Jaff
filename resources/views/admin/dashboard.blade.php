@@ -3,7 +3,7 @@
 @section('content')
                 <!-- Dashboard Analytics Start -->
 <section id="dashboard-analytics">
-    <div class="row">
+    <div class="row match-height" >
         
         <div class="col-lg-6 col-md-12 col-sm-12">
             <div class="card bg-analytics text-white">
@@ -17,7 +17,7 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <h2 class="mb-2 text-white">Welcome {{ucfirst(trans(Auth::guard('admin')->user()->name))}} to Jaff Admin Dashboard,</h2>
+                            <h2 class="mb-2 text-white">Welcome {{ucfirst(trans(Auth::guard('admin')->user()->name))}},</h2>
                             <p class="m-auto w-75">You have total <strong>{{$total->count()}}</strong> users registered this week.</p>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                     </div>
                     
                     <h2 class="text-bold-700 mt-1 mb-25">Total {{$total->count()}} users</h2>
-                    <p class="mb-0">User-gain-per-week</p>
+                    <p class="mb-0">Registered in last 7 days</p>
                     
                 </div> 
                 <div class="card-content">
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <h2 class="text-bold-700 mt-1 mb-25">Total {{$total_books->count()}}</h2>
-                    <p class="mb-0">Booking-graph(per week)</p>
+                    <p class="mb-0">Booked slot(last 7 days)</p>
                 </div>
                 <div class="card-content">
                     <div id="orders-received-chart"></div>
@@ -176,21 +176,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-start">
-                    <div>
-                        <h4 class="card-title">Sales Stats</h4>
-                        <p class="text-muted mt-25 mb-0">Last 6 months</p>
-                    </div>
-                    <p class="mb-0"><i class="feather icon-more-vertical font-medium-3 text-muted cursor-pointer"></i></p>
-                </div>
-                <div class="card-content">
-                    <div class="card-body px-0">
-                        <div id="sales-chart"></div>
-                    </div>
-                </div>
-            </div>
+        <div class="col-lg-4 col-lg-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Column Chart</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div id="column-chart"></div>
+                                    </div>
+                                </div>
+                            </div>
         </div>
 {{--         <div class="col-lg-4 col-12">
             <div class="card">
@@ -408,7 +404,7 @@
   <script src="{{asset('public/js/back/apexcharts.min.js')}}"></script>
   <script src="{{asset('public/js/back/dashboard-analytics.min.js')}}"></script>
   <script src="{{asset('public/js/back/dashboard-ecommerce.min.js')}}"></script>
-  <script src="{{asset('public/js/back/shepherd.min.js')}}"></script>
+  {{-- <script src="{{asset('public/js/back/shepherd.min.js')}}"></script> --}}
   <script src="{{asset('public/js/back/chart-apex.min.js')}}"></script>
 
 <script>
