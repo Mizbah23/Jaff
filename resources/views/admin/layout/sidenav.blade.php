@@ -203,6 +203,11 @@
                         <a href="{{route('membership')}}"><i class="fa fa-dribbble"></i>
                         <span class="menu-title" data-i18n="Email">Membership</span></a>
                 </li>
+
+                <li class=" nav-item msgsetting">
+                        <a href="{{route('message')}}"><i class="fa fa-envelope-open"></i>
+                        <span class="menu-title" data-i18n="Email">Message Settings</span></a>
+                </li>
             
             
 <!--                <li class=" nav-item">

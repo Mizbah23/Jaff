@@ -93,11 +93,11 @@ class HomeController extends Controller
         );
         return Response::json($notification); 
     }
-    public function getTimeTable()
+    public function getBooking()
     {
         $data = array();
-        $data['title'] = 'Slot Time Table';
-        return view('user.pages.timetable',$data);
+        $data['title'] = 'Jaff';
+        return view('user.pages.booking',$data);
     }
     public function showAllNews()
     {

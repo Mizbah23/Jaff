@@ -47,7 +47,7 @@
 				</div>
 				<div class="under-button">
 					<span></span>
-					<a href="{{route('time')}}" class="d-border-c d-bg-c-h d-text-c">Book A Slot</a>
+					<a href="#" class="d-border-c d-bg-c-h d-text-c">Book A Slot</a>
 				</div>
 			</div>
 			<div class="col-md-4">

@@ -3,6 +3,7 @@
 namespace Jaff\Http\Controllers;
 
 use Illuminate\Http\Request;
+// namespace App\Mail;
 use Jaff\User;
 use Jaff\Booking;
 use Jaff\Bookdetail;
@@ -11,6 +12,8 @@ use Jaff\Offer;
 use Jaff\Dropin;
 use Jaff\Fullday;
 use Jaff\Offerdetail;
+use Illuminate\Support\Facades\Mail;
+// use App\Mail\SendMailable;
 use Cart;
 use DB;
 use Auth;
@@ -162,56 +165,66 @@ class BookingController extends Controller
         $book->created_by = Auth::guard('admin')->user()->id;
         $book->save();
         
-        $bookid = $book->book_id;
-        if($bookid < 10){$book_code = "JFSB0000".$bookid;}
-        else if ($bookid < 100){$book_code = "JFSB000".$bookid;}
-        else if ($bookid < 1000){$book_code = "JFSB00".$bookid;}
-        else if ($bookid < 10000){$book_code = "JFSB0".$bookid;}
-        else {$book_code = "JFSB".$bookid;}
-        $upcode = Booking::find($bookid);
-        $upcode->book_code = $book_code;
-        $upcode->save();
+        // $bookid = $book->book_id;
+        // if($bookid < 10){$book_code = "JFSB0000".$bookid;}
+        // else if ($bookid < 100){$book_code = "JFSB000".$bookid;}
+        // else if ($bookid < 1000){$book_code = "JFSB00".$bookid;}
+        // else if ($bookid < 10000){$book_code = "JFSB0".$bookid;}
+        // else {$book_code = "JFSB".$bookid;}
+        // $upcode = Booking::find($bookid);
+        // $upcode->book_code = $book_code;
+        // $upcode->save();
         
-        foreach(Cart::content() as $cart)
-        {
-            $bookdetail = new Bookdetail;
-            $bookdetail->book_id = $bookid;
-            $bookdetail->slot_date = $cart->options->date;
-            $bookdetail->slot_id = $cart->options->slot;
-            $bookdetail->ground_id = 1;
+        // foreach(Cart::content() as $cart)
+        // {
+        //     $bookdetail = new Bookdetail;
+        //     $bookdetail->book_id = $bookid;
+        //     $bookdetail->slot_date = $cart->options->date;
+        //     $bookdetail->slot_id = $cart->options->slot;
+        //     $bookdetail->ground_id = 1;
 
-            if(array_key_exists($cart->options->date, $fdays))
-            {
-                $bookdetail->price = $cart->options->price;
-                $bookdetail->discount = $cart->options->price-$fdays[$cart->options->date];
-                $bookdetail->book_price = $fdays[$cart->options->date];
-                $bookdetail->type= 3;
-            }
-            else{
-                if(array_key_exists($cart->options->date, $drops) && array_key_exists($cart->options->slot, $dslot))
-                {
-                    $bookdetail->price = $drops[$cart->options->date];
-                    $bookdetail->discount = 0;
-                    $bookdetail->book_price = $drops[$cart->options->date];
-                    $bookdetail->type= 4;
+        //     if(array_key_exists($cart->options->date, $fdays))
+        //     {
+        //         $bookdetail->price = $cart->options->price;
+        //         $bookdetail->discount = $cart->options->price-$fdays[$cart->options->date];
+        //         $bookdetail->book_price = $fdays[$cart->options->date];
+        //         $bookdetail->type= 3;
+        //     }
+        //     else{
+        //         if(array_key_exists($cart->options->date, $drops) && array_key_exists($cart->options->slot, $dslot))
+        //         {
+        //             $bookdetail->price = $drops[$cart->options->date];
+        //             $bookdetail->discount = 0;
+        //             $bookdetail->book_price = $drops[$cart->options->date];
+        //             $bookdetail->type= 4;
                     
-                }else{
-                    if(array_key_exists($cart->options->date, $lists) && array_key_exists($cart->options->slot, $slots))
-                    {
-                        $bookdetail->price = $cart->options->price;
-                        $bookdetail->discount = ($lists[$cart->options->date]/100)*$cart->options->price;
-                        $bookdetail->book_price = $cart->options->price-(($lists[$cart->options->date]/100)*$cart->options->price);
-                        $bookdetail->type = 2;
-                    }else{
-                        $bookdetail->price = $cart->options->price;
-                        $bookdetail->discount = 0;
-                        $bookdetail->book_price = $cart->options->price;
-                        $bookdetail->type= 1;
-                    }
-                }                        
-            }
-            $bookdetail->save();   
-        }
+        //         }else{
+        //             if(array_key_exists($cart->options->date, $lists) && array_key_exists($cart->options->slot, $slots))
+        //             {
+        //                 $bookdetail->price = $cart->options->price;
+        //                 $bookdetail->discount = ($lists[$cart->options->date]/100)*$cart->options->price;
+        //                 $bookdetail->book_price = $cart->options->price-(($lists[$cart->options->date]/100)*$cart->options->price);
+        //                 $bookdetail->type = 2;
+        //             }else{
+        //                 $bookdetail->price = $cart->options->price;
+        //                 $bookdetail->discount = 0;
+        //                 $bookdetail->book_price = $cart->options->price;
+        //                 $bookdetail->type= 1;
+        //             }
+        //         }                        
+        //     }
+
+        //     $bookdetail->save();   
+        // }
+        $to_name = User::where('username',$request->bookedfor)->value('username');
+        $to_mail = User::where('username',$request->bookedfor)->value('email');
+        
+        $data = array('name'=>$to_name, "body" => $to_mail,);
+        Mail::to('emails.mail', $data, function($message) use ($to_name, $to_mail) {
+                 $message->to($to_mail, $to_name)->subject('Artisans Web Testing Mail');
+        $message->from('mizbahmed161@gmail.com','Artisans Web');
+        });
+        // return $data;
         $notification = array(
                 'message' => 'Booking Confirmed Successfully',
                 'type' => 'success'

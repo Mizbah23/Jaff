@@ -10,7 +10,8 @@
 */
 Auth::routes();
 Route::get('/','HomeController@getMainPage')->name('home');
-Route::get('/timetable','HomeController@getTimeTable')->name('time');
+// Route::get('/timetable','HomeController@getTimeTable')->name('time');
+Route::get('/booking','HomeController@getBooking')->name('booking');
 
 //User Login & Reg routes
 Route::get('/login','Auth\LoginController@showLoginForm')->name('login');
@@ -158,8 +159,8 @@ Route::prefix('admin')->group(function()
 
     Route::prefix('message settings')->group(function()
     {
-      Route::get('/','ProgramController@get')->name('message');
-      // Route::post('/save','ProgramController@saveNotice')->name('save.notice');
+      Route::get('/','ProgramController@getMsg')->name('message');
+      Route::post('/save','ProgramController@saveMsg')->name('save.msgform');
       // Route::post('/list','ProgramController@getNotice')->name('notice.list');
       // Route::post('/update','ProgramController@updateNotice')->name('update.notice');
       // Route::post('/delete','ProgramController@deleteNotice')->name('delete.notice');

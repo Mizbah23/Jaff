@@ -1,3 +1,4 @@
+@@ -1,746 +0,0 @@
 @extends('admin.master')
 @section('title'){{$title}}@stop
 @section('content')

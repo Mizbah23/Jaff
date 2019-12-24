@@ -74,8 +74,8 @@
                                         <a title="Login" href="{{route('login')}}" aria-haspopup="true"><i class="fa fa-user"></i> Login </a>
                                     </li>
 
-                                    <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="fa fa-cart-plus"></i><span class="caret"></span><span class="badge badge-pill badge-primary badge-up">5</span></a>
-                                    <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
+                                    <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="{{route('booking')}}" data-toggle="dropdown"><i class="fa fa-cart-plus"></i><span class="caret"></span><span class="badge badge-pill badge-primary badge-up">5</span></a>
+{{--                                     <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                                      <li class="dropdown-menu-header">
                                         <div class="dropdown-header m-0 p-2">
                                             <h3 class="white">5 New</h3><span class="notification-title">App Notifications</span>
@@ -123,7 +123,7 @@
                                             </div>
                                         </a></li>
                                     <li class="dropdown-menu-footer"><a class="dropdown-item p-1 text-center" href="javascript:void(0)">Read all notifications</a></li>
-                                </ul>
+                                </ul> --}}
                             </li>
                                     
                                     

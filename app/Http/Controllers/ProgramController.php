@@ -10,6 +10,7 @@ use Jaff\Singleimg;
 use Jaff\Testimonial;
 use Jaff\Membership;
 use Jaff\Notice;
+use Jaff\Mailsettings;
 use Auth;
 use Response;
 class ProgramController extends Controller
@@ -898,6 +899,37 @@ class ProgramController extends Controller
                  'type' => 'error'
              );
         return Response::json($notification);
+    }
+    //************* Message Settings *************//
+        public function getMsg()
+    {
+        $data = array();
+        $data['title'] = 'Message & Mail Setup';
+        $data['messages']=Mailsettings::where('id',1)->first();
+        return view('admin.pages.msgsetup',$data);
+    }
+
+        public function saveMsg(Request $request)
+    {
+        if(!$messages = Mailsettings::find(1)){
+            return Response::json($error);
+        }
+        else{
+        // $msg = new Mailsettings;
+        $messages->username = $request->username;
+        $messages->password = $request->password;
+        $messages->url = $request->url;
+        $messages->update();
+                $error=array(
+            'message' =>'Nothing to Update' , 
+            'type'=>'danger'
+        );
+        $notification = array(
+                'message' => 'Customer Message Updated!',
+                'type' => 'success'
+        );
+
+        return Response::json($notification); 
     }
 
 }

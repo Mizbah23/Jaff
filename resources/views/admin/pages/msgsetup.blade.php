@@ -18,52 +18,73 @@
 <!--***********************************addimage*******************************-->
        <section id="basic-tabs-components">
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-8">
                     <div class="card overflow-hidden">
-                        <form method="post" id="addFrm" enctype="multipart/form-data"> 
-                            @csrf
-                            <input type="hidden" name="oldoffer" value="{{asset($images->offer_image)}}"
-                            id="oldoffer">
-                            <input type="hidden" name="oldabout" id="oldabout" value="{{asset($images->about_image)}}">
-                            <div class="card-content">
+
+                            
+                       <div class="card-content">
                                     <div class="card-body">
                                         
                                         <ul class="nav nav-tabs" role="tablist">
                                             <li class="nav-item">
-                                                <a class="nav-link active" id="offer-tab" data-toggle="tab" href="#offer" aria-controls="offer" role="tab" aria-selected="true">Offer Section Image</a>
+                                                <a class="nav-link active" id="offer-tab" data-toggle="tab" href="#offer" aria-controls="offer" role="tab" aria-selected="true">Customer SMS Setup</a>
                                             </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" aria-controls="about" role="tab" aria-selected="false">About us section image</a>
-                                            </li>
-
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" aria-controls="profile" role="tab" aria-selected="false">#</a>
-                                            </li>
+{{--                                             <li class="nav-item">
+                                                <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" aria-controls="about" role="tab" aria-selected="false">Customer Mail Setup</a>
+                                            </li> --}}
   
                                         </ul>
                                         <div class="tab-content">
                                             
                                             <div class="tab-pane active" id="offer" aria-labelledby="offer-tab" role="tabpanel">
-                                                
-                                                <div data-provides="fileupload" class="fileupload fileupload-new">
-                                                    <div  class="fileupload-new thumbnail upimg">
-                                                        <img alt="" class="oldoffer" src="{{asset($images->offer_image)}}">
-                                                    </div>
-                                                    <div  class="fileupload-preview fileupload-exists upimg thumbnail"></div>
-                                                    <div>
-                                                       <span class="btn btn-sm btn-success btn-file"><span class="fileupload-new">Select</span>
-                                                       <span class="fileupload-exists">Change</span>
-                                                       <input type="file" name="offer_image" class="default"></span>
-                                                        <a data-dismiss="fileupload" class="btn btn-sm bg-maroon fileupload-exists btn-danger" href="#">Remove</a>
-                                                    </div>
+                                                <div class="row">
+                                                <div class="col-sm-4 col-6">
+                                                <form method="post" id="addFrm" > 
+                                                    <input type="hidden" name="pid" id="pid" value="{{($messages->id)}}">
+                                                @csrf
+                                                <div>
+                                                <fieldset class="form-label-group form-group position-relative has-icon-left">
+                                                <input type="text" class="form-control" name="username" id="username" value="{{($messages->username)}}" placeholder="Username">
+                                                <div class="form-control-position">
+                                                    <i class="feather icon-phone"></i>
                                                 </div>
+                                                   
+                                                </fieldset>
+
+                                                <fieldset class="form-label-group form-group position-relative has-icon-left">
+                                                <input type="text" class="form-control" name="password" id="password" value="{{($messages->password)}}" placeholder="Password">
+                                                <div class="form-control-position">
+                                                    <i class="feather icon-unlock"></i>
+                                                </div>
+                                                    
+                                                </fieldset>
+
+                                                <fieldset class="form-label-group form-group position-relative has-icon-left">
+                                                <input type="text" class="form-control" name="url" id="url" value="{{($messages->url)}}" placeholder="Url">
+                                                <div class="form-control-position">
+                                                    <i class="feather icon-link"></i>
+                                                </div>
+                                                   
+                                                </fieldset>
+                                                </div>
+                                              <div>
+                                              
+                                              <button type="submit" class="btn btn-outline-info mr-1 mb-1 waves-effect waves-light"> Update 
+                                              <span class="addbtn" role="status" aria-hidden="true"></span>
+                                              </button>
+                                              </div>
+                                              </form>
+                                      
+                                               </div>
+                                
                                             </div>
-                                            <div class="tab-pane" id="about" aria-labelledby="about-tab" role="tabpanel">
+                                            </div>
+{{--                                             <div class="tab-pane" id="about" aria-labelledby="about-tab" role="tabpanel">
                                            
                                             <label><code>Please select about us image</code></label>
                                               <div data-provides="fileupload" class="fileupload fileupload-new">
                                                 <div  class="fileupload-new thumbnail upimg">
-                                                    <img alt="" class="oldabout" src="{{asset($images->about_image)}}">
+                                                    <img alt="" class="oldabout" src="">
                                                 </div>
                                                     <div  class="fileupload-preview fileupload-exists upimg thumbnail"></div>
                                                     <div>
@@ -73,37 +94,15 @@
                                                         <a data-dismiss="fileupload" class="btn btn-sm bg-maroon fileupload-exists btn-danger" href="#">Remove</a>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="tab-pane" id="disable" role="tabpanel" aria-labelledby="disable-tab">
-                                                <p>Cake croissant lemon drops gummi bears carrot cake biscuit cupcake croissant. Macaroon lemon drops
-                                                    muffin jelly sugar plum chocolate cupcake danish icing. Soufflé tootsie roll lemon drops sweet roll
-                                                    cake icing cookie halvah cupcake.</p>
-                                            </div>
-                                            <div class="tab-pane" id="dropdown32" role="tabpanel" aria-labelledby="dropdown32-tab" aria-expanded="false">
-                                                <p>Chocolate croissant cupcake croissant jelly donut. Cheesecake toffee apple pie chocolate bar biscuit
-                                                    tart croissant. Lemon drops danish cookie. Oat cake macaroon icing tart lollipop cookie sweet bear
-                                                    claw.</p>
-                                            </div>
-                                             <div class="tab-pane " id="profile" aria-labelledby="profile-tab" role="tabpanel">
-                                                <p>Carrot cake dragée chocolate. Lemon drops ice cream wafer gummies dragée. Chocolate bar liquorice
-                                                    cheesecake cookie chupa chups marshmallow oat cake biscuit. Dessert toffee fruitcake ice cream
-                                                    powder
-                                                    tootsie roll cake.</p>
-                                            </div>
+                                            </div> --}}
+
+
                                           
                                         </div>
                                     </div>
                                 </div>
-                 <div>
-                <button type="reset" class="btn btn-outline-warning mr-1 mb-1 waves-effect waves-light">Reset</button>
-                <button type="submit" class="btn btn-outline-info mr-1 mb-1 waves-effect waves-light">
-                    Save <span class="addbtn" role="status" aria-hidden="true"></span>
-                    
-                </button>
-                
-            </div>
-                            </form>
-                            </div>
+
+                                                        </div>
                         </div>
                     </div>
                 </section>
@@ -125,7 +124,7 @@
 
     $(document).ready(function()
     {
-       $('.images').addClass('active');
+       $('.msgsetting').addClass('active');
        countslot();
        
     });
@@ -152,7 +151,7 @@ $("#addFrm").on('submit',function(event)
     // formData.append('description', 
     $.ajax({
         type: 'POST',
-        url: "{{route('save.single_image')}}",
+        url: "{{route('save.msgform')}}",
         data:formData,
         dataType:'JSON',
         contentType: false,
@@ -162,12 +161,13 @@ $("#addFrm").on('submit',function(event)
         {
             console.log(data);
             // table.ajax.reload( null, false );
-
-            $('#oldoffer').val(data.offerimg);
-            $('#oldabout').val(data.aboutimg);
-
+            $('#username').val(data.username);
+            $('#password').val(data.password);
+            $('#url').val(data.url);
             toastr[data.type](data.message);
-
+            document.getElementById("addFrm").reset();
+            location.reload();
+            
             // $('.addbtn').removeClass('spinner-border spinner-border-sm');
         }
     });
