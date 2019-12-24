@@ -7,6 +7,8 @@ use Jaff\Slot;
 use Jaff\Holiday;
 use Jaff\Booking;
 use Jaff\Bookdetail;
+use Jaff\Fullday;
+use Jaff\Dropin;
 use Illuminate\Support\Facades\Input;
 use DB;
 use PDF;
@@ -99,6 +101,32 @@ class ReportController extends Controller
                 {return $query->whereRaw("TIME(slots.end) <= ?", $toTime);})->get();
                 $pdf = PDF::loadView('report.bookslotPrint',['posts'=>$posts,'total'=>count($posts),'fromdate'=>$fromDate,'todate'=>$toDate,'fromtime'=>$fromTime,'totime'=>$toTime]);
         return $pdf->stream('Booking_Slot-Pdf.pdf');
+    }
+    /****** Full day Print ********/
+        public function fulldayPrint(Request $request)
+    {
+        $fromdate= Input::get('fromdate');
+        $todate=   Input::get('todate');
+    
+        $total= Fullday::count();
+            $posts = Fullday::join('grounds','fulldays.ground_id','=','grounds.id')
+                    ->select('fulldays.*','grounds.name')->get();
+                $pdf = PDF::loadView('report.fulldayPrint',['posts'=>$posts,'total'=>count($posts),'fromdate'=>$fromdate,'todate'=>$todate]);
+        return $pdf->stream('Fullday_slot-Pdf.pdf');
+    }
+    /******* Dropin Print ********/
+        public function dropinPrint(Request $request)
+    {
+        $fromdate= Input::get('fromdate');
+        $todate=   Input::get('todate');
+    
+        $total= Dropin::count();
+            $posts = Dropin::join('slots','dropins.slot_id','=','slots.slot_id')
+                    ->join('grounds','dropins.ground_id','=','grounds.id')
+                    ->select('dropins.*','grounds.name','slots.start','slots.end',DB::raw("(SELECT count(bookdetails.id) FROM bookdetails WHERE "
+                            . "bookdetails.`slot_id`=dropins.`slot_id` AND bookdetails.`slot_date`=dropins.`date`) as booked"))->get();
+                $pdf = PDF::loadView('report.dropinPrint',['posts'=>$posts,'total'=>count($posts),'fromdate'=>$fromdate,'todate'=>$todate]);
+        return $pdf->stream('Dropin-Pdf.pdf');
     }
 
 }

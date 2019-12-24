@@ -920,16 +920,14 @@ class ProgramController extends Controller
         $messages->password = $request->password;
         $messages->url = $request->url;
         $messages->update();
-                $error=array(
+        $notification=array(
             'message' =>'Nothing to Update' , 
             'type'=>'danger'
         );
-        $notification = array(
-                'message' => 'Customer Message Updated!',
-                'type' => 'success'
-        );
+    
 
         return Response::json($notification); 
     }
 
+}
 }

@@ -1,4 +1,3 @@
-@@ -1,746 +0,0 @@
 @extends('admin.master')
 @section('title'){{$title}}@stop
 @section('content')
@@ -19,7 +18,7 @@
                         </div>
                         <div class="text-center">
                             <h2 class="mb-2 text-white">Welcome {{ucfirst(trans(Auth::guard('admin')->user()->name))}},</h2>
-                            <p class="m-auto w-75">You have total <strong>{{$total->count()}}</strong> users registered this week.</p>
+                            <p class="m-auto w-75">You have total <strong>{{$total_books->count()}}</strong> bookings in last 7 days.</p>
                         </div>
                     </div>
                 </div>

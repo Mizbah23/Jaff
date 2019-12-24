@@ -80,11 +80,11 @@ class AdminController extends Controller
         $data['paid_count'] = Booking::where( [['created_at', '>=', Carbon::now()->subDays(30)], ['status', '=', '1' ]])->count();
         $data['due_count'] = Booking::where( [['created_at', '>=', Carbon::now()->subDays(30)], ['status', '=', '0' ]])->count();
         $data['partial_count'] = Booking::where( [['created_at', '>=', Carbon::now()->subDays(30)], ['status', '=', '2' ]])->count();
-        $data['paid_percent']=number_format($data['paid_count']/($data['total_count'])*100, 0, '.', '');
-        $data['partial_percent']=number_format($data['partial_count']/($data['total_count'])*100, 0, '.', '');
-        $data['due_percent']=number_format($data['due_count']/($data['total_count'])*100, 0, '.', '');
-
-        // dd($data);
+        $data['paid_percent']=number_format($data['paid_count']/($data['total_count'])*100, 2, '.', '');
+        $data['partial_percent']=number_format($data['partial_count']/($data['total_count'])*100, 2, '.', '');
+        $data['due_percent']=number_format($data['due_count']/($data['total_count'])*100, 2, '.', '');
+        
+        // dd($data['due_percent']);
         ///**********Slot type wise booking*********'///
         $data['peak_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '2' ]])->count();
         $data['offpeak_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '3' ]])->count();

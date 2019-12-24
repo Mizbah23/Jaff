@@ -1,5 +1,3 @@
-
-
 {{-- /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Holidays</title>
+    <title>Fulldays</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style type="text/css">
  
@@ -53,8 +51,7 @@ img {
     <div style="margin-top: -10px">Bashundhara Main Gate,
     Opposite of Jamuna Future Park Sidegate,<br>Bashundhara R/A,Dhaka.
     <br>Phone: +8801304229158, Email: info@jaff.com
-    <h4>Holiday List</h4>
-    @if(!empty($from && $to))
+{{--     @if(!empty($from && $to))
     <h4>List of Holidays(from {{date('d-m-Y',strtotime($from))}} to {{date('d-m-Y',strtotime($to))}})</h4>
     @elseif(!empty($from))
     <h4>List of Holidays(from {{date('d-m-Y',strtotime($from))}})</h4>
@@ -62,7 +59,9 @@ img {
     <h4>List of Holidays(Till {{date('d-m-Y',strtotime($to))}})</h4>
     @else
     <h4>List of Holidays(All)</h4>
-    @endif
+    @endif --}}
+    <br>
+    <h4>Fullday List</h4>
     <br>
   </div>
   </div>
@@ -72,8 +71,9 @@ img {
      <table id="hldTbl" class="table zero-configuration ">
        <thead>
         <tr>
-               <th>Holiday</th>
-               <th>Purpose</th>
+               <th>Pick Date</th>
+               <th>Price</th>
+               <th>Details</th>
                <th>Ground</th>
                {{-- <th>Status</th> --}}    
        </tr>
@@ -81,8 +81,9 @@ img {
        <tbody>
         @foreach ($posts as $item)  
         <tr>
-            <td align="center">{{date('D ,d M Y',strtotime($item->holiday))}}</td>
+            <td align="center">{{date('D ,d M Y',strtotime($item->date))}}</td>
             
+            <td align="center">{{$item->price}}</td>
             <td align="center">{{$item->details}}</td>
             <td align="center">{{$item->name}}</td>
             {{-- <td align="center">{{$item->status}}</td> --}}
@@ -94,7 +95,7 @@ img {
        
    </center>
  <br>
-        <h4  style="text-align: center;font-size: 12px">Total Holidays {{$total}}</h4>
+        <h4  style="text-align: center;font-size: 12px">Total {{$total}}</h4>
 
 </body>
 

@@ -13,7 +13,7 @@
 @section('content')
 <div class="content">
 
-<div class="path-section" style='background-image: url(public/img/slide-1.jpg);'>
+<div class="path-section" style="background-image: url('{{asset('public/img/slide-1.jpg')}}')">
     <div class="bg-cover">
         <div class="container">
             <h3>News & Updates</h3>

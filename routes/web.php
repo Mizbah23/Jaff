@@ -287,6 +287,9 @@ Route::prefix('admin')->group(function()
         Route::get('/holiday-list', ['as' => 'report.holidayPrint', 'uses' => 'ReportController@holidayPrint']);
         Route::get('/booking-list', ['as' => 'report.bookingPrint', 'uses' => 'ReportController@bookingListPrint']);
         Route::get('/booked-slot-list', ['as' => 'report.bookslotPrint', 'uses' => 'ReportController@bookslotPrint']);
+        Route::get('/fillday-list', ['as' => 'report.fullday', 'uses' => 'ReportController@fulldayPrint']);
+        
+        Route::get('/dropin-list', ['as' => 'report.dropin', 'uses' => 'ReportController@dropinPrint']);
         
    });
     Route::prefix('acounts')->group(function()

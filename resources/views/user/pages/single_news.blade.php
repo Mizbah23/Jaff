@@ -23,10 +23,10 @@
 @section('content')
 <div class="content">
 
-<div class="path-section" style='background-image: url(public/img/slide-1.jpg);'>
+<div class="path-section" style="background-image: url('{{asset('public/img/slide-1.jpg')}}')">
     <div class="bg-cover">
         <div class="container">
-            <h3>Time Table</h3>
+            <h3>News Detail</h3>
         </div>
     </div>
 </div>
