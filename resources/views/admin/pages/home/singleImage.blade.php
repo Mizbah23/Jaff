@@ -25,7 +25,7 @@
                             <input type="hidden" name="oldoffer" value="{{asset($images->offer_image)}}"
                             id="oldoffer">
                             <input type="hidden" name="oldabout" id="oldabout" value="{{asset($images->about_image)}}">
-                            <div class="card-content">
+                       <div class="card-content">
                                     <div class="card-body">
                                         
                                         <ul class="nav nav-tabs" role="tablist">
@@ -44,7 +44,7 @@
                                         <div class="tab-content">
                                             
                                             <div class="tab-pane active" id="offer" aria-labelledby="offer-tab" role="tabpanel">
-                                                
+                                                <label><code>Please select offer image</code></label>
                                                 <div data-provides="fileupload" class="fileupload fileupload-new">
                                                     <div  class="fileupload-new thumbnail upimg">
                                                         <img alt="" class="oldoffer" src="{{asset($images->offer_image)}}">

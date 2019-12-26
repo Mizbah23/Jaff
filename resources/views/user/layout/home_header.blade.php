@@ -190,7 +190,7 @@
                                         <a title="Pages" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true">Profile <span class="caret"></span></a>
                                         <ul role="menu" class="dropdown-menu">
                                             <li id="menu-item-405" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-405">
-                                              <a title="Time Table" href="time.html">{{Auth::guard('web')->user()->username}}</a>
+                                              <a title="Time Table" href="profile.html">{{Auth::guard('web')->user()->username}}</a>
                                             </li>
                                             <li id="menu-item-407" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-407">
                                                 <a title="Shortcodes" href="{{route('logout')}}">Logout</a>

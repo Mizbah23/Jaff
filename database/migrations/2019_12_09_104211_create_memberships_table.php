@@ -14,15 +14,13 @@ class CreateMembershipsTable extends Migration
     public function up()
     {
         Schema::create('memberships', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->Increments('id');
             $table->string('name');
             $table->integer('duration');
             $table->integer('fee')->default(0)->nullable();
             $table->boolean('discount')->default(0)->nullable();
-            $table->integer('damount')->default(0)->nullable();
-            $table->tinyInteger('status')
-                  ->default(0)->nullable()
-                  ->comment('0=inactive|1=active');
+            $table->tinyInteger('status')->default(0)->nullable()
+                    ->comment('0=inactive|1=active');
             $table->timestamps();
         });
     }

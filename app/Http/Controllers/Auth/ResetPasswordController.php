@@ -4,6 +4,7 @@ namespace Jaff\Http\Controllers\Auth;
 
 use Jaff\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -44,7 +45,11 @@ class ResetPasswordController extends Controller
     
     public function resetCode(Request $request,$phone)
     {
+        // dd($request->all());
      $user=User::where('phone',$phone)->first();
+      if (! $request->hasValidSignature()) {
+        abort(401);
+    }
          // dd($user);
     return view('user.auth.reset')->with('user',$user);
     }
@@ -62,7 +67,8 @@ class ResetPasswordController extends Controller
               
           if($code===$enteredOtp){
             User::where('phone', $phone)->update(['phone_verified_at'=>date('Y-m-d H:i:s'),'vcode'=>null]);
-            // dd($request->all());
+            
+
             return redirect()->route('newPassword',['phone'=>$request->phone])->with('success','You are ready to give new Password');
             }
       }

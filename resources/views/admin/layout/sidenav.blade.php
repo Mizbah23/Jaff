@@ -30,12 +30,12 @@
 
             <li class="navigation-header"><span>Website</span></li>
                 
-            
-            
+            @if(session()->has('user'))
             <li class=" nav-item usr">
                 <a href="{{route('user')}}"><i class="feather icon-users"></i>
                 <span class="menu-title" data-i18n="Email">Users</span></a>
-            </li>  
+            </li> 
+            @endif
                 
                
                 
@@ -78,16 +78,31 @@
                         <a href="{{route('testimonials')}}"><i class="feather icon-clipboard"></i>
                         <span class="menu-title" data-i18n="Email">Testimonials</span></a>
                     </li>
-
-                    <li class=" nav-item notices">
+                    
+<!--                    <li class=" nav-item notices">
                         <a href="{{route('notices')}}"><i class="feather icon-clipboard"></i>
                         <span class="menu-title" data-i18n="Email">Notices</span></a>
-                    </li>
+                    </li>-->
                 </ul>
             </li>
-                
-                
-                     <li class="n nav-item">
+            
+            
+            <li class=" nav-item nw">
+                    <a href="{{route('show.news')}}">
+                        <i class="feather icon-message-square"></i>
+                        <span class="menu-title" data-i18n="Email">News</span>
+                    </a>
+            </li>
+            
+            <li class=" nav-item notices">
+                    <a href="{{route('notices')}}">
+                        <i class="feather icon-clipboard"></i>
+                        <span class="menu-title" data-i18n="Email">Notices</span>
+                    </a>
+            </li>
+            
+            
+<!--            <li class="n nav-item">
                 <a href="#">
                     <i class="feather icon-message-square"></i>
                     <span class="menu-title" data-i18n="Ecommerce">News & Updates</span>
@@ -98,82 +113,128 @@
                         <span class="menu-title" data-i18n="Email">News</span></a>
                     </li>
                 </ul>
-            </li>  
-                
-                
-                
-                
-                
+            </li>-->
+
                 <li class="navigation-header"><span>Administration</span></li>
                 
+                <li class=" nav-item ucs">
+                    <a href="{{route('setting.usr')}}"><i class="feather icon-settings"></i>
+                    <span class="menu-title" data-i18n="Email">Settings</span></a>
+                </li>
                 
-                
+                @if(session()->has('admin'))
                 <li class=" nav-item admn">
                     <a href="{{route('admin.user')}}"><i class="feather icon-users"></i>
                     <span class="menu-title" data-i18n="Email">Admins</span></a>
                 </li>
-
+                @endif
             <!--<li class="navigation-header"><span>Administration</span></li>-->
-                
+                @if(session()->has('ground'))
                 <li class="grnd nav-item">
                     <a href="{{route('ground.setting')}}">
-                        <i class="fa fa-location-arrow"></i>
+                        <i class="feather icon-map-pin"></i>
                         <span class="menu-title" data-i18n="Calender">Ground</span>
                     </a>
                 </li>
-                
+                @endif
                 <li class="s nav-item">
                     <a href="#">
                         <i class="feather icon-clock"></i>
                         <span class="menu-title" data-i18n="Ecommerce">Slots</span>
                     </a>
                     <ul class="menu-content">
+                        @if(session()->has('week'))
                         <li class="wtyp nav-item">
                             <a href="{{route('get.weektype')}}">
                                 <i class="feather icon-package"></i>
                                 <span class="menu-title" data-i18n="Calender">Week & Type</span>
                             </a>
                         </li>
+                        @endif
+                        @if(session()->has('slot'))
                         <li class="slt nav-item">
                             <a href="{{route('slot.setting')}}">
                                 <i class="feather icon-list"></i>
                                 <span class="menu-title" data-i18n="Calender">Slot List</span>
                             </a>
                         </li>
+                        @endif
+                        @if(session()->has('ofr'))
                         <li class="ofr nav-item">
                             <a href="{{route('list.offer')}}">
                                 <i class="feather icon-gift"></i>
                                 <span class="menu-title" data-i18n="Calender">Offers</span>
                             </a>
                         </li>
+                        @endif
+                        @if(session()->has('hday'))
                         <li class="hld nav-item">
                             <a href="{{route('list.holiday')}}">
                                 <i class="feather icon-clipboard"></i>
                                 <span class="menu-title" data-i18n="Calender">Holidays</span>
                             </a>
                         </li>
+                        @endif
+                        @if(session()->has('fday'))
                         <li class="fday nav-item">
                             <a href="{{route('get.fday')}}">
                                 <i class="feather icon-clipboard"></i>
                                 <span class="menu-title" data-i18n="Calender">Full Day</span>
                             </a>
                         </li>
+                        @endif
+                        @if(session()->has('dday'))
                         <li class="drp nav-item">
                             <a href="{{route('get.dropin')}}">
                                 <i class="feather icon-clipboard"></i>
                                 <span class="menu-title" data-i18n="Calender">Drop In</span>
                             </a>
                         </li>
+                        @endif
                     </ul>
                 </li>
-
                 
+                
+                
+            <li class="cour nav-item">
+                <a href="#">
+                    <i class="feather icon-hash"></i>
+                    <span class="menu-title" data-i18n="Ecommerce">Courses</span>
+                </a>
+                <ul class="menu-content">
+                    <li class="cl nav-item">
+                        <a href="{{route('courses')}}"><i class="feather icon-circle"></i>
+                        <span class="menu-title" data-i18n="Email">Course List</span></a>
+                    </li>
+                    <li class="as nav-item">
+                        <a href="{{route('schedules')}}"><i class="feather icon-circle"></i>
+                        <span class="menu-title" data-i18n="Email">Schedules</span></a>
+                    </li>
+                    <li class="cu nav-item">
+                        <a href="{{route('user.courseList')}}"><i class="feather icon-circle"></i>
+                        <span class="menu-title" data-i18n="Email">Assign Course</span></a>
+                    </li>
+                    
+                    <li class="cpmenu nav-item">
+                        <a href="{{route('show.cpayment')}}"><i class="feather icon-circle"></i>
+                        <span class="menu-title" data-i18n="Email">Course Payments</span></a>
+                    </li>
+                    
+                    
+                    
+                </ul>
+            </li>
+                
+                
+
+                @if(session()->has('cal'))
                 <li class="cal nav-item">
                     <a href="{{route('calender.setting')}}">
                         <i class="feather icon-calendar"></i>
                         <span class="menu-title" data-i18n="Calender">Calender</span>
                     </a>
                 </li>
+                @endif
 <!--                <li class=" nav-item">
                     <a href="">
                         <i class="feather icon-check-square"></i>
@@ -196,17 +257,85 @@
                                 <i class="feather icon-circle"></i><span class="menu-item" data-i18n="Wish List">Booked Slot</span>
                             </a>
                         </li>
+                        <li class="bp">
+                            <a href="{{route('show.bpayment')}}">
+                                <i class="feather icon-circle"></i><span class="menu-item" data-i18n="Wish List">Payments</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
-                <li class=" nav-item membership">
-                        <a href="{{route('membership')}}"><i class="fa fa-dribbble"></i>
-                        <span class="menu-title" data-i18n="Email">Membership</span></a>
+                <li class="m nav-item">
+                    <a href="#">
+                        <i class="feather icon-user-plus"></i>
+                        <span class="menu-title" data-i18n="Ecommerce">Memberships</span>
+                    </a>
+                    <ul class="menu-content">
+                        <li class="membership">
+                            <a href="{{route('membership')}}">
+                                <i class="feather icon-circle"></i><span class="menu-item" data-i18n="Shop">Packages</span>
+                            </a>
+                        </li>
+                        <li class="mem">
+                            <a href="{{route('member')}}">
+                                <i class="feather icon-circle"></i><span class="menu-item" data-i18n="Wish List">Members</span>
+                            </a>
+                        </li>
+                        <li class="mr nav-item">
+                        <a href="{{route('show.mpayment')}}"><i class="feather icon-circle"></i>
+                        <span class="menu-title" data-i18n="Email">Payments</span></a>
+                        </li>
+                        
+                        
+                    </ul>
                 </li>
-
-                <li class=" nav-item msgsetting">
-                        <a href="{{route('message')}}"><i class="fa fa-envelope-open"></i>
-                        <span class="menu-title" data-i18n="Email">Message Settings</span></a>
+                
+                <li class="acc nav-item">
+                    <a href="#">
+                        <i class="feather icon-server"></i>
+                        <span class="menu-title" data-i18n="Ecommerce">Accounts</span>
+                    </a>
+                    <ul class="menu-content">
+                        <li class="asec">
+                            <a href="{{route('show.aslist')}}">
+                                <i class="feather icon-circle"></i><span class="menu-item" data-i18n="Shop">Parent Accounts</span>
+                            </a>
+                        </li>
+                        <li class="agrp">
+                            <a href="{{route('show.agrp')}}">
+                                <i class="feather icon-circle"></i><span class="menu-item" data-i18n="Wish">Sub Accounts</span>
+                            </a>
+                        </li>
+                        <li class="ac">
+                            <a href="{{route('show.acc')}}">
+                                <i class="feather icon-circle"></i><span class="menu-item" data-i18n="Wish">Accounts</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="blnc nav-item">
+                    <a href="#">
+                        <i class="feather icon-dollar-sign"></i>
+                        <span class="menu-title" data-i18n="Ecommerce">Amounts</span>
+                    </a>
+                    <ul class="menu-content">
+                        <li class="inc">
+                            <a href="{{route('income')}}">
+                                <i class="feather icon-circle"></i><span class="menu-item" data-i18n="Shop">Income</span>
+                            </a>
+                        </li>
+                        <li class="exp">
+                            <a href="{{route('expense')}}">
+                                <i class="feather icon-circle"></i><span class="menu-item" data-i18n="Wish">Expense</span>
+                            </a>
+                        </li>
+                        <li class="bl">
+                            <a href="{{route('balance')}}">
+                                <i class="feather icon-circle"></i><span class="menu-item" data-i18n="Wish">Balance</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             
             

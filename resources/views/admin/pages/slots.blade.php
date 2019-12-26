@@ -181,7 +181,7 @@
                         <div class="form-group">
                             <label for="first-name-icon">Day</label>
                             <div class="position-relative has-icon-left">
-                                <select name="uday_id" id="uday_id" class="select2 form-control" >
+                                <select name="uday_id" id="uday_id" class="select2 form-control" required>
                                     <option value="">select</option>
                                     @foreach($weekdays as $wd)
                                     <option value="{{$wd->id}}">{{$wd->day}}</option>
@@ -564,6 +564,11 @@
 
 <section id="basic-input" style="margin-top: -20px;">
     <div class="row">
+        
+              
+        
+        
+        
         <div class="col-xl-9 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
                 <div class="card-content">
@@ -840,8 +845,9 @@ $('#uslottyp').on('change', function()
 $(document).on('click', '.addSlot', function()
 {
     document.getElementById("addSlotFrm").reset();
-    $('.sClass').removeClass('is-valid');
-    $('.eClass').removeClass('is-valid');
+    $('.sClass').removeClass('is-valid is-invalid');
+    $('.eClass').removeClass('is-valid is-invalid');
+    $('#day_id').val('');$('#day_id').trigger('change');$('.existing').html('');
     $('.addSlotMdl').modal('show');
     
 });   
@@ -895,6 +901,8 @@ $(document).on('click', '.changests', function()
 $(document).on('click', '.editmdl', function()
 {
     document.getElementById("upSlotFrm").reset();
+    $('.usClass').removeClass('is-valid');$('.usClass').removeClass('is-invalid');
+    $('.ueClass').removeClass('is-valid');$('.ueClass').removeClass('is-invalid');
     $('#upslotid').val($(this).data('sid'));
     $('#uground_id').val($(this).data('gid'));
     $('#uday_id').val($(this).data('dayid'));
@@ -933,9 +941,12 @@ $("#upSlotFrm").on('submit',function(event)
 $(document).on('click', '.pickmdl', function()
 {
 //    document.getElementById("addSlotFrm").reset();
-    $('.pickMdl').modal('show');
+    
     $('#slotid').val($(this).data('sid'));
     $('#dayid').val($(this).data('did'));
+    $('#offer_id').val('');$('#offer_id').trigger('change');
+    $('#datelist').trigger('change');$('#datelist').val('');
+    $('.pickMdl').modal('show');
 
 });
 $("#pickFrm").on('submit',function(event)

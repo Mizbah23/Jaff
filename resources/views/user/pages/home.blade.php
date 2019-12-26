@@ -11,6 +11,12 @@
     img.attachment-thumb-495-495.size-thumb-495-495.wp-post-image {
     height: 290px;
 }
+/*   .info-section .info-details.info-details-center {
+    margin-top: -249px;
+    overflow-y: scroll;
+    height: 400px;
+}
+*/
 </style>
 @stop
 @section('content')

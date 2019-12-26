@@ -255,12 +255,13 @@
                             <table id="bookTbl" class="table zero-configuration ">
                                 <thead>
                                     <tr style="background-color: #030079;color: white;">
-                                        <th>Book Date</th>
+                                        <th>Book Code</th>
+                                        <th>Slot Date</th>
                                         <th>Slot Duration</th>
                                         <th>Regular Price</th>
                                         <th>Discount</th>
                                         <th>Booking Price</th>
-                                        <th>Status</th>
+                                        <th>Type</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -324,15 +325,16 @@
             }
         },
         "columns":[
+        {"data":"code"},
         {"data":"sltdate"},
         {"data":"duration"},
         {"data":"price"},
         {"data":"discount"},
         {"data":"book_price"},
-        {"data":"sts"},
+        {"data":"type"},
         {"data":"action","searchable":false,"orderable":false}
     ],
-    "order": [[1, 'desc']]   
+    "order": [[0, 'desc']]   
 });
 //******************************add*********************************************
 $(".addnew").on('click',function(){

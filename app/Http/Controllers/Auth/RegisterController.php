@@ -7,6 +7,7 @@ use Jaff\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 use illuminate\Support\Str;
 use Response;
@@ -107,8 +108,8 @@ class RegisterController extends Controller
                'username'=>'required',
                'phone'=>'required | min:6|unique:users',
                'email'=>'required|unique:users',
-               'password'=>'min:2|required_with:cpass|same:cpass',
-                'cpass'=>'min:2'
+               'password'=>'min:6|required_with:cpass|same:cpass',
+                'cpass'=>'min:6'
         ]);
 
         // $this->validator($request->all());

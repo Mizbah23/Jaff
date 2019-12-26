@@ -10,8 +10,7 @@
 */
 Auth::routes();
 Route::get('/','HomeController@getMainPage')->name('home');
-// Route::get('/timetable','HomeController@getTimeTable')->name('time');
-Route::get('/booking','HomeController@getBooking')->name('booking');
+Route::get('/timetable','HomeController@getTimeTable')->name('time');
 
 //User Login & Reg routes
 Route::get('/login','Auth\LoginController@showLoginForm')->name('login');
@@ -35,39 +34,42 @@ Route::get('/Reset_Password/{phone}','Auth\RegisterController@showNewForm')->nam
 Route::post('/Reset_Password/{phone}','Auth\RegisterController@newLogin');
 
 
-
-//Route::get('/', 'HomeController@index')->name('home');
-//Route::get('/search', 'HomeController@search')->name('search');
-//Route::get('/about', 'HomeController@about')->name('about');
-//Auth::routes();
-//Route::get('/logout', 'Auth\LoginController@userLogout')->name('user.logout');
-//
-//Route::post('/get-content','HomeController@GetHomeContent')->name('GetHomeContent');
-//Route::post('/get-ajxsearch','HomeController@GetSearch')->name('GetSearch');
-//
-//Route::prefix('category')->group(function(){
-//   Route::get('/', 'CategoryController@showAllCategory')->name('show.categories');
-//   Route::get('/create', 'CategoryController@createCategory')->name('create.category');
-//   Route::post('/save', 'CategoryController@saveCategory')->name('save.category');
-//   Route::get('/post/{id}', 'CategoryController@showCategoryPost')->name('show.catpost');
-//});
 Route::prefix('news')->group(function()
 {
    Route::get('/', 'HomeController@showAllNews')->name('user.news');
    Route::get('/{slug}', 'HomeController@showSingleNews')->name('user.snews');
-   Route::get('/share', 'HomeController@showUrl')->name('share.snews');
-//   Route::post('/latest', 'HomeController@getLatest')->name('get.latestnews');
-   
-});
-Route::prefix('notice')->group(function()
-{
-   Route::get('/', 'HomeController@showAllNotice')->name('user.notice');
- 
 //   Route::post('/latest', 'HomeController@getLatest')->name('get.latestnews');
    
 });
 //
+Route::prefix('notice')->group(function()
+{
+   Route::get('/', 'HomeController@showAllNotice')->name('user.notice');
+//   Route::post('/latest', 'HomeController@getLatest')->name('get.latestnews');
+});
 
+Route::prefix('usercal')->group(function()
+{
+//    Route::get('/', 'CalendarController@calender')->name('calender.setting');
+    Route::post('/load-event','UserCalController@loadEvent')->name('load.usrevent');
+    Route::post('/avail-slot', 'UserCalController@availSlot')->name('avail.usrslot');
+    
+    
+//    Route::post('/del-cartrow', 'SlotController@delCartRow')->name('del.cartrow');
+});
+Route::prefix('cart')->group(function()
+{
+    Route::get('/', 'UserCartController@showCart')->name('usrcart');
+    Route::post('/add-cart', 'UserCartController@addCart')->name('add.usrcart');
+    Route::post('/rmv-cart', 'UserCartController@rmvCart')->name('rmv.usrcart');
+    Route::post('/del-cart', 'UserCartController@delCart')->name('del.usrcart');
+    Route::post('/con-book', 'UserBookController@userConBook')->name('con.book');
+    
+    
+//    Route::post('/del-cartrow', 'SlotController@delCartRow')->name('del.cartrow');
+});
+
+Route::get('/notify', 'UserBookController@successNofity')->name('notify.success');
 
 
 Route::prefix('admin')->group(function()
@@ -86,6 +88,15 @@ Route::prefix('admin')->group(function()
    Route::post('/admin-delete','AdminController@deleteAdmin')->name('delete.admin');
    
    //*************Slider Setting****************
+   
+   
+    Route::prefix('settings')->group(function()
+    {
+        Route::get('/', 'CalendarController@usrCoreSet')->name('setting.usr');
+        Route::post('/update','CalendarController@updateSetting')->name('update.setting');
+    });
+    
+    
     Route::prefix('sliders')->group(function()
     {
         Route::get('/', 'SliderController@sliderList')->name('sliderlist');
@@ -95,6 +106,9 @@ Route::prefix('admin')->group(function()
         Route::post('/delete','SliderController@deleteSlider')->name('delete.slider');
         Route::post('/sts','SliderController@statusSlider')->name('status.slider');
     });
+    
+    
+    
     Route::prefix('programs')->group(function()
     {
         Route::get('/','HomeController@programList')->name('programs');
@@ -139,12 +153,41 @@ Route::prefix('admin')->group(function()
     
     Route::prefix('membership')->group(function()
     {
-       Route::get('/','ProgramController@membershipList')->name('membership');
-       Route::post('/save','ProgramController@saveMembership')->name('save.membership');
-       Route::post('/list','ProgramController@getMembership')->name('membership.list');
-       Route::post('/update','ProgramController@updateMembership')->name('update.membership');
-       Route::post('/delete','ProgramController@deleteMembership')->name('delete.membership');
-       Route::post('/status','ProgramController@statusMembership')->name('status.membership');
+       Route::get('/packages','MembershipController@membershipList')->name('membership');
+       Route::post('/psave','MembershipController@saveMembership')->name('save.membership');
+       Route::post('/plist','MembershipController@getMembership')->name('membership.list');
+       Route::post('/pupdate','MembershipController@updateMembership')->name('update.membership');
+       Route::post('/pdelete','MembershipController@deleteMembership')->name('delete.membership');
+       Route::post('/pstatus','MembershipController@statusMembership')->name('status.membership');
+       
+       Route::get('/','MembershipController@memberList')->name('member');
+       Route::post('/save','MembershipController@saveMember')->name('save.member');
+       Route::post('/list','MembershipController@getMember')->name('member.list');
+       Route::post('/update','MembershipController@updateMember')->name('update.member');
+       Route::post('/delete','MembershipController@deleteMember')->name('delete.member');
+       Route::post('/status','MembershipController@statusMember')->name('status.member');
+       Route::post('/renew','MembershipController@renewMember')->name('renew.member');
+    });
+    Route::prefix('payments')->group(function(){
+        Route::post('/pay-membership','PaymentController@payMembership')->name('pay.membership');
+        Route::post('/pay-booking','PaymentController@payBooking')->name('pay.booking');
+        Route::post('/pay-course','PaymentController@payCourse')->name('pay.course');
+        
+        Route::get('/courses','PaymentController@showCpayment')->name('show.cpayment');
+        Route::post('/cplist','PaymentController@listCpayment')->name('list.cpayment');
+        Route::post('/cpsum','PaymentController@sumCpayment')->name('sum.cpayment');
+        
+        Route::get('/memberships','PaymentController@showMpayment')->name('show.mpayment');
+        Route::post('/mplist','PaymentController@listMpayment')->name('list.mpayment');
+        Route::post('/mpsum','PaymentController@sumMpayment')->name('sum.mpayment');
+        Route::post('/del-mpay','PaymentController@delMpayment')->name('del.mpay');
+        Route::post('/update-mpay','PaymentController@updateMpayment')->name('update.mpay');
+        
+        
+        Route::get('/bookings','PaymentController@showBpayment')->name('show.bpayment');
+        Route::post('/bplist','PaymentController@listBpayment')->name('list.bpayment');
+        Route::post('/bpsum','PaymentController@sumBpayment')->name('sum.bpayment');
+
     });
     
     Route::prefix('notices')->group(function()
@@ -154,18 +197,37 @@ Route::prefix('admin')->group(function()
        Route::post('/list','ProgramController@getNotice')->name('notice.list');
        Route::post('/update','ProgramController@updateNotice')->name('update.notice');
        Route::post('/delete','ProgramController@deleteNotice')->name('delete.notice');
-        // Route::post('/sts','ProgramController@statusProgram')->name('status.program');
     });
-
-    Route::prefix('message settings')->group(function()
+    
+    
+    
+    Route::prefix('courses')->group(function()
     {
-      Route::get('/','ProgramController@getMsg')->name('message');
-      Route::post('/save','ProgramController@saveMsg')->name('save.msgform');
-      // Route::post('/list','ProgramController@getNotice')->name('notice.list');
-      // Route::post('/update','ProgramController@updateNotice')->name('update.notice');
-      // Route::post('/delete','ProgramController@deleteNotice')->name('delete.notice');
-        // Route::post('/sts','ProgramController@statusProgram')->name('status.program');
+       Route::get('/','CourseController@courseList')->name('courses');
+       Route::post('/save','CourseController@saveCourse')->name('save.course');
+       Route::post('/list','CourseController@getCourse')->name('course.list');
+       Route::post('/update','CourseController@updateCourse')->name('update.course');
+       Route::post('/delete','CourseController@deleteCourse')->name('delete.course');
+       Route::post('/sts','CourseController@statusCourse')->name('status.course');
+       
+       Route::get('/schedule','CourseController@scheduleList')->name('schedules');
+       Route::post('/sch-save','CourseController@saveSchedule')->name('save.schedule');
+       Route::post('/sch-list','CourseController@getSchedule')->name('schedule.list');
+       Route::get('/fetch-schdate','CourseController@getDaylist')->name('get.daylist');
+       
+       
+       Route::post('/sch-update','CourseController@updateschedule')->name('update.schedule');
+       Route::post('/sch-del','CourseController@deleteschedule')->name('delete.schedule');
+       Route::post('/sch-sts','CourseController@statusSchedule')->name('status.schedule');
+       
+       Route::get('/user','CourseController@userCourse')->name('user.courseList');
+       Route::post('/get-cprice','CourseController@getPrice')->name('get.cprice');
+       Route::post('/save-assign','CourseController@saveAssign')->name('save.assign');
+       Route::post('/update-assign','CourseController@updateAssign')->name('update.assign');
+       Route::post('/del-assign','CourseController@deleteAssign')->name('delete.assign');
+       Route::post('/assign-list','CourseController@getAssign')->name('assign.list');
     });
+    
     
     
    //=================================Slot Setting==============================
@@ -177,6 +239,8 @@ Route::prefix('admin')->group(function()
         Route::post('/update','SlotController@updateFday')->name('update.fday');
         Route::post('/sts', 'SlotController@StatusFday')->name('sts.fday');
         Route::post('/del','SlotController@delFday')->name('del.fday');
+        Route::post('/count','SlotController@countFday')->name('count.fday');
+        
     });
     Route::prefix('dropin')->group(function()
     {
@@ -187,8 +251,8 @@ Route::prefix('admin')->group(function()
         Route::post('/sts', 'SlotController@StatusDropIn')->name('sts.dropin');
         Route::post('/del','SlotController@delDropIn')->name('del.dropin');
         Route::get('/fetch','SlotController@fetchDropSlot')->name('fetchDropSlot');
-        // Route::post('/sts','SlotController@StatusDropIn')->name('status.dropin');
-
+        Route::post('/count','SlotController@countDrop')->name('count.dropin');
+        
     });
     Route::prefix('grounds')->group(function()
     {
@@ -270,25 +334,31 @@ Route::prefix('admin')->group(function()
         Route::get('/slotlist','BookingController@bookedSlotList')->name('show.bookedslot');
         Route::post('/del-bookrow', 'BookingController@delBookRow')->name('del.bookrow');
         Route::post('/get-bookuser', 'BookingController@userDetails')->name('get.bookuser');
-        Route::post('/count','BookingController@countBooking')->name('count.bookings');
-
+        Route::post('/count-booking', 'BookingController@countBooking')->name('count.booking');
+        
+        
    });
    Route::post('/get-bookinglist','BookingController@getbookList')->name('bookPro');
    Route::post('/get-bookingSlotlist','BookingController@getBookSlot')->name('bookSlotPro');
    Route::post('/get-bookslots','BookingController@getbookMdl')->name('get.bookslots');
    Route::post('/del-bookslots','BookingController@delbookMdl')->name('del.bookslots');
    Route::post('/save-book', 'BookingController@saveBook')->name('save.book');
-   
-   
-   
    Route::prefix('reports')->group(function()
    {
         Route::get('/slot-list', ['as' => 'report.slotPrint', 'uses' => 'ReportController@slotPrint']);
         Route::get('/holiday-list', ['as' => 'report.holidayPrint', 'uses' => 'ReportController@holidayPrint']);
         Route::get('/booking-list', ['as' => 'report.bookingPrint', 'uses' => 'ReportController@bookingListPrint']);
         Route::get('/booked-slot-list', ['as' => 'report.bookslotPrint', 'uses' => 'ReportController@bookslotPrint']);
-        Route::get('/fillday-list', ['as' => 'report.fullday', 'uses' => 'ReportController@fulldayPrint']);
         
+        Route::get('/income-report', ['as' => 'income.report', 'uses' => 'ReportController@incomeReport']);
+        Route::get('/expense-report', ['as' => 'expense.report', 'uses' => 'ReportController@expenseReport']);
+        Route::get('/balance-report', ['as' => 'balance.report', 'uses' => 'ReportController@balanceReport']);
+        
+        Route::get('/course-payment', ['as' => 'course.report', 'uses' => 'ReportController@coursePaymentReport']);
+        Route::get('/member-report', ['as' => 'member.report', 'uses' => 'ReportController@memberPaymentReport']);
+        Route::get('/bookings-report', ['as' => 'bpay.report', 'uses' => 'ReportController@bookingPaymentReport']);
+        
+        Route::get('/fillday-list', ['as' => 'report.fullday', 'uses' => 'ReportController@fulldayPrint']);
         Route::get('/dropin-list', ['as' => 'report.dropin', 'uses' => 'ReportController@dropinPrint']);
         
    });
@@ -335,8 +405,38 @@ Route::prefix('admin')->group(function()
         Route::post('/sts','PostController@statusNews')->name('status.news');
         Route::post('/del','PostController@deleteNews')->name('delete.news');
     });
-
     Route::get('/test','CalendarController@showTest');
+    
+    Route::prefix('income')->group(function()
+    {
+        Route::get('/','BalanceController@showIncome')->name('income');
+        Route::post('/list','BalanceController@listIncome')->name('list.income');
+        Route::post('/save','BalanceController@saveIncome')->name('save.income');
+        Route::post('/update','BalanceController@updateIncome')->name('update.income');
+        Route::post('/del','BalanceController@delIncome')->name('delete.income');
+        Route::post('/sum','BalanceController@sumIncome')->name('sum.income');
+        
+    });
+    Route::prefix('expense')->group(function()
+    {
+        Route::get('/','BalanceController@showExpense')->name('expense');
+        Route::post('/list','BalanceController@listExpense')->name('list.expense');
+        Route::post('/save','BalanceController@saveExpense')->name('save.expense');
+        Route::post('/update','BalanceController@updateExpense')->name('update.expense');
+        Route::post('/del','BalanceController@delExpense')->name('delete.expense');
+        Route::post('/sum','BalanceController@sumExpense')->name('sum.expense');
+    });
+    Route::prefix('blnc')->group(function()
+    {
+        Route::get('/','BalanceController@showBalance')->name('balance');
+//        Route::post('/list','BalanceController@listBalance')->name('list.balance');
+//        Route::post('/save','BalanceController@saveExpense')->name('save.expense');
+//        Route::post('/update','BalanceController@updateExpense')->name('update.expense');
+//        Route::post('/del','BalanceController@delExpense')->name('delete.expense');
+        Route::post('/sum','BalanceController@sumBalance')->name('sum.balance');
+    });
+    
+     
    
 
 });

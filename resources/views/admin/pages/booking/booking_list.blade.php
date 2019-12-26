@@ -5,13 +5,29 @@
    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/datatables.min.css')}}">
    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
    <link href="{{asset('public/css/back/bootstrap-fileupload.css')}}" rel="stylesheet" />
-   <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/pickadate.css')}}">
+      <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/pickadate.css')}}">
 @stop
 @section('content')
 <style>
     .upimg{border: 1px solid gray;border-radius: 10px;width:180px; 
            height: 130px; line-height: 20px;}
-    .picker--opened .picker__holder{width: 245px;}
+     .picker--opened .picker__holder{width: 245px;}
+    .mrgn{margin-top: -20px;}
+    .avatar .avatar-content {height: 46px;width: 46px;}
+.picker__table {
+
+    margin-bottom: 0px;
+}
+   .picker__header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+} 
+.picker__table {
+    font-size: 11px;
+}
+.picker {
+    top: 78%;
+}
 </style>
 
 <!-- *****************************add model**********************************-->
@@ -207,65 +223,122 @@
         </div>
     </div>
 </div>
-                     {{-- End of delete modal --}}
+
+
+<div class="modal fade payMdl" id="animation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel6" aria-modal="true">
+    <div class="modal-dialog modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">  
+        <div class="modal-header bg-primary">
+            <h5 class="modal-title" id="exampleModalScrollableTitle">Slot Booking Payment</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>                           
+            <div class="modal-body" style="padding-top: 23px;">
+                <form method="post" id="payFrm"  enctype="">
+                    <input type="hidden" name="pid" id="pid">
+                    <input type="hidden" name="damount" id="damount">
+                <div class="row" >  
+                    <div class="col-md-12 col-12 ">
+                        <div class="form-group checkacc">
+                        <label for="first-name-icon">Payment Date</label><span> 
+                            <input type="text" class="form-control pickadate" name="pdate" id="pdate"  value="{{date('Y-m-d',strtotime(now()))}}" required="" placeholder="Enter Payment Date">
+                        <div class="valid-feedback evtxt"></div><div class="invalid-feedback eitxt"></div>
+                         </div>
+                    </div>
+                    <div class="col-md-12 col-12 ">
+                        <div class="form-group checkacc">
+                        <label for="first-name-icon">Amount To Pay</label><span> 
+                            <input type="text" class="form-control" name="pamount" id="pamount" required="" placeholder="Enter Amount to Pay">
+                        <div class="valid-feedback evtxt"></div><div class="invalid-feedback eitxt"></div>
+                         </div>
+                    </div>
+                    <div class="col-md-6 col-6 ">
+                        <div class="form-group checkacc">
+                        <label for="first-name-icon">Less</label><span> 
+                            <input type="text" class="form-control" name="less" id="less" required="" value="0" placeholder="Less pay amount">
+                        <div class="valid-feedback evtxt"></div><div class="invalid-feedback eitxt"></div>
+                         </div>
+                    </div>
+                    <div class="col-md-6 col-6 ">
+                        <div class="form-group checkacc">
+                        <label for="first-name-icon">Due</label><span> 
+                            <input type="text" class="form-control" name="due" id="due" value="0" required="" readonly placeholder="">
+                        <div class="valid-feedback evtxt"></div><div class="invalid-feedback eitxt"></div>
+                         </div>
+                    </div>
+                    
+                    <div class="col-md-12 col-12">
+                        <div class="form-group checkphn">
+                         <label for="first-name-icon">Details</label>
+                         <textarea class="form-control" name="pdetails" id="pdetails" name="udetails"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-outline-warning mr-1 mb-1 waves-effect waves-light">Reset</button>
+                <button type="submit" class="btn btn-outline-info mr-1 mb-1 waves-effect waves-light">
+                    Payment <span class="addbtn" role="status" aria-hidden="true"></span>
+                </button>
+            </div>
+            </form>
+            </div>
+        </div>
+</div>
+
+
 
 
 <section id="basic-input" style="margin-top: -20px;">
     <div class="row">
-        <div class="col-xl-9 col-md-12 col-sm-12 col-xs-12">
+        <div class="col-xl-8 col-md-8 col-sm-8 col-xs-8">
             <div class="card">
                 <div class="card-content">
                     <div class="card-body " style="padding-bottom: 0px;">
                         <form method="get" action="{{route('report.bookingPrint')}}" target="_blank">
-                           
                         <div class="row">
-                            <div class="col-xl-3 col-md-6 col-12 mb-1">
+                            <div class="col-xl-4 col-md-6 col-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">From Date</label>
-                                    <input type="text" class="form-control pickadate" name="fromdate" id="fromdate" placeholder="From Date">
+                                    <input type="text" class="form-control pickadate" id="fromdate" name='fromdate' placeholder="From Date">
                                 </fieldset>
                             </div>
-                            <div class="col-xl-3 col-md-6 col-12 mb-1">
+                            <div class="col-xl-4 col-md-6 col-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">To Date</label>
-                                    <input type="text" class="form-control pickadate" name="todate" id="todate" placeholder="To Date">
+                                    <input type="text" class="form-control pickadate" id="todate" name="todate" placeholder="To Date">
                                 </fieldset>
                             </div>
-                            
-                            <div class="col-xl-3 col-md-6 col-12 mb-1">
-                                <fieldset class="form-group">
-                                    <label for="basicInput">Phone</label>
-                                    <input type="number" class="form-control" id="phone" placeholder="Phone">
-                                </fieldset>
-                            </div>
-
-                            <div class="col-xl-3 col-md-6 col-12 mb-1" style="padding-top: 17px;">
+                            <div class="col-xl-4 col-md-6 col-12 mb-1"  style="padding-top: 18px;">
                                 <fieldset class="form-group" style="margin-bottom: 0px;">    
-                                    <button type="submit" class=" btn btn-outline-success mr-1 mb-1 waves-effect waves-light"><i class="feather icon-printer"></i> Print
+                                    <button type="submit" class=" btn btn-outline-success mr-1 mb-1 waves-effect waves-light">
+                                        <i class="feather icon-printer"></i> Print
                                     </button>
                                 </fieldset>               
                             </div>
                         </div>
-                    </form>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-          <div class="col-xl-3 col-sm-4 col-md-4 col-xs-4" style="margin-top: 0px;">
+        <div class="col-xl-4 col-sm-4 col-md-4 col-xs-4" style="margin-top: 0px;">
             <div class="card">
                 <div class="card-content">
-                    <div class="card-body ">
+                    <div class="card-body " >
                         <div class="row">
-                            <div class="col-xl-6 col-md-6 col-12 ">
+                            <div class="col-xl-6 col-md-6 col-12 mb-1">
                                 <div>
-                            <h2 class="text-bold-700 dayCount">2</h2>
+                            <h2 class="text-bold-700 dayCount">0</h2>
                             <p class="mb-0">Total Booking</p>
                         </div>
                             </div>
                             <div class="col-xl-6 col-md-6 col-12 mb-1">
-                                <div class="avatar bg-rgba-primary p-0">
+                                <div class="avatar bg-rgba-warning p-0">
                             <div class="avatar-content">
-                                <i class="feather icon-activity text-info font-medium-5"></i>
+                                <i class="feather icon-check-circle text-success font-medium-5"></i>
                             </div>
                         </div>
                             </div>
@@ -274,9 +347,10 @@
                 </div>
             </div>
         </div>
-
     </div>
 </section>
+
+
 
 
 
@@ -308,11 +382,10 @@
                                     <tr class="bg-gradient-primary">
                                         <th>ID</th>
                                         <th>Book Date</th>
-                                        <th>Name</th>
-                                        <th>Phone</th>
-                                        <th>Email</th>
+                                        <th>User Info</th>
                                         <th>Slots</th>
                                         <th>Total</th>
+                                        <th>payments</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -337,18 +410,22 @@
 
 <script src="{{asset('public/js/back/datatable.min.js')}}"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-
+<script type="text/javascript" src="{{asset('public/js/back/bootstrap-fileupload.js')}}"></script>
 <script src="{{asset('public/js/back/picker.js')}}"></script>
 <script src="{{asset('public/js/back/picker.date.js')}}"></script>
-<script src="{{asset('public/js/back/picker.time.js')}}"></script>
-
-<script type="text/javascript" src="{{asset('public/js/back/bootstrap-fileupload.js')}}"></script>
 <script>
+        $(function () {
+        $('.pickadate').pickadate({
+        format: 'yyyy-m-d'
+//       ,min: [2019,10,20]
+//       ,max: [2019,11,28]
+        });
+    });
     $(document).ready(function()
     {
        $('.bk').addClass('active');
        $('.b').addClass('has-sub sidebar-group-active open');
-       countslot();
+       countMethod();
     });
     var table = $('#bookTbl').DataTable(
     {
@@ -366,19 +443,18 @@
                 "data": function ( d )
                 {
                     d._token= $('meta[name="csrf-token"]').attr('content');
-                    d.fromdate= $('#fromdate').val();
-                    d.todate= $('#todate').val();
+                    d.from= $('#fromdate').val();
+                    d.to= $('#todate').val();
                 }
             },
         "columns":[
         {"data":"code"},
         {"data":"date"},
-        {"data":"name"},
-        {"data":"email"},
-        {"data":"phone"},
+        {"data":"userinfo"},
         {"data":"slots"},
         {"data":"total"},
-        {"data":"sts"},
+        {"data":"payment","searchable":false,"orderable":false},
+        {"data":"sts","searchable":false,"orderable":false},
         {"data":"action","searchable":false,"orderable":false}
     ],
         "order": [[1, 'desc']]   
@@ -409,11 +485,6 @@ $("#addUserForm").on('submit',function(event)
             $('.addbtn').removeClass('spinner-border spinner-border-sm');
         }
     });
-
-    $(document).on('change', '#fromdate', function()
-    {countslot();table.ajax.reload( null, false ); });
-    $(document).on('change', '#todate', function()
-    {countslot();table.ajax.reload( null, false ); }); 
     $('#title').val('');
     $('#body').val('');
 });
@@ -458,47 +529,97 @@ $(document).on('click', '.delbs', function()
        }
     });
 });
+//=====================================Payment==================================
+$("#pamount").on('keyup',function()
+{  
+    var pamount = ($("#pamount").val()!="")?parseInt($("#pamount").val()):0;
+    var damount = ($("#damount").val()!="")?parseInt($("#damount").val()):0;
+    var less = ($("#less").val()!="")?parseInt($("#less").val()):0;
+    var due = ($("#due").val()!="")?parseInt($("#due").val()):0;
+    var ndue = damount-(pamount+less);
+    if(pamount>damount || ndue<0)
+    {
+        $("#pamount").val(damount);
+        $("#due").val(0);
+        $("#less").val(0); 
+    }else{
+        $("#due").val(ndue);
+    }
+});
+$("#less").on('keyup',function()
+{  
+    var pamount = ($("#pamount").val()!="")?parseInt($("#pamount").val()):0;
+    var damount = ($("#damount").val()!="")?parseInt($("#damount").val()):0;
+    var less = ($("#less").val()!="")?parseInt($("#less").val()):0;
+    var due = ($("#due").val()!="")?parseInt($("#due").val()):0;
+    var ndue = damount-(pamount+less);
+    if(ndue<0)
+    {
+        $("#pamount").val(damount);
+        $("#due").val(0);
+        $("#less").val(0); 
+    }else{
+        $("#due").val(ndue);
+    }
+});
 
-    $(function () {
-        $('.pickadate').pickadate({
-        format: 'yyyy-m-d'
-//       ,min: [2019,10,20]
-//       ,max: [2019,11,28]
-        });
-        $('.pickatime').pickatime({
-            interval: 30
-        });
+$(document).on('click', '.paymdl', function()
+{
+    $("#pid").val($(this).data('pid'));
+    $("#pamount").val($(this).data('amnt'));
+    $("#damount").val($(this).data('amnt'));
+    $('.payMdl').modal('show');
+});
+$("#payFrm").on('submit',function(event)
+{  
+    event.preventDefault();
+//    $('.upbtn').addClass('spinner-border spinner-border-sm');
+    var formData = new FormData(this);
+    formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+    $.ajax({
+        type: 'POST',
+        url: "{{route('pay.booking')}}",
+        data:formData,
+        dataType:'JSON',
+        contentType: false,
+        cache: false,
+        processData: false,
+        success:function(data)
+        {
+            table.ajax.reload( null, false );
+            if(data.type==="success"){
+                $('.payMdl').modal('hide');
+            }
+            toastr[data.type](data.message);
+//            document.getElementById("payFrm").reset();
+//            $('.upbtn').removeClass('spinner-border spinner-border-sm');
+        }
     });
-  /***************** Count Booking ****************/
-
-//***************************************************
-
+});
+ //==================================
 $('#fromdate').change(function()
-{
-    table.ajax.reload( null, false );
-});   
-   
+{table.ajax.reload( null, false );countMethod();});
 $('#todate').change(function()
-{
-    table.ajax.reload( null, false );
-});    
-
-function countBooking()
+{ table.ajax.reload( null, false );countMethod();}); 
+function countMethod()
 {
     $.ajax({
         type: 'POST',
-        url: "{{route('count.bookings')}}",
+        url: "{{route('count.booking')}}",
         data: {
          _token: $('meta[name="csrf-token"]').attr('content'),
-         fromdate : $('#fromdate').val(),
-         todate : $('#todate').val(),
+         from: $('#fromdate').val(),
+         to: $('#todate').val()
         },
        success: function(data){
         $('.dayCount').html(data);
        }
     });
-}  
- 
-
+}
+   
+   
+   
+   
+    
 </script>
 @stop

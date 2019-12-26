@@ -9,6 +9,8 @@ use Jaff\Fullday;
 use Jaff\Dropin;
 use Jaff\Bookdetail;
 use Jaff\Offerdetail;
+use Jaff\Setting;
+use Jaff\Schedule;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use DB;
 use Response;
@@ -95,15 +97,22 @@ class CalendarController extends Controller
     
     public function loadEvent(Request $request)
     {
-        $holidays = array();$fds = array();$drops = array();$dropd = array();
+        $holidays = array();$fds = array();$drops = array();$dropd = array();$courd = array();$cours = array();
         $hs = Holiday::where('status',1)->get();
         $fday = Fullday::where('status',1)->get();
         $ddays = Dropin::where('status',1)->get();
+        $cdays = Schedule::join('courses','schedules.course_id','=','courses.id')
+                ->join('coaches','courses.coach_id','=','coaches.id')->select('schedules.date','schedules.slot_id','coaches.name','courses.title')
+                ->where('schedules.status',1)->where('courses.status',1)->get();
         foreach ($hs as $h){array_push($holidays, $h->holiday);}
         foreach ($fday as $fd){array_push($fds, $fd->date);}
         foreach ($ddays as $dd){
             $dropd[$dd->date] = $dd->seat;
             $drops[$dd->slot_id] = $dd->taken;
+        }
+        foreach ($cdays as $cc){
+            $courd[$cc->date] = $cc->title;
+            $cours[$cc->slot_id] = $cc->name;
         }
         
         $lts = array();$slts = array();
@@ -139,47 +148,58 @@ class CalendarController extends Controller
                             ->where('weekdays.code',$cd)->where('slots.status',1)->get();
                     foreach($active_slots as $value)
                     {
-                        $is_booked = DB::table('bookdetails')->where('slot_id',$value->slot_id)
-                            ->whereDate('slot_date','=',$d)->exists();
-                        if(in_array($d, $fds))
+                        if(array_key_exists($d, $courd) && array_key_exists($value->slot_id, $cours))
                         {
-                                $event['id'] = ($is_booked)?$value->id:'null';
-                                $event['title'] = ($is_booked)? 'Booked':'Available';
-                                $event['start'] = $d."T".$value->start;
-                                $event['end'] = $d."T".$value->end;
-                                $event['color'] = ($is_booked)?'#5900b3':'#b366ff';
-                                array_push($list, $event);
-                        }else{              
-                        if(array_key_exists($d, $dropd) && array_key_exists($value->slot_id, $drops))
-                        {
-                            $droped = Bookdetail::where(['slot_id'=>$value->slot_id,'slot_date'=>$d])->count('id');
-                            $event['id'] = ($is_booked)?$value->id:'null';
-                            $avail = $dropd[$d]-$droped;
-                            $event['title'] = 'DropIn '.$avail.'('.$dropd[$d].')';
+                            $event['title'] = 'Course class';
                             $event['start'] = $d."T".$value->start;
                             $event['end'] = $d."T".$value->end;
-                            $event['color'] = '#990066';
+                            $event['color'] = '#663300';
                             array_push($list, $event); 
-                        }
-                        else{
-                            if(array_key_exists($d, $lts) && array_key_exists($value->slot_id, $slts))
-                            { 
+                        }else{
+                            $is_booked = DB::table('bookdetails')->where('slot_id',$value->slot_id)
+                            ->whereDate('slot_date','=',$d)->exists();
+                            if(in_array($d, $fds))
+                            {
+                                    $event['id'] = ($is_booked)?$value->id:'null';
+                                    $event['title'] = ($is_booked)? 'Booked':'Available';
+                                    $event['start'] = $d."T".$value->start;
+                                    $event['end'] = $d."T".$value->end;
+                                    $event['color'] = ($is_booked)?'#5900b3':'#b366ff';
+                                    array_push($list, $event);
+                            }else{              
+                            if(array_key_exists($d, $dropd) && array_key_exists($value->slot_id, $drops))
+                            {
+                                $droped = Bookdetail::where(['slot_id'=>$value->slot_id,'slot_date'=>$d])->count('id');
                                 $event['id'] = ($is_booked)?$value->id:'null';
-                                $event['title'] = ($is_booked)? 'Offer Booked':'Offer Available';
+                                $avail = $dropd[$d]-$droped;
+                                $event['title'] = 'DropIn '.$avail.'('.$dropd[$d].')';
                                 $event['start'] = $d."T".$value->start;
                                 $event['end'] = $d."T".$value->end;
-                                $event['color'] = ($is_booked)?'#3333ff':'#00ace6';
+                                $event['color'] = '#990066';
                                 array_push($list, $event); 
-                            }else{
-                                $event['id'] = ($is_booked)?$value->id:'null';
-                                $event['title'] = ($is_booked)? 'Booked':'Available';
-                                $event['start'] = $d."T".$value->start;
-                                $event['end'] = $d."T".$value->end;
-                                $event['color'] = ($is_booked)?'#EA5455':'#009900';
-                                array_push($list, $event); 
+                            }
+                            else{
+                                if(array_key_exists($d, $lts) && array_key_exists($value->slot_id, $slts))
+                                { 
+                                    $event['id'] = ($is_booked)?$value->id:'null';
+                                    $event['title'] = ($is_booked)? 'Offer Booked':'Offer Available';
+                                    $event['start'] = $d."T".$value->start;
+                                    $event['end'] = $d."T".$value->end;
+                                    $event['color'] = ($is_booked)?'#3333ff':'#00ace6';
+                                    array_push($list, $event); 
+                                }else{
+                                    $event['id'] = ($is_booked)?$value->id:'null';
+                                    $event['title'] = ($is_booked)? 'Booked':'Available';
+                                    $event['start'] = $d."T".$value->start;
+                                    $event['end'] = $d."T".$value->end;
+                                    $event['color'] = ($is_booked)?'#EA5455':'#009900';
+                                    array_push($list, $event); 
+                                    }
                                 }
                             }
                         }
+                        
+
                     }
                 }
             }
@@ -189,7 +209,7 @@ class CalendarController extends Controller
     }
     public function getAvailableSlot(Request $request)
     {
-        $cart = array();$holidays = array();$drops = array();$dropd = array();
+        $cart = array();$holidays = array();$drops = array();$dropd = array();$courd = array();$cours = array();
         foreach (Cart::content() as $cv)
         {
             array_push($cart, $cv->name);
@@ -200,9 +220,16 @@ class CalendarController extends Controller
             array_push($holidays, $h->holiday);
         }
         $ddays = Dropin::where('status',1)->get();
+        $cdays = Schedule::join('courses','schedules.course_id','=','courses.id')
+                ->join('coaches','courses.coach_id','=','coaches.id')->select('schedules.date','schedules.slot_id','coaches.name','courses.title')
+                ->where('schedules.status',1)->where('courses.status',1)->get();
         foreach ($ddays as $dd){
             $dropd[$dd->date] = $dd->seat;
             $drops[$dd->slot_id] = $dd->taken;
+        }
+        foreach ($cdays as $cc){
+            $courd[$cc->date] = $cc->title;
+            $cours[$cc->slot_id] = $cc->name;
         }
         
         $slts = array();
@@ -244,7 +271,11 @@ class CalendarController extends Controller
             $i=1;
             foreach($active_slots as $value)
             {
-                $is_booked = DB::table('bookdetails')->where('slot_id',$value->slot_id)
+                if(array_key_exists($request->date, $courd) && array_key_exists($value->slot_id, $cours))
+                {
+                    
+                }else{
+                    $is_booked = DB::table('bookdetails')->where('slot_id',$value->slot_id)
                         ->whereDate('slot_date','=',$request->date)->exists();
                 $duration = date( "h:i A", strtotime($value->start)).'-'.date( "h:i A", strtotime($value->end));
                 
@@ -356,6 +387,9 @@ class CalendarController extends Controller
                   
               }
                 
+                    
+                }
+
                 
                 
                 
@@ -393,6 +427,26 @@ class CalendarController extends Controller
                             }
                       }
         echo $second;
-
+    }
+    
+    //user cal setting
+    public function usrCoreSet()
+    {
+        $data = array();
+        $data['title'] = 'Settings User Functionalities';
+        $data['info'] = Setting::where('id',1)->first();
+        return view('admin.pages.settings',$data);
+    }
+    public function updateSetting(Request $request)
+    {
+        $update = Setting::find(1);
+        $update->max_month = $request->max_month;
+        $update->max_slot = $request->max_slot;
+        $update->save();
+        $notification = array(
+            'message' => 'Settings Updated',
+            'type' => 'info'
+        );
+        return Response::json($notification); 
     }
 }

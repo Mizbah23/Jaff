@@ -4,7 +4,7 @@
 @section('link')
    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/datatables.min.css')}}">
    <link href="{{asset('public/css/back/bootstrap-fileupload.css')}}" rel="stylesheet" />
-   <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/dropzone.css')}}">
+
 @stop
 @section('content')
 
@@ -585,7 +585,28 @@
 
 
 <!-- *****************************delete model**********************************-->
-
+<div class="modal fade delMdl" id="animation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel6" aria-modal="true">
+    <div class="modal-dialog modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            
+        <div class="modal-header bg-primary">
+            <h5 class="modal-title" id="exampleModalScrollableTitle">Delete Admin</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <input type="hidden" value="" id="delaid">                                        
+        <div class="modal-body">
+            Are You Sure You want to delete this Admin <span class="ttl" style="color:red;"></span>?
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="delAdmin" class="btn btn-outline-danger  waves-effect waves-light">
+                Delete <span class="delbtn" role="status" aria-hidden="true"></span>
+            </button>
+        </div>
+            </div>
+        </div>
+</div>
 
 
 
@@ -840,7 +861,7 @@ $(document).on('click', '.delmdl', function()
     $('.delbtn').removeClass('spinner-border spinner-border-sm');
     $('#delaid').val($(this).data('delaid'));
     $('.ttl').html($(this).data('ttl'));
-    $('.delAdminMdl').modal('show');
+    $('.delMdl').modal('show');
 }); 
 
 $("#delAdmin").on('click',function(event)
@@ -856,7 +877,7 @@ $("#delAdmin").on('click',function(event)
       },
       success: function(data){
          table.ajax.reload( null, false );
-         $('.delAdminMdl').modal('hide');
+         $('.delMdl').modal('hide');
          toastr[data.type](data.message);
       }
     });

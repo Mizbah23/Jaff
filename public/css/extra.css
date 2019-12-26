@@ -1,0 +1,96 @@
+.modal .modal-header .close span {
+    font-weight: 400;
+    font-size: 2rem;
+    color: #7367f0;
+}
+.modal .modal-header {
+    background-color: #f8f8f8;
+    border-radius: .42rem;
+    /*padding: .8rem;*/
+    border-bottom: none;
+}
+
+
+.modal .modal-header .close {
+    padding: .2rem .62rem;
+    /*-webkit-box-shadow: 0 5px 20px 0 rgba(0,0,0,.1);*/
+    box-shadow: 0 5px 20px 0 rgba(0,0,0,.1);
+    border-radius: .357rem;
+    background: #fff;
+    opacity: 1;
+    /*-webkit-transition: all .23s ease .1s;*/
+    -o-transition: all .23s ease .1s;
+    -moz-transition: all .23s ease .1s;
+    transition: all .23s ease .1s;
+    position: relative;
+    /*-webkit-transform: translate(8px,-2px);*/
+    -moz-transform: translate(8px,-2px);
+    -ms-transform: translate(8px,-2px);
+    -o-transform: translate(8px,-2px);
+    transform: translate(8px,-2px);
+}
+
+.modal-header .close {
+    /*padding: 1rem;*/
+    /*margin: -1rem -1rem -1rem auto;*/
+    margin: -45px -4px 40px auto;
+}
+vs-checkbox-con input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 200;
+    cursor: pointer;
+    top: 0;
+}
+.vs-checkbox-con .vs-checkbox {
+    cursor: pointer;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-width: 0px;
+    border-style: solid;
+    border-color: #b8c2cc;
+    border-radius: 2px;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    transition: all .2s ease;
+    overflow: hidden;
+    margin-right: .5rem;
+}
+/*.blog-section.page_spacing {
+    width: 1200px;
+}
+#calendar {
+    margin-left: 40px;
+}
+.modal-backdrop.fade.in {
+    overflow-y: scroll;
+}
+.path-section {
+    width: 1263px;
+}
+footer#footer {
+    width: 1263px;
+}
+header.header.sticky-wrapper.sticky-bar {
+    width: 1263px;
+}*/
+.vs-checkbox-success input.cartslot {
+    height: 20px;
+    width: 20px;
+    background: #7367f0;
+}
+.vs-checkbox {
+    border-color: #28C76F!important;
+}
+.mtl{
+    color: #024279;
+    font-size: large;
+    font-family: sans-serif;
+    font-weight: 900;
+}

@@ -4,17 +4,16 @@
 @section('link')
    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/datatables.min.css')}}">
    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
-   <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/dropzone.css')}}">
+   <link href="{{asset('public/css/back/bootstrap-fileupload.css')}}" rel="stylesheet" />
 @stop
 @section('content')
 <style>
-    .dropzone {
-    min-height: 190px;
-    border: 2px dashed rgba(0, 0, 0, 0.3);
-    background: white;
-    padding: 20px 20px;}
-    .dropzone .dz-preview{
-        margin: 0px;
+   .upimg{
+        border: 1px solid gray;
+        border-radius: 10px;
+        width:180px; 
+        height: 130px; 
+        line-height: 20px;
     }
 </style>
 
@@ -47,10 +46,33 @@
                             <div class="form-control-position"><i class="feather icon-user"></i></div>
                             <label for="user-floating-icon">User Name *</label>
                         </div>
-                        <div class="form-group">
-                            <label for="first-name-icon">Profile Image *</label>
-                            <div class="dropzone" id="adminDrop"></div>
+                        
+                        
+                        
+                        
+                  <div class="form-group">
+                    <label for="exampleInputFile">Profile Image *</label>
+                    <div class="controls">
+                        <div data-provides="fileupload" class="fileupload fileupload-new">
+                            <div  class="fileupload-new thumbnail upimg">
+                                <img alt="" class="old_img" src="">
+                            </div>
+                            <div  class="fileupload-preview fileupload-exists upimg thumbnail"></div>
+                            <div>
+                               <span class="btn btn-sm btn-success btn-file"><span class="fileupload-new">select</span>
+                               <span class="fileupload-exists">Change</span>
+                               <input type="file" name="image" class="default"></span>
+                                <a data-dismiss="fileupload" class="btn btn-sm bg-maroon fileupload-exists btn-danger" href="#">Remove</a>
+                            </div>
                         </div>
+                    </div>
+                </div>
+                        
+                        
+                        
+                        
+                        
+                        
                         {{csrf_field()}}
                     </div>   
                     <div class="col-md-6 col-xl-6"> 
@@ -107,6 +129,7 @@
             <div class="modal-body" style="padding-top: 23px;">
                 <form method="post" id="upUserForm" enctype="multipart/form-data">
                     <input type="hidden" id="uid" name="uid">
+                    <input type="hidden" name="oldimg" id="oldimg">
                 <div class="row" >  
                     <div class="col-md-6 col-12">
                         <div class="form-label-group position-relative has-icon-left">
@@ -125,9 +148,23 @@
                             <label for="user-floating-icon">User Name *</label>
                         </div>
                         <div class="form-group">
-                            <label for="first-name-icon">Profile Image *</label>
-                            <div class="dropzone" id="upDrop"></div>
+                            
+                    <label for="exampleInputFile">Profile Image *</label>
+                    <div class="controls">
+                        <div data-provides="fileupload" class="fileupload fileupload-new">
+                            <div  class="fileupload-new thumbnail upimg">
+                                <img alt="" class="oldimg" src="">
+                            </div>
+                            <div  class="fileupload-preview fileupload-exists upimg thumbnail"></div>
+                            <div>
+                               <span class="btn btn-sm btn-success btn-file"><span class="fileupload-new">select</span>
+                               <span class="fileupload-exists">Change</span>
+                               <input type="file" name="uimage" class="default"></span>
+                                <a data-dismiss="fileupload" class="btn btn-sm bg-maroon fileupload-exists btn-danger" href="#">Remove</a>
+                            </div>
                         </div>
+                    </div>
+                </div>
 
                         {{csrf_field()}}
                     </div>   
@@ -178,7 +215,7 @@
         <div class="modal-content">
             
         <div class="modal-header bg-primary">
-            <h5 class="modal-title" id="exampleModalScrollableTitle">Delete Holiday</h5>
+            <h5 class="modal-title" id="exampleModalScrollableTitle">Delete User</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -257,88 +294,10 @@
 <script src="{{asset('public/js/back/datatables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('public/js/back/datatable.min.js')}}"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-<script src="{{asset('public/js/back/dropzone.js')}}"></script>
+<script type="text/javascript" src="{{asset('public/js/back/bootstrap-fileupload.js')}}"></script>
 <script>   
-Dropzone.autoDiscover = false;   
-var newDropzone = new Dropzone(
-    '#adminDrop',{
-    autoProcessQueue : false,
-    addRemoveLinks : true,
-    uploadMultiple : false,
-    paramName: "image",
-    maxFiles : 1,
-    url : "{{route('save.users')}}",
-    init : function () 
-    {
-        var myDropzone = this;
-        $("#addUserForm").submit(function (e) 
-        {
-            e.preventDefault();
-            myDropzone.processQueue();
-        });
-        this.on('sending', function(file, xhr, formData)
-        {
-            var data = $('#addUserForm').serializeArray();
-            $.each(data, function(key, el)
-            {
-                formData.append(el.name, el.value);
-            });
-        });
-        this.on("success", function(file, responseText)
-        {
-            $('.addUserModel').modal('hide');
-            document.getElementById("addUserForm").reset();
-            myDropzone.removeAllFiles(true);
-            console.log(responseText);
-//          toastr[responseText.type](responseText.message);
-            table.ajax.reload( null, false );
-        });
-        myDropzone.on("maxfilesexceeded", function(file) {
-        myDropzone.removeFile(file);
-        });
 
-    }
-}); 
 
-//Dropzone.options.adminDrop = 
-//{
-//    autoProcessQueue : false,
-//    addRemoveLinks : true,
-//    uploadMultiple : false,
-//    paramName: "image",
-//    maxFiles : 1,
-//    url : "{{route('save.users')}}",
-//    init : function () 
-//    {
-//        var myDropzone = this;
-//        $("#addUserForm").submit(function (e) 
-//        {
-//            e.preventDefault();
-//            myDropzone.processQueue();
-//        });
-//        this.on('sending', function(file, xhr, formData)
-//        {
-//            var data = $('#addUserForm').serializeArray();
-//            $.each(data, function(key, el)
-//            {
-//                formData.append(el.name, el.value);
-//            });
-//        });
-//        this.on("success", function(file, responseText)
-//        {
-//            $('.addUserModel').modal('hide');
-//            document.getElementById("addUserForm").reset();
-//            myDropzone.removeAllFiles(true);
-//            console.log(responseText);
-////            toastr[responseText.type](responseText.message);
-//            table.ajax.reload( null, false );
-//        });
-//        myDropzone.on("maxfilesexceeded", function(file) {
-//        myDropzone.removeFile(file);
-//        });
-//
-//    }
-//};
     $(document).ready(function()
     {
        $('.usr').addClass('active');
@@ -375,6 +334,27 @@ $(".addnew").on('click',function(){
     document.getElementById("addUserForm").reset();
     $('.addUserModel').modal('show');
 });
+$("#addUserForm").on('submit',function(event)
+{  
+    event.preventDefault();
+    $.ajax({
+        type: 'POST',
+        url: "{{route('save.users')}}",
+        data:new FormData(this),
+        dataType:'JSON',
+        contentType: false,
+        cache: false,
+        processData: false,
+        success:function(data)
+        {
+            table.ajax.reload( null, false );
+            $('.upUserModel').modal('hide');
+            toastr[data.type](data.message);
+            document.getElementById("upUserForm").reset();
+//            $('.addbtn').removeClass('spinner-border spinner-border-sm');
+        }
+    });
+});
 
 //******************************edit*********************************************
 $(document).on('click', '.editmdl', function()
@@ -387,6 +367,8 @@ $(document).on('click', '.editmdl', function()
     $('#uemail').val($(this).data('eml'));
     $('#uphone').val($(this).data('phn'));
     $('#uaddress').val($(this).data('addrs'));
+    $('#oldimg').val($(this).data('img'));
+    $('.oldimg').attr("src",$(this).data('img'));
     $('.upUserModel').modal('show');
 
 });  

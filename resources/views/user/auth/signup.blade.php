@@ -167,7 +167,7 @@
                                                 <a title="Shortcodes" href="">Shortcodes</a>
                                             </li>
                                             <li id="menu-item-405" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-405">
-                                                <a title="Time Table" href="{{route('time')}}">Time Table</a>
+                                                <a title="Time Table" href="">Time Table</a>
                                             </li>
                                         </ul>
                                     </li>

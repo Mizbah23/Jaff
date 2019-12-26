@@ -21,7 +21,6 @@ class AdminController extends Controller
     }
     public function index()
     {
-    
         $data = array();
         $data['title'] = 'Dashboard';
         $data['total']=User::where( 'created_at', '>=', Carbon::now()->subDays(7))->orderBy('created_at','desc')->get();
@@ -40,16 +39,14 @@ class AdminController extends Controller
          $dates = $dates->merge( $data['users'] );
          $data['dates']=$dates;
          $dates = [];
-         $counts = [];
-         foreach ($data['dates'] as $key=>$count) {
-            // dd($key);
-            array_push($counts, $count);
-            array_push($dates, $key);
+         foreach ($data['dates'] as $key=>$date) {
+             array_push($dates, $date);
             
-         }         
-         $counts = implode(",",$counts);
+         }
+         
+         $dates = implode(",",$dates);
          // dd($dates);
-         $data['counts'] = $counts;
+         $data['dates'] = $dates;
          //******bookings date chart************//
 
          $data['total_books']=Bookdetail::where( 'slot_date', '>=', Carbon::now()->subDays(7))->orderBy('slot_date','desc')->get();
@@ -80,11 +77,12 @@ class AdminController extends Controller
         $data['paid_count'] = Booking::where( [['created_at', '>=', Carbon::now()->subDays(30)], ['status', '=', '1' ]])->count();
         $data['due_count'] = Booking::where( [['created_at', '>=', Carbon::now()->subDays(30)], ['status', '=', '0' ]])->count();
         $data['partial_count'] = Booking::where( [['created_at', '>=', Carbon::now()->subDays(30)], ['status', '=', '2' ]])->count();
-        $data['paid_percent']=number_format($data['paid_count']/($data['total_count'])*100, 2, '.', '');
-        $data['partial_percent']=number_format($data['partial_count']/($data['total_count'])*100, 2, '.', '');
-        $data['due_percent']=number_format($data['due_count']/($data['total_count'])*100, 2, '.', '');
         
-        // dd($data['due_percent']);
+        $data['paid_percent']=($data['paid_count']>0)? number_format($data['paid_count']/($data['total_count'])*100, 0, '.', ''):0.0;
+        $data['partial_percent']= ($data['partial_count']>0)? number_format($data['partial_count']/($data['total_count'])*100, 0, '.', ''):0.0;
+        $data['due_percent']= ($data['due_count']>0)? number_format($data['due_count']/($data['total_count'])*100, 0, '.', ''):0.0;
+
+        // dd($data);
         ///**********Slot type wise booking*********'///
         $data['peak_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '2' ]])->count();
         $data['offpeak_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '3' ]])->count();
@@ -97,16 +95,19 @@ class AdminController extends Controller
         $data['full_count']=Bookdetail::where( [['slot_date', '>=', Carbon::now()->subDays(30)], ['type', '=', '3' ]])->count();
         $data['drop_count']=Bookdetail::where( [['slot_date', '>=', Carbon::now()->subDays(30)], ['type', '=', '4' ]])->count();
 
-        //Last 12 Month Income Expense
+        // Last 12 Month Income Expense
         
-        $months = collect();
-        foreach( range( 0, 11 ) as $i ) {
-            $date = Carbon::now()->subMonths( $i )->format( 'M' );
-            $months->put( $date, 0);
-         }
+        // $months = collect();
+        // foreach( range( 0, 11 ) as $i ) {
+        //     $date = Carbon::now()->subMonths( $i )->format( 'M' );
+        //     $months->put( $date, 0);
+        //  }
         // dd($months);
      
         return view('admin.dashboard',$data);
+        
+        
+        
     }
     public function UserList()
     {
@@ -164,24 +165,34 @@ class AdminController extends Controller
             $nestedData['img'] = '<img class="rounded-circle" src="'.$img.'" alt="admin image" height="80" width="80">';
             $nestedData['phn'] = $r->phone;
             $nestedData['eml'] = $r->email;
-
-            $sts = ($r->status==1)?
-                $sts = '<div class="btn-group"><div class="badge badge-success dropdown">
+            
+            
+            if($r->level=='SA'){
+                $sts = '<div class="badge badge-success">Active</div>';
+            }else{
+                $sts = ($r->status==1)?
+                 '<div class="btn-group"><div class="badge badge-success dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Active</span></a>
                 <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
                     <a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="0" href="#">Disable</a></div>
                 </div>
                  </div>':
-            '<div class="btn-group"><div class="badge badge-danger dropdown">
+                '<div class="btn-group"><div class="badge badge-danger dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Disabled</span></a>
                 <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
                     <a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="1" href="#">Active</a></div>
                 </div>
-            </div>';
-            $nestedData['sts']=$sts;
-            $nestedData['action'] = '<a class="editmdl" data-id="'.$r->id.'" data-nm="'.$r->name.'" data-phn="'.$r->phone.'" data-eml="'.$r->email.'" '
-                    . 'data-img="'.asset($r->image).'" style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a> '
-                    . '<a href="#" class="delmdl" data-delaid="'.$r->id.'" data-ttl="'.$r->name.'" style="padding: 4px;"><i class="ficon feather icon-trash-2 danger"></i></a>';
+                </div>';
+            }
+
+            
+            $nestedData['sts']= $sts;
+            $action = '<a class="editmdl" data-id="'.$r->id.'" data-nm="'.$r->name.'" data-phn="'.$r->phone.'" data-eml="'.$r->email.'" '
+                    . 'data-img="'.asset($r->image).'" style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a>';
+            if($r->level!='SA'){
+               $action .= '<a href="#" class="delmdl" data-delaid="'.$r->id.'" data-ttl="'.$r->name.'" style="padding: 4px;"><i class="ficon feather icon-trash-2 danger"></i></a>'; 
+            }
+            $nestedData['action'] = $action; 
             $data[] = $nestedData;
         }
     }     

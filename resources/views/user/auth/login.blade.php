@@ -11,7 +11,7 @@
 @section('content')
 <div class="content">
 
-<div class="path-section" style='background-image: url(public/img/slide-1.jpg);'>
+<div class="path-section" style="background-image: url({{asset('public/img/slide-1.jpg')}})">
     <div class="bg-cover" style="padding: 90px 0 20px">
 {{--     <div class="container">
             <h3>Time Table</h3>

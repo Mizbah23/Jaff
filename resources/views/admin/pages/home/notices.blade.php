@@ -70,7 +70,7 @@
                             <textarea name="description" id="description" rows="10" class="form-control" placeholder="Describe about notice" style="line-height: 0.8rem;"></textarea>
                         </div>
                     </div>
-                    {{csrf_field()}}
+         
                 </div>
             </div> 
                 
@@ -310,7 +310,7 @@ $("#editFrm").on('submit',function(event)
         success:function(data)
         {
             table.ajax.reload( null, false );
-            $('#editMdl').modal('hide');
+            $('.upModel').modal('hide');
             toastr[data.type](data.message);
             document.getElementById("editFrm").reset();
             $('.upbtn').removeClass('spinner-border spinner-border-sm');

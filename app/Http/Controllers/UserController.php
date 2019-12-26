@@ -57,12 +57,10 @@ class UserController extends Controller
             $nestedData['email'] = $r->email;
             $nestedData['img'] = '<img class="rounded-circle" src="'.asset($r->img).'" alt="'.$r->name.'" height="60" width="60">';
             if( $r->status==0){
-                $sts = '<div class="btn-group">
-                <div class="badge badge-warning dropdown">
+                $sts = '<div class="btn-group"><div class="badge badge-warning dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Hold</span></a>
                 <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
-                    <a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="1" href="#">Active</a><a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="2" href="#">Block</a>
-                </div>
+                    <a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="1" href="#">Active</a><a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="2" href="#">Block</a></div>
                 </div>
                  </div>';
             }else if($r->status==1){
@@ -81,23 +79,8 @@ class UserController extends Controller
                  </div>';
             }
             $nestedData['sts']=$sts;
-//        '<div class="btn-group"><div class="badge badge-success dropdown">
-//            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Active</span></a>
-//            <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
-//                <a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="0" href="#">Hold</a><a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="2" href="#">Block</a></div>
-//            </div>
-//        </div>':'<div class="btn-group"><div class="badge badge-warning dropdown">
-//            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Hold</span></a>
-//            <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
-//                <a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="1" href="#">Active</a><a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="2" href="#">Block</a></div>
-//            </div>
-//        </div>';    
-//                '<div class="badge  badge-pill badge-success mr-1 badge-glow mb-1"><span>Active</span></div>':
-//                '<div class="badge  badge-pill badge-warning mr-1 badge-glow mb-1"><span>Hold</span></div>';
-//            $nestedData['sts']=($r->status==1)?'<div class="badge  badge-pill badge-success mr-1 badge-glow mb-1"><i class="feather icon-check"></i><span>Active</span></div>':
-//                '<div class="badge badge-pill  badge-danger mr-1 badge-glow mb-1"><i class="feather icon-x"></i><span>Active</span></div>';
             $nestedData['action'] = '<a class="editmdl" data-id="'.$r->id.'" data-fnm="'.$r->first_name.'" data-lnm="'.$r->last_name.'" data-nm="'.$r->username.'" '
-                    . 'data-eml="'.$r->email.'" data-phn="'.$r->phone.'" data-addrs="'.$r->address.'" style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a> '
+                    . 'data-eml="'.$r->email.'" data-phn="'.$r->phone.'" data-img="'.asset($r->img).'" data-addrs="'.$r->address.'" style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a> '
                     . '<a href="#" class="delmdl" style="padding: 4px;" data-deluid="'.$r->id.'"><i class="ficon feather icon-trash-2 danger"></i></a>';
             $data[] = $nestedData;
         }
@@ -180,6 +163,23 @@ class UserController extends Controller
         $user->address = $request->uaddress;
         if($request->upassword!=""){
             $user->password = $request->upassword;
+        }
+        $image=$request->file('uimage');
+        if($image)
+        {
+            $image_name=str_random(3).$request->uname;
+            $ext=strtolower($image->getClientOriginalExtension());
+            $image_full_name=$image_name.'.'.$ext;
+            $upload_path='public/img/user/';
+            $image_url=$upload_path.$image_full_name;
+            $success=$image->move($upload_path,$image_full_name);
+            if($success)
+            {
+                $user->img=$image_url;
+                if(file_exists($request->oldimg)){
+                    unlink($request->oldimg);
+                }
+            }
         }
         $user->save();
         $notification = array(

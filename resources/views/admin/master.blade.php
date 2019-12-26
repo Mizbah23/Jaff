@@ -10,7 +10,7 @@
     <meta name="description" content="Vuesax admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuesax admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="">
-    <title>Jaff</title>
+    <title>Jaff - @yield('title') </title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="icon" type="image/ico" href="{{asset('/public/favicon.ico')}}">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
@@ -22,11 +22,10 @@
     <link rel="stylesheet" type="text/css" href="{{asset('/public/css/back/bootstrap-extended.min.css')}}">
     
 
-    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/apexcharts.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/dashboard-ecommerce.css')}}">
+    <!--<link rel="stylesheet" type="text/css" href="{{asset('public/css/back/apexcharts.css')}}">-->
     <!--<link rel="stylesheet" type="text/css" href="{{asset('public/css/back/tether-theme-arrows.css')}}">-->
     <!--<link rel="stylesheet" type="text/css" href="{{asset('public/css/back/tether.min.css')}}">-->
-    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/shepherd-theme-default.css')}}">
+    <!--<link rel="stylesheet" type="text/css" href="{{asset('public/css/back/shepherd-theme-default.css')}}">-->
     
     <link rel="stylesheet" type="text/css" href="{{asset('/public/css/back/colors.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/public/css/back/components.min.css')}}">

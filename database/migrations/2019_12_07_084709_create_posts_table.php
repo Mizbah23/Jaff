@@ -21,7 +21,6 @@ class CreatePostsTable extends Migration
             $table->text('details');
             $table->string('post_img');
             $table->tinyInteger('status')->deafult(1)->nullable();
-            $table->Integer('view_count')->nullable();
             $table->Integer('created_by');
             $table->Integer('updated_by')->nullable();
             $table->timestamps();

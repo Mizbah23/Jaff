@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<link rel="icon" type="image/ico" href="{{asset('public/img/favicon.png')}}">
+<link rel="icon" type="image/ico" href="public/img/favicon.png">
 
 <title>@yield('title')</title>
 <link rel='stylesheet' id='wp-block-library-css'  href="{{asset('public/css/front/style.min.css')}}" type='text/css' media='all' />
@@ -43,11 +43,11 @@
 
 		
 <body class="home page-template-default page page-id-10 woocommerce-no-js @yield('page')" data-offset="200" data-spy="scroll" data-target=".navbar-custom">
-{{--      <div id="loader">
+     <div id="loader">
         <div class="spinner1"></div>
         <div class="spinner2"></div>
         <div class="spinner3"></div>
-    </div>   --}}
+    </div>  
   
     <a id="goto-top"></a>
     <div class="box-wide">
@@ -63,6 +63,13 @@
        
        
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+
+<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>-->
+
+
+
+
 <script type='text/javascript' src='{{asset('public/js/front/scripts1748.js')}}'></script>
 <script type='text/javascript' src='{{asset('public/js/front/jquery.blockUI.min44fd.js')}}'></script>
 <script type='text/javascript'>
@@ -86,7 +93,7 @@
 <script type='text/javascript' src='{{asset('public/js/front/functions.js')}}'></script>
 <script type='text/javascript' src='{{asset('public/js/front/wp-embed.min066b.js')}}'></script>
 <!--slick slider-->
-{{--     <script>
+    <script>
           $(window).on("load", function (e) 
           {
             console.log("loaded");
@@ -95,7 +102,7 @@
 //                     setTimeout(function(){ $('#loader').attr('hidden',true); }, 80000);
                      
           });
-        </script>    --}}
+        </script>   
 @yield('script')
 
 

@@ -840,7 +840,8 @@ class SlotController extends Controller
         }
         $output = '';
         $i = 1;
-        foreach(Cart::content() as $content){
+        foreach(Cart::content() as $content)
+        {
             $output .= '<tr class="table-light">
                             <th scope="row">'.$i++.'</th>
                             <td>'.$content->options->date.'</td>
@@ -970,8 +971,13 @@ class SlotController extends Controller
     }
     public function getFday(Request $request) 
     {
+        $from =  ($request->from)? $request->from:'';
+        $to =  ($request->to)? $request->to:''; 
+        
         $columns = array(0 =>'date',1=> 'price',2=> 'details',3=> 'ground_id',4=> 'status',5=> 'action');
-        $totalData = Fullday::count();
+        $totalData = Fullday::when($from, function ($query, $from){return $query->whereDate('date','>',$from);})
+                    ->when($to, function ($query, $to){return $query->whereDate('date','<',$to);})
+                    ->count();
         $limit = $request->input('length');
         $start = $request->input('start');
         $order = $columns[$request->input('order.0.column')];
@@ -980,14 +986,20 @@ class SlotController extends Controller
         {
             $posts = Fullday::join('grounds','fulldays.ground_id','=','grounds.id')
                     ->select('fulldays.*','grounds.name')
+                    ->when($from, function ($query, $from){return $query->whereDate('fulldays.date','>',$from);})
+                    ->when($to, function ($query, $to){return $query->whereDate('fulldays.date','<',$to);})
                     ->offset($start)->limit($limit)
                     ->orderBy($order,$dir)->get();
-            $totalFiltered =  Fullday::count();
+            $totalFiltered =  Fullday::when($from, function ($query, $from){return $query->whereDate('date','>',$from);})
+                    ->when($to, function ($query, $to){return $query->whereDate('date','<',$to);})
+                    ->count();
         }
         else{
             $search = $request->input('search.value');
             $posts = Fullday::join('grounds','fulldays.ground_id','=','grounds.id')
                     ->select('fulldays.*','grounds.name')
+                    ->when($from, function ($query, $from){return $query->whereDate('fulldays.date','>',$from);})
+                    ->when($to, function ($query, $to){return $query->whereDate('fulldays.date','<',$to);})
                     ->where('fulldays.date', 'like', "%{$search}%")
                     ->orwhere('fulldays.price', 'like', "%{$search}%")
                     ->orwhere('fulldays.details', 'like', "%{$search}%")
@@ -995,6 +1007,8 @@ class SlotController extends Controller
                     ->offset($start)->limit($limit)
                     ->orderBy($order, $dir)->get();
             $totalFiltered = Fullday::join('grounds','fulldays.ground_id','=','grounds.id')
+                    ->when($from, function ($query, $from){return $query->whereDate('fulldays.date','>',$from);})
+                    ->when($to, function ($query, $to){return $query->whereDate('fulldays.date','<',$to);})
                     ->where('fulldays.date', 'like', "%{$search}%")
                     ->orwhere('fulldays.price', 'like', "%{$search}%")
                     ->orwhere('fulldays.details', 'like', "%{$search}%")
@@ -1010,25 +1024,25 @@ class SlotController extends Controller
             $nestedData['price'] = $r->price;
             $nestedData['details'] = $r->details;
             $nestedData['ground'] = $r->name;
-
-            if( $r->status==1){
-                $sts ='<div class="btn-group"><div class="badge badge-success dropdown">
+            
+            $sts = ($r->status==1)?
+                 '<div class="btn-group"><div class="badge badge-success dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Active</span></a>
                 <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
-                    <a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="0" href="#">Deactive</a></div>
+                    <a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="0" href="#">Disable</a></div>
                 </div>
-                 </div>' ;
-            }else{
-               $sts = '<div class="btn-group"><div class="badge badge-danger dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Deactivated</span></a>
+                 </div>':
+                '<div class="btn-group"><div class="badge badge-danger dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Disabled</span></a>
                 <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
                     <a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="1" href="#">Active</a></div>
                 </div>
-                 </div>'; 
-            }
-            $nestedData['sts']=$sts;
-            $nestedData['action'] = '<a class="editmdl" data-id="'.$r->id.'" data-nm="'.$r->name.'" data-phn="'.$r->address.'" data-eml="'.$r->details.'" style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a> '
-                    . '<a href="#" class="delmdl" style="padding: 4px;"><i class="ficon feather icon-trash danger"></i></a>';
+                </div>';
+
+            $nestedData['sts'] = $sts;
+
+            $nestedData['action'] = '<a class="editmdl" data-fid="'.$r->id.'" data-date="'.$r->date.'"  data-price="'.$r->price.'" data-dtl="'.$r->details.'" data-gid="'.$r->ground_id.'" style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a> '
+                    . '<a href="#" class="delmdl" data-delid="'.$r->id.'" data-date="'.$r->date.'" style="padding: 4px;"><i class="ficon feather icon-trash-2 danger"></i></a>';
             $data[] = $nestedData;
         }
     }     
@@ -1055,25 +1069,61 @@ class SlotController extends Controller
             );
         return Response::json($notification);
     }
-
+    public function updateFday(Request $request)
+    {
+        $fday = Fullday::find($request->fid);
+        $fday->date = $request->udate;
+        $fday->details = $request->udetails;
+        $fday->price = $request->uprice;
+        $fday->ground_id = $request->uground_id;
+        $fday->updated_by = Auth::guard('admin')->user()->id;
+        $fday->save();
+        $notification = array(
+                'message' => 'Full Day Updated Successfully',
+                'type' => 'success'
+            );
+        return Response::json($notification);       
+    }
+    public function delFday(Request $request)
+    {
+        $del = Fullday::find($request->delid);
+        $del->delete();
+        $notification = array(
+                'message' => 'Full Day Deleted Successfully',
+                'type' => 'error'
+            );
+        return Response::json($notification); 
+    }
     public function StatusFday(Request $request)
     {
-        $offer= Fullday::find($request->oid);
-        $offer->status = $request->sts;
-        $offer->save();
+        $fday= Fullday::find($request->aid);
+        $fday->status = $request->sts;
+        $fday->save();
         if($request->sts==1){
-            $msg= 'Activated Successfully';
+            $msg= 'Fullday Activated Successfully';
             $typ= 'success';
         }else{
-            $msg= 'Offer Has Deactivated';
-            $typ= 'error';
+            $msg= 'Fullday Inactivated Successfully';
+            $typ= 'warning';
         }
         $notification = array(
                 'message' => $msg,
                 'type' => $typ
             );
         return Response::json($notification); 
-    } 
+    }
+    public function countFday(Request $request)
+    {
+        $from =  ($request->from)? $request->from:'';
+        $to =  ($request->to)? $request->to:''; 
+        $total= Fullday::when($from, function ($query, $from){return $query->whereDate('date','>',$from);})
+        ->when($to, function ($query, $to){return $query->whereDate('date','<',$to);})
+        ->count();
+        return number_format($total);
+    }
+    
+
+    
     //*****************************Drop In*********************************
     public function showDropIn() 
     {
@@ -1112,9 +1162,13 @@ class SlotController extends Controller
     }
     public function getDropIn(Request $request) 
     {
+        $from =  ($request->from)? $request->from:'';
+        $to =  ($request->to)? $request->to:''; 
         $columns = array(0 =>'date',1=> 'slot_id',2=> 'price',3=> 'seat',4=> 'taken',5=> 'ground_id',6=>'status'
         );
-        $totalData = Dropin::count();
+        $totalData = Dropin::when($from, function ($query, $from){return $query->whereDate('date','>',$from);})
+                    ->when($to, function ($query, $to){return $query->whereDate('date','<',$to);})
+                    ->count();
         $limit = $request->input('length');
         $start = $request->input('start');
         $order = $columns[$request->input('order.0.column')];
@@ -1125,8 +1179,12 @@ class SlotController extends Controller
                     ->join('grounds','dropins.ground_id','=','grounds.id')
                     ->select('dropins.*','grounds.name','slots.start','slots.end',DB::raw("(SELECT count(bookdetails.id) FROM bookdetails WHERE "
                             . "bookdetails.`slot_id`=dropins.`slot_id` AND bookdetails.`slot_date`=dropins.`date`) as booked"))
+                    ->when($from, function ($query, $from){return $query->whereDate('dropins.date','>',$from);})
+                    ->when($to, function ($query, $to){return $query->whereDate('dropins.date','<',$to);})
                     ->offset($start)->limit($limit)->orderBy($order,$dir)->get();
-            $totalFiltered =  Dropin::count();
+            $totalFiltered =  Dropin::when($from, function ($query, $from){return $query->whereDate('date','>',$from);})
+                    ->when($to, function ($query, $to){return $query->whereDate('date','<',$to);})
+                    ->count();
         }
         else{
             $search = $request->input('search.value');
@@ -1135,11 +1193,15 @@ class SlotController extends Controller
                     ->select('dropins.*','grounds.name','slots.start','slots.end',
                             DB::raw("(SELECT count(bookdetails.id) FROM bookdetails WHERE "
                             . "bookdetails.`slot_id`=dropins.`slot_id` AND bookdetails.`slot_date`=dropins.`date`) as booked"))
+                    ->when($from, function ($query, $from){return $query->whereDate('dropins.date','>',$from);})
+                    ->when($to, function ($query, $to){return $query->whereDate('dropins.date','<',$to);})
                     ->where('dropins.date', 'like', "%{$search}%")
                     ->where('grounds.name', 'like', "%{$search}%")
                     ->offset($start)->limit($limit)
                     ->orderBy($order, $dir)->get();
             $totalFiltered = Dropin::join('grounds','dropins.ground_id','=','grounds.id')
+                    ->when($from, function ($query, $from){return $query->whereDate('dropins.date','>',$from);})
+                    ->when($to, function ($query, $to){return $query->whereDate('dropins.date','<',$to);})
                     ->where('dropins.date', 'like', "%{$search}%")
                     ->where('grounds.name', 'like', "%{$search}%")
                     ->count();
@@ -1156,24 +1218,25 @@ class SlotController extends Controller
             $nestedData['taken'] = $r->booked;
             $nestedData['details'] = $r->details;
             $nestedData['name'] = $r->name;
-                if( $r->status==1){
-                $sts ='<div class="btn-group"><div class="badge badge-success dropdown">
+            
+            $sts = ($r->status==1)?
+                 '<div class="btn-group"><div class="badge badge-success dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Active</span></a>
                 <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
-                    <a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="0" href="#">Deactive</a></div>
+                    <a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="0" href="#">Disable</a></div>
                 </div>
-                 </div>' ;
-            }else{
-               $sts = '<div class="btn-group"><div class="badge badge-danger dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Deactivated</span></a>
+                 </div>':
+                '<div class="btn-group"><div class="badge badge-danger dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span>Disabled</span></a>
                 <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(4px, -165px, 0px);">
                     <a class="dropdown-item csts" data-id="'.$r->id.'" data-sts="1" href="#">Active</a></div>
                 </div>
-                 </div>'; 
-            }
-            $nestedData['sts']=$sts;
-            $nestedData['action'] = '<a class="editmdl" data-id="'.$r->id.'" data-nm="'.$r->name.'" data-phn="'.$r->address.'" data-eml="'.$r->details.'" style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a> '
-                    . '<a href="#" class="delmdl" style="padding: 4px;"><i class="ficon feather icon-trash danger"></i></a>';
+                </div>';
+
+            $nestedData['sts'] = $sts;
+            $nestedData['action'] = '<a class="editmdl" data-updid="'.$r->id.'" data-sltid="'.$r->slot_id.'" data-date="'.$r->date.'" data-gid="'.$r->ground_id.'" '
+                    . 'data-seat="'.$r->seat.'" data-price="'.$r->price.'" style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a> '
+                    . '<a href="#" class="delmdl" data-delid="'.$r->id.'" data-ttl="'.$r->date.'" style="padding: 4px;"><i class="ficon feather icon-trash-2 danger"></i></a>';
             $data[] = $nestedData;
         }
     }     
@@ -1185,24 +1248,62 @@ class SlotController extends Controller
         );
         echo json_encode($json_data);    
     }
-    
-    public function statusDropin(Request $request)
+    public function StatusDropIn(Request $request)
     {
-        $dropin= Dropin::find($request->oid);
-        $dropin->status = $request->sts;
-        $dropin->save();
+        $dday= Dropin::find($request->aid);
+        $dday->status = $request->sts;
+        $dday->save();
         if($request->sts==1){
-            $msg= 'Activated Successfully';
+            $msg= 'DropIn Activated Successfully';
             $typ= 'success';
         }else{
-            $msg= 'Dropin Has Deactivated';
-            $typ= 'error';
+            $msg= 'DropIn Inactivated Successfully';
+            $typ= 'warning';
         }
         $notification = array(
                 'message' => $msg,
                 'type' => $typ
             );
         return Response::json($notification); 
-    } 
+    }
+    public function updateDropIn(Request $request)
+    {
+        $dropin = Dropin::find($request->updid);
+        $dropin->date = $request->udate;
+        $dropin->ground_id = $request->uground_id;
+        $dropin->slot_id = $request->uslot_id;
+        $dropin->seat = $request->useat;
+        $dropin->price = $request->uprice;
+        $dropin->updated_by = Auth::guard('admin')->user()->id;
+        $dropin->save();
+        $notification = array(
+            'message' => 'Dropin Slot Updated Successfully',
+            'type' => 'success'
+        );
+        return Response::json($notification); 
+    }
+    public function delDropIn(Request $request)
+    {
+       $dropin = Dropin::find($request->deldropid);
+       $dropin->delete();
+       $notification = array(
+            'message' => 'Dropin Slot Deleted Successfully',
+            'type' => 'error'
+        );
+        return Response::json($notification); 
+    }
+    public function countDrop(Request $request)
+    {
+        $from =  ($request->from)? $request->from:'';
+        $to =  ($request->to)? $request->to:''; 
+        $total= Dropin::when($from, function ($query, $from){return $query->whereDate('date','>',$from);})
+        ->when($to, function ($query, $to){return $query->whereDate('date','<',$to);})
+        ->count();
+        return number_format($total);
+    }
+    
+    
+    
+    
     
 }
