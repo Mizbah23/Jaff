@@ -11,12 +11,12 @@
     img.attachment-thumb-495-495.size-thumb-495-495.wp-post-image {
     height: 290px;
 }
-/*   .info-section .info-details.info-details-center {
+.info-section .info-details.info-details-center {
     margin-top: -249px;
+    min-height: 575px;
     overflow-y: scroll;
-    height: 400px;
 }
-*/
+
 </style>
 @stop
 @section('content')
@@ -53,27 +53,27 @@
 				</div>
 				<div class="under-button">
 					<span></span>
-					<a href="#" class="d-border-c d-bg-c-h d-text-c">Book A Slot</a>
+					<a href="{{route('time')}}" class="d-border-c d-bg-c-h d-text-c">Book A Slot</a>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<div class="info-details info-details-center d-bg-c">
-					<h4>WHAT We OFFER ?</h4>
-					<div class="info-image"><img src="{{$simg->offer_image}}" alt="image" style="width: 100%; height:251px" /></div>
-					<ul class="ul-calendar">
+            <div class="col-md-4">
+                <div class="info-details info-details-center d-bg-c">
+                    <h4>WHAT We OFFER ?</h4>
+                    <div class="info-image"><img src="{{$simg->offer_image}}" alt="image" style="width: 100%; height:251px" /></div>
+                    <ul class="ul-calendar">
                                             @foreach($offers as $off)
                                             <li>
                                                 <span>{{$off->offer_title}}</span>
                                                 <span>{{$off->details}}</span>
                                             </li>
                                             @endforeach
-					</ul>
-				</div>
-				<div class="under-button">
-					<span></span>
-					<a href="#" class="d-border-c d-bg-c-h d-text-c">Call Now</a>
-				</div>
-			</div>
+                    </ul>
+                </div>
+                <div class="under-button">
+                    <span></span>
+                    <a href="{{route('time')}}" class="d-border-c d-bg-c-h d-text-c">Book Now</a>
+                </div>
+            </div>
 			<div class="col-md-4">
 				<div class="info-details d-bg-c">
 					<h4>Notice Board</h4>
@@ -89,7 +89,7 @@
 				</div>
 				<div class="under-button">
 					<span></span>
-					<a href="{{route('user.notice')}}" class="d-border-c d-bg-c-h d-text-c">Details</a>
+					<a href="{{route('user.notice')}}" class="d-border-c d-bg-c-h d-text-c">View More</a>
 				</div>
 			</div>
 		</div>
@@ -108,7 +108,7 @@
 			<div class="row">
 				<div class="col-md-4">
 					<div class="img-box">
-					  <img src="{{$simg->about_image}}" style="width: 100%; height:251px" alt="presentation" />
+					  <img src="{{asset($simg->about_image)}}" style="width: 100%; height:251px" alt="presentation" />
 					</div>
 				</div>
 				<div class="col-md-8">
@@ -422,7 +422,7 @@
 <script>
     
 
-$('.post-wrapper').slick({
+         $('.post-wrapper').slick({
   slidesToShow: 3,
   slidesToScroll: 1,
   autoplay: true,

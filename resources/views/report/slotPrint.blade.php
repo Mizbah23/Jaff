@@ -12,10 +12,6 @@
     <title>Slots</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style type="text/css">
-@page{
-  header: page-header;
-  footer: page-footer;
-}
  
 
 table{
@@ -42,7 +38,6 @@ img {
   width: 5%;
   height: 5%
 }
-
   
 /*$mpdf->Image('/img/app-logo.png', 0, 0, 210, 297, 'jpg', '', true, false);
 */
@@ -91,14 +86,6 @@ img {
        
    </center>
  <br>
- <h4  style="text-align: center;font-size: 12px">Total Slots {{$total}}</h4>
- <htmlpagefooter name="page-footer">
- <div id="signaturename">
-  Signature
-</div>
-
-
-</div>
-</htmlpagefooter>
+        <h4  style="text-align: center;font-size: 12px">Total Slots {{$total}}</h4>
 </body>
 </html>

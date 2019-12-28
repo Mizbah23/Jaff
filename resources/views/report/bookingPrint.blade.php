@@ -62,6 +62,7 @@ img {
      <table id="slotTbl" class="table zero-configuration ">
        <thead>
         <tr>
+            <th>SL</th>
                <th>Book ID</th>
                <th>Book Date</th>
                <th>Name</th>
@@ -72,22 +73,25 @@ img {
        </tr>
        </thead>
        <tbody>
+        @php $i =1;$total = 0;@endphp
         @foreach ($posts as $item)  
         <tr>
+            <td>{{$i++}}</td>
             <td>{{$item->book_code}}</td>
             <td align="center">{{date('D ,d M Y',strtotime($item->created_at))}}</td>
             <td align="center">{{$item->username}}</td>
             <td align="center">{{$item->phone}}</td>
             <td align="center">{{$item->tslot}}</td>
-            <td align="center">{{$item->total}}</td>
+            <td align="center">{{number_format($item->total)}}</td>
         
         </tr>
+        @php $total +=$item->total; @endphp
         @endforeach
        </tbody>
    </table>
        
    </center>
  <br>
-        <h4  style="text-align: center;font-size: 12px">Total Slots {{$total}}</h4>
+        <h4  style="text-align: center;font-size: 12px">Total amount: {{number_format($total).' BDT'}}</h4>
 </body>
 </html>

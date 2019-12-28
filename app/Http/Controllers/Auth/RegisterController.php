@@ -7,7 +7,6 @@ use Jaff\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 use illuminate\Support\Str;
 use Response;
@@ -108,8 +107,8 @@ class RegisterController extends Controller
                'username'=>'required',
                'phone'=>'required | min:6|unique:users',
                'email'=>'required|unique:users',
-               'password'=>'min:6|required_with:cpass|same:cpass',
-                'cpass'=>'min:6'
+               'password'=>'min:2|required_with:cpass|same:cpass',
+                'cpass'=>'min:2'
         ]);
 
         // $this->validator($request->all());
@@ -159,9 +158,11 @@ class RegisterController extends Controller
     
         public function getOTP(Request $request,$phone)
     {
-        $user=User::where('phone',$phone)->first();
+        $data= array();
+        $data['title']='Sign up';
+        $data['user']=User::where('phone',$phone)->first();
          // dd($user);
-        return view('user.auth.otp')->with('user',$user);
+        return view('user.auth.otp',$data);
     }
     
         public function verifyOTP(Request $request,$phone){
@@ -181,8 +182,11 @@ class RegisterController extends Controller
     
         public function showNewForm(Request $request,$phone)
     {
-         $user=User::where('phone',$phone)->first();
-         return view('user.auth.newPassword');
+          $data= array();
+          $data['title']='New Password Form';
+         $data['user']=User::where('phone',$phone)->first();
+         
+         return view('user.auth.newPassword',$data);
     }
     
         public function newLogin(Request $request,$phone)

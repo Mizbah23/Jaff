@@ -23,10 +23,10 @@
 @section('content')
 <div class="content">
 
-<div class="path-section" style="background-image: url('{{asset('public/img/slide-1.jpg')}}')">
+<div class="path-section" style="background-image: url({{asset('public/img/slide-1.jpg')}})">
     <div class="bg-cover">
         <div class="container">
-            <h3>News Detail</h3>
+            <h3>Time Table</h3>
         </div>
     </div>
 </div>
@@ -66,7 +66,7 @@
 			
 	
            
-			<ul class="all-socials">
+<!--			<ul class="all-socials">
 				
 				<li>Share Post</li>
 				<li>
@@ -94,7 +94,7 @@
 					</a>
 				</li>
 				
-			</ul>
+			</ul>-->
 			
 		</div>
 	</article><!-- #post-## --> 
@@ -128,14 +128,14 @@
 
 				<div class="col-md-3">
 					<div class="sidebar wow bounceInRight">
-						<aside id="search-2" class="widget widget_search">
+<!--						<aside id="search-2" class="widget widget_search">
 							<form role="search" method="get" id="searchform" class="search-form" action="http://lolthemes.com/demo/geo/ulysses/" autocomplete="off">
 	<div>
 		<input type="text" class="search-line" placeholder="Search" value="" name="s" id="s" />
 		<input type="submit" class="search-button" id="searchsubmit" value="" />
 	</div>
                             </form>
-                        </aside>		
+                        </aside>		-->
 
 
             <aside id="recent-posts-2" class="widget widget_recent_entries">		
@@ -149,7 +149,7 @@
                 </ul>
             </aside>
 
-		<aside id="social_icons-1" class="widget widget_social_icons">
+<!--		<aside id="social_icons-1" class="widget widget_social_icons">
 					<i class="ulysses_widget_icon"></i>
 					<h3 class="widget-title">Social</h3>
 					<i class="bottom_border"></i>		
@@ -161,7 +161,7 @@
 				<li><a class="d-bg-c-h" href="#"><i class="fa fa-linkedin"></i></a></li>			
 					
 			</ul>
-        </aside>
+        </aside>-->
 
 		<aside id="post_tabs-1" class="widget widget_post_tabs">		
 			<div class="tab-widget">

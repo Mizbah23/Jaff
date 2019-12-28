@@ -24,8 +24,10 @@
                             @csrf
                             <input type="hidden" name="oldoffer" value="{{asset($images->offer_image)}}"
                             id="oldoffer">
+                            
                             <input type="hidden" name="oldabout" id="oldabout" value="{{asset($images->about_image)}}">
-                       <div class="card-content">
+                            
+                            <div class="card-content">
                                     <div class="card-body">
                                         
                                         <ul class="nav nav-tabs" role="tablist">
@@ -44,7 +46,7 @@
                                         <div class="tab-content">
                                             
                                             <div class="tab-pane active" id="offer" aria-labelledby="offer-tab" role="tabpanel">
-                                                <label><code>Please select offer image</code></label>
+                                            <label><code>Please select image into 600X500</code></label>  
                                                 <div data-provides="fileupload" class="fileupload fileupload-new">
                                                     <div  class="fileupload-new thumbnail upimg">
                                                         <img alt="" class="oldoffer" src="{{asset($images->offer_image)}}">
@@ -55,12 +57,13 @@
                                                        <span class="fileupload-exists">Change</span>
                                                        <input type="file" name="offer_image" class="default"></span>
                                                         <a data-dismiss="fileupload" class="btn btn-sm bg-maroon fileupload-exists btn-danger" href="#">Remove</a>
+                                                        <div class="error">{{$errors->first('offer_image')}}</div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="tab-pane" id="about" aria-labelledby="about-tab" role="tabpanel">
                                            
-                                            <label><code>Please select about us image</code></label>
+                                            <label><code>Please select image into 600X500</code></label>
                                               <div data-provides="fileupload" class="fileupload fileupload-new">
                                                 <div  class="fileupload-new thumbnail upimg">
                                                     <img alt="" class="oldabout" src="{{asset($images->about_image)}}">
@@ -71,6 +74,7 @@
                                                        <span class="fileupload-exists">Change</span>
                                                        <input type="file" name="about_image" class="default"></span>
                                                         <a data-dismiss="fileupload" class="btn btn-sm bg-maroon fileupload-exists btn-danger" href="#">Remove</a>
+                                                        <div class="error">{{$errors->first('about_image')}}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -126,7 +130,7 @@
     $(document).ready(function()
     {
        $('.images').addClass('active');
-       countslot();
+       // countslot();
        
     });
 
@@ -160,16 +164,23 @@ $("#addFrm").on('submit',function(event)
         processData: false,
         success:function(data)
         {
-            console.log(data);
+            if(data.errors){
+
+             alert('The image has invalid image dimensions(must be 600X500)');
+             location.reload();
+
+            } else
+                          
+                console.log(data);
             // table.ajax.reload( null, false );
 
             $('#oldoffer').val(data.offerimg);
             $('#oldabout').val(data.aboutimg);
 
-            toastr[data.type](data.message);
-
-            // $('.addbtn').removeClass('spinner-border spinner-border-sm');
+            toastr[data.type](data.message)
+            // $('.addbtn').removeClass('spinner-border spinner-border-sm')
         }
+
     });
 });   
 

@@ -77,7 +77,7 @@
                      <div class="col-md-6 col-xs-6">
                         <div class="form-group">
                             <label for="first-name-icon">Price</label>
-                            <input name="price" id="price" class=" form-control" placeholder="Price for all slot">
+                            <input name="price" id="price" class=" form-control" placeholder="Price for this slot">
                         </div>
                     </div>
                     {{csrf_field()}}
@@ -97,31 +97,26 @@
 
 <!-- *****************************edit model**********************************-->
 <div class="modal fade upModel" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header bg-success white">
-                <h5 class="modal-title" id="exampleModalScrollableTitle">Update Offer</h5>
+                <h5 class="modal-title" id="exampleModalScrollableTitle">Update Drop In Slots</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body" style="padding-top: 23px;">
-                <form method="post" id="upForm" enctype="multipart/form-data">    
+                <form method="post" id="upForm" enctype="multipart/form-data"> 
+                <input type="hidden" name="updid" id="updid">
+                <input type="hidden" name="sltid" id="sltid">
                 <div class="row" >  
-                    <input type="hidden" name="oid" id="oid">
-                    <div class="col-md-4 col-xs-4 ">
+                    <div class="col-md-6 col-xs-6 ">
                         <fieldset class="form-group">
-                            <label for="basicInput">Start Date</label>
-                            <input type="text" class="form-control pickadate" name="uoffer_start" id="uoffer_start" placeholder="Offer Start date">
+                            <label for="basicInput">Date</label>
+                            <input type="text" class="form-control pickadate" name="udate" id="udate" placeholder="Effective Date">
                         </fieldset>   
                     </div>
-                    <div class="col-md-4 col-xs-4">
-                        <fieldset class="form-group">
-                            <label for="basicInput">End Date</label>
-                            <input type="text" class="form-control pickadate" name="uoffer_end" id="uoffer_end" placeholder="Offer End date">
-                        </fieldset>   
-                    </div>
-                    <div class="col-md-4 col-xs-4">
+                    <div class="col-md-6 col-xs-6">
                         <div class="form-group">
                             <label for="first-name-icon">Playground</label>
                             <select name="uground_id" id="uground_id" class="select2 form-control" placeholder="Type">
@@ -131,32 +126,33 @@
                             </select>
                         </div>
                     </div>
-                    {{csrf_field()}} 
-                    <div class="col-md-6 col-xs-6 ">
-                        <fieldset class="form-group">
-                            <label for="basicInput">Offer Title</label>
-                            <input type="text" class="form-control" name="uoffer_title" id="uoffer_title" placeholder="Offer Applicable for the date">
-                        </fieldset>   
-                    </div>
-                    <div class="col-md-6 col-xs-6 ">
-                        <fieldset class="form-group">
-                            <label for="basicInput">Percentage(%)</label>
-                            <input type="number" class="form-control" name="upercentage" id="upercentage" placeholder="Offer Percetage Amount ">
-                        </fieldset>   
-                    </div>
-                    <div class="col-md-12 col-12">
+                    <div class="col-md-6 col-xs-6">
                         <div class="form-group">
-                            <label for="first-name-icon">Details</label>
-                            <textarea name="udetails" id="udetails" rows="10" class="form-control" placeholder="Offer Details"></textarea>
+                            <label for="first-name-icon">Slots</label>
+                            <select name="uslot_id" id="uslot_id" class="select2 form-control" placeholder="Type">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-6">
+                        <div class="form-group">
+                            <label for="first-name-icon">Person</label>
+                            <input name="useat" id="useat" class=" form-control" placeholder="Total Seat availability ">
+                        </div>
+                    </div>
+                     <div class="col-md-6 col-xs-6">
+                        <div class="form-group">
+                            <label for="first-name-icon">Price</label>
+                            <input name="uprice" id="uprice" class=" form-control" placeholder="Price for this slot">
                         </div>
                     </div>
                     {{csrf_field()}}
                 </div>
             </div>   
             <div class="modal-footer">
-                <button type="reset" class="btn btn-outline-warning mr-1 mb-1 waves-effect waves-light">Reset</button>
-                <button type="submit" class="btn btn-outline-info mr-1 mb-1 waves-effect waves-light">
-                    Save <span class="addbtn" role="status" aria-hidden="true"></span>
+                <button type="reset" class="btn btn-outline-warning mr-1 mb-0 waves-effect waves-light">Reset</button>
+                <button type="submit" class="btn btn-outline-info mr-1 mb-0 waves-effect waves-light">
+                    Update <span class="upbtn" role="status" aria-hidden="true"></span>
                 </button>
             </div>
         </form>
@@ -168,17 +164,17 @@
     <div class="modal-dialog modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">    
             <div class="modal-header bg-primary">
-                <h5 class="modal-title" id="exampleModalScrollableTitle">Delete Offer</h5>
+                <h5 class="modal-title" id="exampleModalScrollableTitle">Delete DropIn Slot</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <input type="hidden" value="" id="delofrid">                                        
+            <input type="hidden" value="" id="deldropid">                                        
             <div class="modal-body">
-                Are You Sure You want to delete this Offer <span class="ttl" style="color:red;"></span>?
+                Are You Sure You want to delete this Slot <span class="ttl" style="color:red;"></span>?
             </div>
             <div class="modal-footer">
-                <button type="button" id="deloffer" class="btn btn-outline-danger  waves-effect waves-light">
+                <button type="button" id="deldrop" class="btn btn-outline-danger  waves-effect waves-light">
                     Delete <span class="delbtn" role="status" aria-hidden="true"></span>
                 </button>
             </div>
@@ -232,29 +228,27 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body " style="padding-bottom: 0px;">
-                         <form method="get" action="{{route('report.dropin')}}" target="_blank">
                         <div class="row">
                             <div class="col-xl-4 col-md-6 col-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">From Date</label>
-                                    <input type="text" class="form-control pickadate" id="fromdate" name="fromdate" placeholder="From Date">
+                                    <input type="text" class="form-control pickadate" id="fromdate" placeholder="From Date">
                                 </fieldset>
                             </div>
                             <div class="col-xl-4 col-md-6 col-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">To Date</label>
-                                    <input type="text" class="form-control pickadate" id="todate" name="todate" placeholder="To Date">
+                                    <input type="text" class="form-control pickadate" id="todate" placeholder="To Date">
                                 </fieldset>
                             </div>
                             <div class="col-xl-4 col-md-6 col-12 mb-1"  style="padding-top: 18px;">
                                 <fieldset class="form-group" style="margin-bottom: 0px;">    
-                                    <button type="submit" class=" btn btn-outline-success mr-1 mb-1 waves-effect waves-light">
+                                    <button type="button" class=" btn btn-outline-success mr-1 mb-1 waves-effect waves-light">
                                         <i class="feather icon-printer"></i> Print
                                     </button>
                                 </fieldset>               
                             </div>
                         </div>
-                    </form>
                     </div>
                 </div>
             </div>
@@ -266,7 +260,7 @@
                         <div class="row">
                             <div class="col-xl-6 col-md-6 col-12 mb-1">
                                 <div>
-                            <h2 class="text-bold-700 dayCont">0</h2>
+                            <h2 class="text-bold-700 dayCount">0</h2>
                             <p class="mb-0">Total Slots</p>
                         </div>
                             </div>
@@ -352,19 +346,10 @@
 <script src="{{asset('public/js/back/picker.js')}}"></script>
 <script src="{{asset('public/js/back/picker.date.js')}}"></script>
 <script>
-    $(document).ready(function()
-    {
-       $('.drp').addClass('active');
-       $('.s').addClass('has-sub sidebar-group-active open');
-       countOffer();
-    });
-    $(function () {
-        $('.pickadate').pickadate({
-        format: 'yyyy-m-d'
-//       ,min: [2019,10,20]
-//       ,max: [2019,11,28]
-        });
-    });
+$(document).ready(function(){$('.drp').addClass('active');$('.s').addClass('has-sub sidebar-group-active open');
+    countMethod();
+});
+$(function () {$('.pickadate').pickadate({format: 'yyyy-m-d'});});
     var table = $('#dropTbl').DataTable(
     {
         "responsive" : true,"autoWidth"  : false,
@@ -399,18 +384,18 @@
 $('#fromdate').change(function()
 {
     table.ajax.reload( null, false );
-    countOffer();
+    countMethod();
 });
 $('#todate').change(function()
 {
     table.ajax.reload( null, false );
-    countOffer();
+    countMethod();
 }); 
-function countOffer()
+function countMethod()
 {
     $.ajax({
         type: 'POST',
-        url: "{{route('count.offer')}}",
+        url: "{{route('count.dropin')}}",
         data: {
          _token: $('meta[name="csrf-token"]').attr('content'),
          from: $('#fromdate').val(),
@@ -423,30 +408,42 @@ function countOffer()
 }
 
 
-    $('#date').on('change', function()
-    {      	
-            var date=$(this).val();
-            var div=$('.addModel').parent();
-            var op=" ";
-            $.ajax({
-                type:'get',
-                url:'{{route('fetchDropSlot')}}',
-                data:{'date':date},
-                success:function(data)
-                {
-                    console.log(data);
-                    op+='<option value="" selected disabled>-chose-</option>';
-                    for(var i=0;i<data.length;i++)
-                    {
-                        op+='<option value="'+data[i].slot_id+'">'+data[i].start+'-'+data[i].end+'</option>';
-                    }
-                    div.find('#slot_id').html(" ");
-                    div.find('#slot_id').append(op);
-                },
-                error:function(){}
-            });
-	});
+$('#date').on('change', function()
+{      	
+    var date=$(this).val();var div=$('.addModel').parent();var op=" ";
+    $.ajax({
+        type:'get',url:'{{route('fetchDropSlot')}}',data:{'date':date},
+        success:function(data)
+        {
+            op+='<option value="" selected disabled>-chose-</option>';
+            for(var i=0;i<data.length;i++)
+            {
+                op+='<option value="'+data[i].slot_id+'">'+data[i].start+'-'+data[i].end+'</option>';
+            }
+            div.find('#slot_id').html(" ");
+            div.find('#slot_id').append(op);
+        },
+        error:function(){}});
+});
 
+$('#udate').on('change', function()
+{      	
+    var date=$(this).val();var div=$('.upModel').parent();var op=" ";var sltid=$('#sltid').val();
+    $.ajax({
+        type:'get',url:'{{route('fetchDropSlot')}}',data:{'date':date},
+        success:function(data)
+        {
+            op+='<option value="" selected disabled>-chose-</option>';
+            for(var i=0;i<data.length;i++)
+            {
+                op+='<option value="'+data[i].slot_id+'">'+data[i].start+'-'+data[i].end+'</option>';
+            }
+            div.find('#uslot_id').html(" ");
+            div.find('#uslot_id').append(op);
+            div.find('#uslot_id').val(sltid);
+        },
+        error:function(){}});
+});
 
 //******************************add*********************************************
 $(".addnew").on('click',function(){
@@ -479,22 +476,21 @@ $("#addForm").on('submit',function(event)
 //******************************edit*********************************************
 $(document).on('click', '.editmdl', function()
 {
-    $('#oid').val($(this).data('oid'));
-    $('#uoffer_start').val($(this).data('ostrt'));
-    $('#uoffer_end').val($(this).data('oend'));
-    $('#uoffer_title').val($(this).data('ottl'));
-    $('#upercentage').val($(this).data('oper'));
-    $('#udetails').val($(this).data('odtl'));
-    $('#uground_id').val($(this).data('gid'));
-    $('.upOfferModel').modal('show');
+    $('#updid').val($(this).data('updid'));
+    $('#sltid').val($(this).data('sltid'));
+    $('#udate').val($(this).data('date'));$('#udate').trigger('change');
+    $('#useat').val($(this).data('seat'));
+    $('#uprice').val($(this).data('price'));
+  
+    $('.upModel').modal('show');
 });
-$("#upOfferForm").on('submit',function(event)
+$("#upForm").on('submit',function(event)
 {  
     event.preventDefault();
     $('.addbtn').addClass('spinner-border spinner-border-sm');
     $.ajax({
         type: 'POST',
-        url: "{{route('update.offer')}}",
+        url: "{{route('update.dropin')}}",
         data:new FormData(this),
         dataType:'JSON',
         contentType: false,
@@ -503,9 +499,9 @@ $("#upOfferForm").on('submit',function(event)
         success:function(data)
         {
             table.ajax.reload(null,false);
-            $('.upOfferModel').modal('hide');
+            $('.upModel').modal('hide');
             toastr[data.type](data.message);
-            document.getElementById("upOfferForm").reset();
+            document.getElementById("upForm").reset();
             $('.addbtn').removeClass('spinner-border spinner-border-sm');
         }
     });
@@ -514,33 +510,40 @@ $("#upOfferForm").on('submit',function(event)
 $(document).on('click', '.delmdl', function()
 {
     $('.delbtn').removeClass('spinner-border spinner-border-sm');
-    $('#delofrid').val($(this).data('delofrid'));
+    $('#deldropid').val($(this).data('delid'));
     $('.ttl').html($(this).data('ttl'));
-    $('.delOfferMdl').modal('show');
+    $('.delModel').modal('show');
 });  
-$("#deloffer").on('click',function(event)
+$("#deldrop").on('click',function(event)
 { 
     event.preventDefault();
     $('.delbtn').addClass('spinner-border spinner-border-sm');
     $.ajax({
       type: 'POST',
-      url: "{{route('delete.offer')}}",
+      url: "{{route('del.dropin')}}",
       data: {
         _token: $('meta[name="csrf-token"]').attr('content'),
-        delofrid: $('#delofrid').val()
+        deldropid: $('#deldropid').val()
       },
       success: function(data){
          table.ajax.reload( null, false );
-         $('.delOfferMdl').modal('hide');
+         $('.delModel').modal('hide');
          toastr[data.type](data.message);
       }
     });
 });
 //*******************************Status***********************************
-$(document).on('click', '.changests', function()
+$(document).on('click', '.csts', function()
 {
-    console.log($(this).data('oid'));
-    
+    $.ajax({
+      type: 'POST',url: "{{route('sts.dropin')}}",
+      data: {
+        _token: $('meta[name="csrf-token"]').attr('content'),
+        aid: $(this).data('id'),sts: $(this).data('sts')},
+      success: function(data){
+      table.ajax.reload( null, false );
+      toastr[data.type](data.message);}
+    });
 });
 
 $(document).on('click', '.listmdl', function()
@@ -578,18 +581,5 @@ $(document).on('click', '.ofslt', function()
        }
     });
 });
-
-$(document).on('click', '.csts', function()
-{
-    $.ajax({
-      type: 'POST',url: "{{route('sts.dropin')}}",
-      data: {
-        _token: $('meta[name="csrf-token"]').attr('content'),
-        oid: $(this).data('id'),sts: $(this).data('sts')},
-      success: function(data){
-      table.ajax.reload( null, false );
-      toastr[data.type](data.message);}
-    });
-}); 
 </script>
 @stop

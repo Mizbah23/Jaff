@@ -2,7 +2,14 @@
 @section('title'){{$title}}@stop
 @section('style')
 <style type="text/css">
-
+     img.attachment-thumb-495-495.size-thumb-495-495.wp-post-image {
+    height: 290px;
+}
+.info-section .info-details.info-details-center {
+    margin-top: -249px;
+    min-height: 575px;
+    overflow-y: scroll;
+}
 </style>
 @stop
 
@@ -13,7 +20,7 @@
 @section('content')
 <div class="content">
 
-<div class="path-section" style="background-image: url('{{asset('public/img/slide-1.jpg')}}')">
+<div class="path-section" style="background-image: url({{asset('public/img/slide-1.jpg')}})">
     <div class="bg-cover">
         <div class="container">
             <h3>News & Updates</h3>
@@ -60,7 +67,7 @@
     <div class="col-md-3">
 					
         <div class="sidebar wow bounceInRight">
-            <aside id="search-2" class="widget widget_search">
+<!--            <aside id="search-2" class="widget widget_search">
                 <form role="search" method="get" id="searchform" class="search-form" action="http://lolthemes.com/demo/geo/ulysses/">
                 <div>
                         <input type="text" class="search-line" placeholder="Search" value="" name="s" id="s" />
@@ -68,7 +75,7 @@
                 </div>
                 </form>
             </aside>
-                
+                -->
             <!--=========================recent=================================-->
 
             <aside id="recent-posts-2" class="widget widget_recent_entries">		
@@ -91,14 +98,14 @@
                 </aside>-->
                 
                 
-            <aside id="archives-2" class="widget widget_archive">
+<!--            <aside id="archives-2" class="widget widget_archive">
                 <i class="ulysses_widget_icon"></i>
                 <h3 class="widget-title">Archives</h3>
                 <i class="bottom_border"></i>
                 <ul>
                     <li><a href='../2015/01/index.html'>January 2015</a></li>
                 </ul>
-            </aside>
+            </aside>-->
 
 
 
@@ -127,7 +134,7 @@
 
 
 
-            <aside id="social_icons-1" class="widget widget_social_icons">
+<!--            <aside id="social_icons-1" class="widget widget_social_icons">
             	<i class="ulysses_widget_icon"></i>
             	<h3 class="widget-title">Social</h3><i class="bottom_border"></i>		
             	<ul class="socials">
@@ -142,7 +149,7 @@
                     <li><a class="d-bg-c-h" href="#"><i class="fa fa-vk"></i></a></li>			
                     <li><a class="d-bg-c-h" href="#"><i class="fa fa-skype"></i></a></li>		
                 </ul>
-            </aside>
+            </aside>-->
 
         <aside id="post_tabs-1" class="widget widget_post_tabs">
             <div class="tab-widget">
@@ -261,7 +268,7 @@
 
 			<div class="under-button">
 				<span></span>
-				<a href="#" class="d-border-c d-bg-c-h d-text-c">Call Now</a>
+				<a href="{{route('time')}}" class="d-border-c d-bg-c-h d-text-c">Book Now</a>
 			</div>
 		</div>
 		</aside>

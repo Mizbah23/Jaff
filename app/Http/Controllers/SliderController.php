@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Jaff\Admin;
 use Jaff\Slider;
 use Response;
+use Validator;
 class SliderController extends Controller
 {
     public function __construct()
@@ -122,6 +123,12 @@ class SliderController extends Controller
 }
     public function saveSlider(Request $request)
     {
+        $validator = Validator::make($request->all(),[
+        'slider_img'=>'dimensions:min_width=5200,max_height=3000'
+        ]);
+         if ($validator->fails()) {      
+           return response()->json(['errors'=>$validator->errors()]);
+        }else{
         $upload_path='public/img/slider/';
         $slider = new Slider;
         $slider->title = $request->title;
@@ -144,9 +151,16 @@ class SliderController extends Controller
                 'type' => 'success'
         );
         return Response::json($notification); 
+        }
     }
     public function updateSlider(Request $request)
     {
+         $validator = Validator::make($request->all(),[
+        'uslider_img'=>'dimensions:min_width=5200,max_height=3000'
+        ]);
+        if ($validator->fails()) {      
+           return response()->json(['errors'=>$validator->errors()]);
+        }else{
         $upload_path='public/img/slider/';
         $slider = Slider::find($request->slider_id);
         $slider->title = $request->utitle;
@@ -172,7 +186,8 @@ class SliderController extends Controller
                 'message' => 'Slider Updated Successfully',
                 'type' => 'success'
         );
-        return Response::json($notification);  
+        return Response::json($notification); 
+        } 
     }
     public function deleteSlider(Request $request)
     {
