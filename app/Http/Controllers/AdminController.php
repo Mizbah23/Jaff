@@ -39,14 +39,18 @@ class AdminController extends Controller
          $dates = $dates->merge( $data['users'] );
          $data['dates']=$dates;
          $dates = [];
-         foreach ($data['dates'] as $key=>$date) {
-             array_push($dates, $date);
-            
+         $counts=[];
+         foreach ($data['dates'] as $key=>$count) {
+            // dd($data['dates']);
+           array_push($counts, $count);
+           array_push($dates, $key);
+ 
          }
          
          $dates = implode(",",$dates);
+         $counts=implode(",",$counts);
          // dd($dates);
-         $data['dates'] = $dates;
+         $data['counts'] = $counts;
          //******bookings date chart************//
 
          $data['total_books']=Bookdetail::where( 'slot_date', '>=', Carbon::now()->subDays(7))->orderBy('slot_date','desc')->get();
