@@ -7,9 +7,7 @@ use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use \Illuminate\Support\Facades\URL;
 use illuminate\Support\Str;
-use Carbon\Carbon;
 use Response;
 use Redirect;
 use Auth;
@@ -84,12 +82,10 @@ class ForgotPasswordController extends Controller
            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
            curl_exec($ch);
            curl_close($ch);
-           $url=URL::temporarySignedRoute('reset', Carbon::now()->addSeconds(30), ['phone' => $request->phone]);
            session()->flash('success', 'A verification code has been sent to '.$request->phone);
-           // return redirect()->route('reset',['phone'=>$request->phone]);
-           return Redirect::away($url);
+           return redirect()->route('reset',['phone'=>$request->phone]);
          } else {
-            return redirect()->route('login')->with('Code does not matched');    
+            return redirect()->back();    
          }
 
 //         

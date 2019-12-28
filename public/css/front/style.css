@@ -10732,3 +10732,10 @@ li.slider{
     margin-top: -10px;
 }
 }
+
+/*Ino-section scroll*/
+  .info-section .info-details.info-details-center {
+    margin-top: -249px;
+    overflow-y: scroll;
+    height: 400px;
+}

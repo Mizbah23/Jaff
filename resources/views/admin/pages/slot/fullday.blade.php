@@ -91,33 +91,37 @@
 </div>
 
 
+
+
 <!-- *****************************edit model**********************************-->
 <div class="modal fade upModel" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header bg-success white">
-                <h5 class="modal-title" id="exampleModalScrollableTitle">Update Offer</h5>
+                <h5 class="modal-title" id="exampleModalScrollableTitle">Full Day Pick</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body" style="padding-top: 23px;">
-                <form method="post" id="upForm" enctype="multipart/form-data">    
+                <form method="post" id="upForm" enctype="multipart/form-data">
+                    <input type="text" name="fid" id="fid">
                 <div class="row" >  
-                    <input type="hidden" name="oid" id="oid">
-                    <div class="col-md-4 col-xs-4 ">
+                    <div class="col-md-6 col-xs-6 ">
                         <fieldset class="form-group">
-                            <label for="basicInput">Start Date</label>
-                            <input type="text" class="form-control pickadate" name="uoffer_start" id="uoffer_start" placeholder="Offer Start date">
+                            <label for="basicInput">Date</label>
+                            <input type="text" class="form-control pickadate" name="udate" id="udate" placeholder="Effective Date">
                         </fieldset>   
                     </div>
-                    <div class="col-md-4 col-xs-4">
+
+                    <div class="col-md-6 col-xs-6 ">
                         <fieldset class="form-group">
-                            <label for="basicInput">End Date</label>
-                            <input type="text" class="form-control pickadate" name="uoffer_end" id="uoffer_end" placeholder="Offer End date">
+                            <label for="basicInput">Price</label>
+                            <input type="number" class="form-control" name="uprice" id="uprice" placeholder="Price for all slots">
                         </fieldset>   
                     </div>
-                    <div class="col-md-4 col-xs-4">
+                    
+                    <div class="col-md-12 col-xs-12">
                         <div class="form-group">
                             <label for="first-name-icon">Playground</label>
                             <select name="uground_id" id="uground_id" class="select2 form-control" placeholder="Type">
@@ -127,32 +131,20 @@
                             </select>
                         </div>
                     </div>
-                    {{csrf_field()}} 
-                    <div class="col-md-6 col-xs-6 ">
-                        <fieldset class="form-group">
-                            <label for="basicInput">Offer Title</label>
-                            <input type="text" class="form-control" name="uoffer_title" id="uoffer_title" placeholder="Offer Applicable for the date">
-                        </fieldset>   
-                    </div>
-                    <div class="col-md-6 col-xs-6 ">
-                        <fieldset class="form-group">
-                            <label for="basicInput">Percentage(%)</label>
-                            <input type="number" class="form-control" name="upercentage" id="upercentage" placeholder="Offer Percetage Amount ">
-                        </fieldset>   
-                    </div>
-                    <div class="col-md-12 col-12">
+                    
+                     <div class="col-md-12 col-12">
                         <div class="form-group">
                             <label for="first-name-icon">Details</label>
-                            <textarea name="udetails" id="udetails" rows="10" class="form-control" placeholder="Offer Details"></textarea>
+                            <textarea name="udetails" id="udetails" rows="5" class="form-control" placeholder="Full Day Details"></textarea>
                         </div>
                     </div>
                     {{csrf_field()}}
                 </div>
             </div>   
             <div class="modal-footer">
-                <button type="reset" class="btn btn-outline-warning mr-1 mb-1 waves-effect waves-light">Reset</button>
-                <button type="submit" class="btn btn-outline-info mr-1 mb-1 waves-effect waves-light">
-                    Save <span class="addbtn" role="status" aria-hidden="true"></span>
+                <button type="reset" class="btn btn-outline-warning mr-1 mb-0 waves-effect waves-light">Reset</button>
+                <button type="submit" class="btn btn-outline-success mr-1 mb-0 waves-effect waves-light">
+                    Update <span class="addbtn" role="status" aria-hidden="true"></span>
                 </button>
             </div>
         </form>
@@ -169,12 +161,12 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <input type="hidden" value="" id="delofrid">                                        
+            <input type="hidden" value="" id="delid">                                        
             <div class="modal-body">
-                Are You Sure You want to delete this Offer <span class="ttl" style="color:red;"></span>?
+                Are You Sure You want to delete this setting <span class="ttl" style="color:red;"></span>?
             </div>
             <div class="modal-footer">
-                <button type="button" id="deloffer" class="btn btn-outline-danger  waves-effect waves-light">
+                <button type="button" id="delFday" class="btn btn-outline-danger  waves-effect waves-light">
                     Delete <span class="delbtn" role="status" aria-hidden="true"></span>
                 </button>
             </div>
@@ -228,29 +220,27 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body " style="padding-bottom: 0px;">
-                        <form method="get" action="{{route('report.fullday')}}" target="_blank">
                         <div class="row">
                             <div class="col-xl-4 col-md-6 col-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">From Date</label>
-                                    <input type="text" class="form-control pickadate" id="fromdate" name="fromdate" placeholder="From Date">
+                                    <input type="text" class="form-control pickadate" id="fromdate" placeholder="From Date">
                                 </fieldset>
                             </div>
                             <div class="col-xl-4 col-md-6 col-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">To Date</label>
-                                    <input type="text" class="form-control pickadate" id="todate" name="todate" placeholder="To Date">
+                                    <input type="text" class="form-control pickadate" id="todate" placeholder="To Date">
                                 </fieldset>
                             </div>
                             <div class="col-xl-4 col-md-6 col-12 mb-1"  style="padding-top: 18px;">
                                 <fieldset class="form-group" style="margin-bottom: 0px;">    
-                                    <button type="submit" class=" btn btn-outline-success mr-1 mb-1 waves-effect waves-light">
+                                    <button type="button" class=" btn btn-outline-success mr-1 mb-1 waves-effect waves-light">
                                         <i class="feather icon-printer"></i> Print
                                     </button>
                                 </fieldset>               
                             </div>
                         </div>
-                    </form>
                     </div>
                 </div>
             </div>
@@ -350,7 +340,7 @@
     {
        $('.fday').addClass('active');
        $('.s').addClass('has-sub sidebar-group-active open');
-       countOffer();
+       countMethod();
     });
     $(function () {
         $('.pickadate').pickadate({
@@ -391,18 +381,18 @@
 $('#fromdate').change(function()
 {
     table.ajax.reload( null, false );
-    countOffer();
+    countMethod();
 });
 $('#todate').change(function()
 {
     table.ajax.reload( null, false );
-    countOffer();
+    countMethod();
 }); 
-function countOffer()
+function countMethod()
 {
     $.ajax({
         type: 'POST',
-        url: "{{route('count.offer')}}",
+        url: "{{route('count.fday')}}",
         data: {
          _token: $('meta[name="csrf-token"]').attr('content'),
          from: $('#fromdate').val(),
@@ -444,68 +434,66 @@ $("#addForm").on('submit',function(event)
 //******************************edit*********************************************
 $(document).on('click', '.editmdl', function()
 {
-    $('#oid').val($(this).data('oid'));
-    $('#uoffer_start').val($(this).data('ostrt'));
-    $('#uoffer_end').val($(this).data('oend'));
-    $('#uoffer_title').val($(this).data('ottl'));
-    $('#upercentage').val($(this).data('oper'));
-    $('#udetails').val($(this).data('odtl'));
-    $('#uground_id').val($(this).data('gid'));
-    $('.upOfferModel').modal('show');
+    $('#fid').val($(this).data('fid'));$('#uprice').val($(this).data('price'));$('#udetails').val($(this).data('dtl'));
+    $('#udate').val($(this).data('date'));$('#uground_id').val($(this).data('gid'));
+    $('.upModel').modal('show');
 });
-$("#upOfferForm").on('submit',function(event)
+$("#upForm").on('submit',function(event)
 {  
     event.preventDefault();
     $('.addbtn').addClass('spinner-border spinner-border-sm');
     $.ajax({
-        type: 'POST',
-        url: "{{route('update.offer')}}",
-        data:new FormData(this),
-        dataType:'JSON',
-        contentType: false,
-        cache: false,
-        processData: false,
-        success:function(data)
-        {
+    type: 'POST',url: "{{route('update.fday')}}",
+    data:new FormData(this),dataType:'JSON',
+    contentType: false,cache: false,processData: false,
+    success:function(data)
+    {
             table.ajax.reload(null,false);
-            $('.upOfferModel').modal('hide');
+            $('.upModel').modal('hide');
             toastr[data.type](data.message);
-            document.getElementById("upOfferForm").reset();
+            document.getElementById("upForm").reset();
             $('.addbtn').removeClass('spinner-border spinner-border-sm');
-        }
+    }
     });
 });
 //*******************************delete***********************************
 $(document).on('click', '.delmdl', function()
 {
     $('.delbtn').removeClass('spinner-border spinner-border-sm');
-    $('#delofrid').val($(this).data('delofrid'));
-    $('.ttl').html($(this).data('ttl'));
-    $('.delOfferMdl').modal('show');
+    $('#delid').val($(this).data('delid'));
+    $('.ttl').html($(this).data('date'));
+    $('.delModel').modal('show');
 });  
-$("#deloffer").on('click',function(event)
+$("#delFday").on('click',function(event)
 { 
     event.preventDefault();
     $('.delbtn').addClass('spinner-border spinner-border-sm');
     $.ajax({
       type: 'POST',
-      url: "{{route('delete.offer')}}",
+      url: "{{route('del.fday')}}",
       data: {
         _token: $('meta[name="csrf-token"]').attr('content'),
-        delofrid: $('#delofrid').val()
+        delid: $('#delid').val()
       },
       success: function(data){
          table.ajax.reload( null, false );
-         $('.delOfferMdl').modal('hide');
+         $('.delModel').modal('hide');
          toastr[data.type](data.message);
       }
     });
 });
 //*******************************Status***********************************
-$(document).on('click', '.changests', function()
+$(document).on('click', '.csts', function()
 {
-    console.log($(this).data('oid'));
-    
+    $.ajax({
+      type: 'POST',url: "{{route('sts.fday')}}",
+      data: {
+        _token: $('meta[name="csrf-token"]').attr('content'),
+        aid: $(this).data('id'),sts: $(this).data('sts')},
+      success: function(data){
+      table.ajax.reload( null, false );
+      toastr[data.type](data.message);}
+    });
 });
 
 $(document).on('click', '.listmdl', function()
@@ -543,18 +531,5 @@ $(document).on('click', '.ofslt', function()
        }
     });
 });
-
-$(document).on('click', '.csts', function()
-{
-    $.ajax({
-      type: 'POST',url: "{{route('sts.fday')}}",
-      data: {
-        _token: $('meta[name="csrf-token"]').attr('content'),
-        oid: $(this).data('id'),sts: $(this).data('sts')},
-      success: function(data){
-      table.ajax.reload( null, false );
-      toastr[data.type](data.message);}
-    });
-}); 
 </script>
 @stop

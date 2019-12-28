@@ -3,7 +3,6 @@
 namespace Jaff\Http\Controllers;
 
 use Illuminate\Http\Request;
-// namespace App\Mail;
 use Jaff\User;
 use Jaff\Booking;
 use Jaff\Bookdetail;
@@ -12,8 +11,6 @@ use Jaff\Offer;
 use Jaff\Dropin;
 use Jaff\Fullday;
 use Jaff\Offerdetail;
-use Illuminate\Support\Facades\Mail;
-// use App\Mail\SendMailable;
 use Cart;
 use DB;
 use Auth;
@@ -57,12 +54,13 @@ class BookingController extends Controller
     }
     public function getbookList(Request $request)
     {
-        $fromdate= $request->fromdate;$todate=$request->todate;
+        $from= $request->from;
+        $to=$request->to;
+        
         $columns = array(0 =>'created_at',1=> 'username',2=> 'phone',3=> 'email',4=> 'status',5=> 'action'
         );
-        $totalData = Booking::when($fromdate, function ($query, $fromdate){return $query->whereDate('bookings.created_at','>=',$fromdate);})
-                    ->when($todate, function ($query, $todate){return $query->whereDate('bookings.created_at','<=',$todate);})->count();
-        
+        $totalData = Booking::when($from, function ($query, $from){return $query->whereDate('created_at','>=',$from);})
+                    ->when($to, function ($query, $to){return $query->whereDate('created_at','<=',$to);})->count();
         $limit = $request->input('length');
         $start = $request->input('start');
         $order = $columns[$request->input('order.0.column')];
@@ -70,32 +68,37 @@ class BookingController extends Controller
         if(empty($request->input('search.value')))
         {
             $posts = Booking::join('users','bookings.booked_for','=','users.id')
-                    ->when($fromdate, function ($query, $fromdate){return $query->whereDate('bookings.created_at','>=',$fromdate);})
-                    ->when($todate, function ($query, $todate){return $query->whereDate('bookings.created_at','<=',$todate);})
+                    
                     ->select('bookings.*','users.username','users.email','users.phone',DB::raw("(SELECT count(bookdetails.id) FROM bookdetails WHERE "
                             . "bookdetails.`book_id`=bookings.`book_id`) as tslot"),DB::raw("(SELECT SUM(bookdetails.book_price) FROM bookdetails WHERE "
-                            . "bookdetails.`book_id`=bookings.`book_id`) as total"))
+                            . "bookdetails.`book_id`=bookings.`book_id`) as total"),
+                            DB::raw("(SELECT SUM(pay_bookings.amount) FROM pay_bookings WHERE "
+                            . "bookings.`book_id`= pay_bookings.`book_id`) as paid"))
+                    ->when($from, function ($query, $from){return $query->whereDate('bookings.created_at','>=',$from);})
+                    ->when($to, function ($query, $to){return $query->whereDate('bookings.created_at','<=',$to);})
                     ->offset($start)->limit($limit)->orderBy($order,$dir)->get();
-            $totalFiltered = Booking::when($fromdate, function ($query, $fromdate){return $query->whereDate('bookings.created_at','>=',$fromdate);})
-                    ->when($todate, function ($query, $todate){return $query->whereDate('bookings.created_at','<=',$todate);})->count();
+            $totalFiltered =  Booking::when($from, function ($query, $from){return $query->whereDate('created_at','>=',$from);})
+                    ->when($to, function ($query, $to){return $query->whereDate('created_at','<=',$to);})->count();
         }
         else{
             $search = $request->input('search.value');
             $posts = Booking::join('users','bookings.booked_for','=','users.id')
-                    ->when($fromdate, function ($query, $fromdate){return $query->whereDate('bookings.created_at','>=',$fromdate);})
-                    ->when($todate, function ($query, $todate){return $query->whereDate('bookings.created_at','<=',$todate);})
                     ->select('bookings.*','users.username','users.email','users.phone',DB::raw("(SELECT count(bookdetails.id) FROM bookdetails WHERE "
                             . "bookdetails.`book_id`=bookings.`book_id`) as tslot"),DB::raw("(SELECT SUM(bookdetails.book_price) FROM bookdetails WHERE "
-                            . "bookdetails.`book_id`=bookings.`book_id`) as total"))
+                            . "bookdetails.`book_id`=bookings.`book_id`) as total"),
+                             DB::raw("(SELECT SUM(pay_bookings.amount) FROM pay_bookings WHERE "
+                            . "bookings.`book_id`= pay_bookings.`book_id`) as paid"))
+                    ->when($from, function ($query, $from){return $query->whereDate('bookings.created_at','>=',$from);})
+                    ->when($to, function ($query, $to){return $query->whereDate('bookings.created_at','<=',$to);})
                     ->where('users.name', 'like', "%{$search}%")
                     ->orwhere('users.phone', 'like', "%{$search}%")
                     ->orwhere('users.email', 'like', "%{$search}%")
                     ->offset($start)->limit($limit)
                     ->orderBy($order, $dir)->get();
             $totalFiltered = Booking::where('name', 'like', "%{$search}%")
-                    ->when($fromdate, function ($query, $fromdate){return $query->whereDate('bookings.created_at','>=',$fromdate);})
-                    ->when($todate, function ($query, $todate){return $query->whereDate('bookings.created_at','<=',$todate);})
                     ->select('bookings.*','users.username','users.email','users.phone')
+                    ->when($from, function ($query, $from){return $query->whereDate('bookings.created_at','>=',$from);})
+                    ->when($to, function ($query, $to){return $query->whereDate('bookings.created_at','<=',$to);})
                     ->where('users.name', 'like', "%{$search}%")
                     ->orwhere('users.phone', 'like', "%{$search}%")
                     ->orwhere('users.email', 'like', "%{$search}%")
@@ -108,16 +111,34 @@ class BookingController extends Controller
         {
             $nestedData['code'] = $r->book_code;
             $nestedData['date'] = date('d-m-y H:i a', strtotime($r->created_at));
-            $nestedData['name'] = $r->username;
-            $nestedData['email'] = $r->email;
-            $nestedData['total'] = $r->total;
+            $nestedData['userinfo'] = 'Name: '.$r->username.'<br> Email:'.$r->email.'<br>Phone: '.$r->phone;
+            $due = $r->total-($r->paid+$r->less);
+            $nestedData['total'] = 'Total: '.$r->total;
+            $nestedData['payment'] = 'Paid: '.$r->paid.'<br>Less: '.$r->less.'<br>Due: '.$due;
+            
             $nestedData['slots'] = '<a href="#" class="listmdl" data-bookid="'.$r->book_id.'" ><span class="badge badge-pill badge-glow bg-primary">'.$r->tslot.'</span></a>';
-            $nestedData['phone'] = $r->phone;
             $nestedData['booked_for'] = $r->booked_for;
-            $nestedData['sts']=($r->status==0)?'<div class="badge  badge-pill badge-warning mr-1 badge-glow mb-1"><i class="feather icon-check"></i><span>Due</span></div>':
-                '<div class="badge badge-pill  badge-danger mr-1 badge-glow mb-1"><i class="feather icon-x"></i><span>Active</span></div>';
-            $nestedData['action'] = '<a class="" data-id="'.$r->id.'" data-nm="'.$r->name.'" data-phn="'.$r->name.'" data-eml="'.$r->name.'" style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a> '
-                    . '<a href="#" class="" style="padding: 4px;"><i class="ficon feather icon-trash danger"></i></a>';
+
+            if($r->status==0){
+                $status = '<span class="badge badge-pill badge-glow bg-danger"><i class="feather icon-x"></i>Due</span>';
+            }else if($r->status==1){
+                $status = '<span class="badge badge-pill badge-glow bg-success"><i class="feather icon-check"></i>Paid</span>';
+            }else{
+                $status = '<span class="badge badge-pill badge-glow bg-warning"><i class="feather icon-alert-circle"></i>Partial</span>';
+            }
+            $nestedData['sts']=$status;
+//            $action = '<a class="" data-id="'.$r->id.'" data-nm="'.$r->name.'" data-phn="'.$r->name.'" data-eml="'.$r->name.'" style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a> '
+             $action =  '<a href="#" class="" style="padding: 4px;"><i class="ficon feather icon-trash-2 danger"></i></a>';
+            
+            if($r->status!=1)
+            {
+                $action.=  '<div class="badge badge-primary">
+                    <a href="#" class="paymdl" data-pid="'.$r->book_id.'" data-amnt="'.$due.'" style="padding: 4px;">pay</a>
+                </div>';
+            }
+            $nestedData['action'] = $action;
+            
+            
             $data[] = $nestedData;
         }
     }     
@@ -129,16 +150,6 @@ class BookingController extends Controller
         );
         echo json_encode($json_data);    
     }
-      
-        public function countBooking(Request $request) 
-    {
-        $fromdate= $request->fromdate;
-        $todate=$request->todate;
-        $total=  Booking::when($fromdate, function ($query, $fromdate){return $query->whereDate('bookings.created_at','>=',$fromdate);})
-            ->when($todate, function ($query, $todate){return $query->whereDate('bookings.created_at','<=',$todate);})->count();
-        return number_format($total);
-    }
-
     public function saveBook(Request $request)
     {
         $lists = $slots = $fdays = $drops = $dslot = array();
@@ -165,66 +176,56 @@ class BookingController extends Controller
         $book->created_by = Auth::guard('admin')->user()->id;
         $book->save();
         
-        // $bookid = $book->book_id;
-        // if($bookid < 10){$book_code = "JFSB0000".$bookid;}
-        // else if ($bookid < 100){$book_code = "JFSB000".$bookid;}
-        // else if ($bookid < 1000){$book_code = "JFSB00".$bookid;}
-        // else if ($bookid < 10000){$book_code = "JFSB0".$bookid;}
-        // else {$book_code = "JFSB".$bookid;}
-        // $upcode = Booking::find($bookid);
-        // $upcode->book_code = $book_code;
-        // $upcode->save();
+        $bookid = $book->book_id;
+        if($bookid < 10){$book_code = "JFSB0000".$bookid;}
+        else if ($bookid < 100){$book_code = "JFSB000".$bookid;}
+        else if ($bookid < 1000){$book_code = "JFSB00".$bookid;}
+        else if ($bookid < 10000){$book_code = "JFSB0".$bookid;}
+        else {$book_code = "JFSB".$bookid;}
+        $upcode = Booking::find($bookid);
+        $upcode->book_code = $book_code;
+        $upcode->save();
         
-        // foreach(Cart::content() as $cart)
-        // {
-        //     $bookdetail = new Bookdetail;
-        //     $bookdetail->book_id = $bookid;
-        //     $bookdetail->slot_date = $cart->options->date;
-        //     $bookdetail->slot_id = $cart->options->slot;
-        //     $bookdetail->ground_id = 1;
+        foreach(Cart::content() as $cart)
+        {
+            $bookdetail = new Bookdetail;
+            $bookdetail->book_id = $bookid;
+            $bookdetail->slot_date = $cart->options->date;
+            $bookdetail->slot_id = $cart->options->slot;
+            $bookdetail->ground_id = 1;
 
-        //     if(array_key_exists($cart->options->date, $fdays))
-        //     {
-        //         $bookdetail->price = $cart->options->price;
-        //         $bookdetail->discount = $cart->options->price-$fdays[$cart->options->date];
-        //         $bookdetail->book_price = $fdays[$cart->options->date];
-        //         $bookdetail->type= 3;
-        //     }
-        //     else{
-        //         if(array_key_exists($cart->options->date, $drops) && array_key_exists($cart->options->slot, $dslot))
-        //         {
-        //             $bookdetail->price = $drops[$cart->options->date];
-        //             $bookdetail->discount = 0;
-        //             $bookdetail->book_price = $drops[$cart->options->date];
-        //             $bookdetail->type= 4;
+            if(array_key_exists($cart->options->date, $fdays))
+            {
+                $bookdetail->price = $cart->options->price;
+                $bookdetail->discount = $cart->options->price-$fdays[$cart->options->date];
+                $bookdetail->book_price = $fdays[$cart->options->date];
+                $bookdetail->type= 3;
+            }
+            else{
+                if(array_key_exists($cart->options->date, $drops) && array_key_exists($cart->options->slot, $dslot))
+                {
+                    $bookdetail->price = $drops[$cart->options->date];
+                    $bookdetail->discount = 0;
+                    $bookdetail->book_price = $drops[$cart->options->date];
+                    $bookdetail->type= 4;
                     
-        //         }else{
-        //             if(array_key_exists($cart->options->date, $lists) && array_key_exists($cart->options->slot, $slots))
-        //             {
-        //                 $bookdetail->price = $cart->options->price;
-        //                 $bookdetail->discount = ($lists[$cart->options->date]/100)*$cart->options->price;
-        //                 $bookdetail->book_price = $cart->options->price-(($lists[$cart->options->date]/100)*$cart->options->price);
-        //                 $bookdetail->type = 2;
-        //             }else{
-        //                 $bookdetail->price = $cart->options->price;
-        //                 $bookdetail->discount = 0;
-        //                 $bookdetail->book_price = $cart->options->price;
-        //                 $bookdetail->type= 1;
-        //             }
-        //         }                        
-        //     }
-
-        //     $bookdetail->save();   
-        // }
-        $to_name = User::where('username',$request->bookedfor)->value('username');
-        $to_mail = User::where('username',$request->bookedfor)->value('email');
-        
-        $data = array('name'=>$to_name, "body" => $to_mail,);
-        Mail::to('emails.mail', $data, function($message) use ($to_name, $to_mail) {
-                 $message->to($to_mail, $to_name)->subject('Artisans Web Testing Mail');
-        $message->from('mizbahmed161@gmail.com','Artisans Web');
-        });
-        // return $data;
+                }else{
+                    if(array_key_exists($cart->options->date, $lists) && array_key_exists($cart->options->slot, $slots))
+                    {
+                        $bookdetail->price = $cart->options->price;
+                        $bookdetail->discount = ($lists[$cart->options->date]/100)*$cart->options->price;
+                        $bookdetail->book_price = $cart->options->price-(($lists[$cart->options->date]/100)*$cart->options->price);
+                        $bookdetail->type = 2;
+                    }else{
+                        $bookdetail->price = $cart->options->price;
+                        $bookdetail->discount = 0;
+                        $bookdetail->book_price = $cart->options->price;
+                        $bookdetail->type= 1;
+                    }
+                }                        
+            }
+            $bookdetail->save();   
+        }
         $notification = array(
                 'message' => 'Booking Confirmed Successfully',
                 'type' => 'success'
@@ -232,6 +233,18 @@ class BookingController extends Controller
         Cart::destroy();
         return Response::json($notification); 
     }
+    
+    
+    public function countBooking(Request $request)
+    {
+        $from= $request->from;
+        $to=$request->to;
+        $total= Booking::when($from, function ($query, $from){return $query->whereDate('created_at','>=',$from);})
+        ->when($to, function ($query, $to){return $query->whereDate('created_at','<=',$to);})
+        ->count();
+        return number_format($total);
+    }
+
     public function bookedSlotList() 
     {
         $data = array();
@@ -245,7 +258,7 @@ class BookingController extends Controller
         $toDate = $request->todate;
         $fromTime = ($request->fromtime!="")?date("H:i:s", strtotime($request->fromtime)):'';
         $toTime = ($request->totime!="")?date("H:i:s", strtotime($request->totime)):'';
-        $columns = array(0 =>'slot_date',1=> 'start',2=> 'price',3=> 'discount',4=> 'book_price',5=> 'status',6=> 'action');
+        $columns = array(0 =>'book_code',1 =>'slot_date',2=> 'start',3=> 'price',4=> 'discount',5=> 'book_price',6=> 'status',7=> 'action');
         $totalData = Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')
                 ->when($fromDate, function ($query, $fromDate)
                 {return $query->whereDate('bookdetails.slot_date','>=',$fromDate);})
@@ -263,6 +276,8 @@ class BookingController extends Controller
         if(empty($request->input('search.value')))
         {
             $posts =Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')
+                   ->join('bookings','bookings.book_id','=','bookdetails.book_id')
+                   ->select('bookdetails.*','bookings.book_code','slots.start','slots.end')
                 ->when($fromDate, function ($query, $fromDate)
                 {return $query->whereDate('bookdetails.slot_date','>=',$fromDate);})
                 ->when($toDate, function ($query, $toDate)
@@ -286,7 +301,8 @@ class BookingController extends Controller
         else{
             $search = $request->input('search.value');
             $posts = Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')
-                    ->select('bookdetails.*','slots.start','slots.end')
+                    ->join('bookings','bookings.book_id','=','bookdetails.book_id')
+                   ->select('bookdetails.*','bookings.book_code','slots.start','slots.end')
                     ->when($fromDate, function ($query, $fromDate)
                     {return $query->whereDate('bookdetails.slot_date','>=',$fromDate);})
                     ->when($toDate, function ($query, $toDate)
@@ -319,13 +335,23 @@ class BookingController extends Controller
     if($posts){
         foreach($posts as $r)
         {
+            $nestedData['code'] = $r->book_code;  
             $nestedData['sltdate'] = date('d M, Y', strtotime($r->slot_date));
             $nestedData['duration'] = date( "h:iA", strtotime($r->start)).'-'.date( "h:iA", strtotime($r->end));
             $nestedData['price'] = $r->price;
             $nestedData['discount'] = $r->discount;
             $nestedData['book_price'] = $r->book_price;
-            $nestedData['sts']=($r->status==1)?'<div class="badge  badge-pill badge-warning mr-1 badge-glow mb-1"><i class="feather icon-check"></i><span>Due</span></div>':
-                '<div class="badge badge-pill  badge-danger mr-1 badge-glow mb-1"><i class="feather icon-x"></i><span>Active</span></div>';
+            
+            if($r->type==2){
+                $type = '<div class="badge  badge-pill badge-info mr-1 badge-glow mb-1"><span>Offer</span></div>';
+            }else if($r->type==3){
+                $type = '<div class="badge  badge-pill badge-warning mr-1 badge-glow mb-1"><span>Fullday</span></div>';
+            }else if($r->type==4){
+                $type = '<div class="badge  badge-pill badge-primary mr-1 badge-glow mb-1"><span>DropIn</span></div>';
+            }else{
+                $type = '<div class="badge  badge-pill badge-secondary mr-1 badge-glow mb-1"><span>Regular</span></div>';
+            }
+            $nestedData['type']= $type;
             $nestedData['action'] = '<a class="" data-id="'.$r->id.'" data-nm="'.$r->slot_date.'" data-phn="'.$r->start.'" data-eml="'.$r->start.'" style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a> '
                     . '<a href="#" class="" style="padding: 4px;"><i class="ficon feather icon-trash danger"></i></a>';
             $data[] = $nestedData;

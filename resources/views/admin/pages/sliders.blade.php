@@ -61,6 +61,7 @@
                     <div class="col-md-12 col-xl-12"> 
                         <div class="form-group">
                             <label for="first-name-icon">Slider Image *</label>
+                            <label><code>Image dimension should be within 5000X3000</code></label>
                             <div class="dropzone" id="addDrop"></div>
                         </div>
                     </div>
@@ -113,7 +114,9 @@
                     <div class="col-md-12 col-xl-12"> 
        
                 <div class="form-group">
-                    <label for="exampleInputFile">Slider Image:</label>
+                    <label for="exampleInputFile">Slider Image:</label><br>
+                    <label><code>Image dimension should be within 5000X3000</code></label>
+                    <br>
                     <div class="controls">
                         <div data-provides="fileupload" class="fileupload fileupload-new">
                             <div  class="fileupload-new thumbnail upimg">
@@ -404,6 +407,10 @@ var Dropzone1 = new Dropzone(
             var data = $('#addSliderForm').serializeArray();
             $.each(data, function(key, el)
             {
+             if(data.errors){
+             alert('The image width must be greater than 5000');
+             location.reload();
+             }else
                 formData.append(el.name, el.value);
             });
         });
@@ -448,6 +455,10 @@ $("#upSliderForm").on('submit',function(event)
         processData: false,
         success:function(data)
         {
+            if(data.errors){
+             alert('The image width must be greater than 5000');
+             // location.reload();
+            }else
             table.ajax.reload( null, false );
             $('.upSliderModel').modal('hide');
             toastr[data.type](data.message);

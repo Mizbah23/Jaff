@@ -10,8 +10,8 @@
                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 footer-time text-center">
                    <h5 class="text-center">Quick Links</h5>
                      <hr>
-                   <li><i class="fa fa-angle-right"></i><a href="{{route('home')}}">Home</a></li>
-                   <li><i class="fa fa-angle-right"></i><a href="{{-- {{route('time')}} --}}">Book Slot</a></li>
+                   <li><i class="fa fa-angle-right"></i><a href="">Home</a></li>
+                   <li><i class="fa fa-angle-right"></i><a href="{{route('time')}}">Book Slot</a></li>
                    <li><i class="fa fa-angle-right"></i><a href="{{route('user.notice')}}">Notices</a></li>
                   
                    <li><i class="fa fa-angle-right"></i><a href="{{route('user.news')}}">News</a></li>
