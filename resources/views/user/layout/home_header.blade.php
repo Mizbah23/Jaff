@@ -74,7 +74,7 @@
                                         <a title="Login" href="{{route('login')}}" aria-haspopup="true"><i class="fa fa-user"></i> Login </a>
                                     </li>
 
-                                    <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="{{route('booking')}}" data-toggle="dropdown"><i class="fa fa-cart-plus"></i><span class="caret"></span><span class="badge badge-pill badge-primary badge-up">5</span></a>
+                                    <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="{{route('book')}}" data-toggle="dropdown"><i class="fa fa-cart-plus"></i><span class="caret"></span><span class="badge badge-pill badge-primary badge-up">5</span></a>
 {{--                                     <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                                      <li class="dropdown-menu-header">
                                         <div class="dropdown-header m-0 p-2">
