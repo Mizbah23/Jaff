@@ -265,7 +265,7 @@ class ReportController extends Controller
                 ->get();
                     
         // $pdf = PDF::loadView('report.booking_payment_report',['posts'=>$posts,'total'=>count($posts),'fromdate'=>$fromdate,'todate'=>$todate]);
-        $excel= Excel::download(new PayBooking, 'booking_payment_report.xlsx');
+        $excel= Excel::download($posts, 'booking_payment_report.xlsx');
         // return $pdf->stream('Jaff-SlotBookingsPayment.pdf');
         return $excel;
     }
