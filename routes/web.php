@@ -361,6 +361,7 @@ Route::prefix('admin')->group(function()
         
         Route::get('/fillday-list', ['as' => 'report.fullday', 'uses' => 'ReportController@fulldayPrint']);
         Route::get('/dropin-list', ['as' => 'report.dropin', 'uses' => 'ReportController@dropinPrint']);
+        // Route::get('/payment-list', ['as' => 'report.payExcel', 'uses' => 'ReportController@paymentPrint']);
         
    });
     Route::prefix('acounts')->group(function()

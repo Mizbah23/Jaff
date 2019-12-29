@@ -176,7 +176,7 @@ return [
         Jaff\Providers\RouteServiceProvider::class,
         
         // ...for pdf
-	    Meneses\LaravelMpdf\LaravelMpdfServiceProvider::class
+	    Meneses\LaravelMpdf\LaravelMpdfServiceProvider::class,
 
         //...for excel
         Maatwebsite\Excel\ExcelServiceProvider::class,

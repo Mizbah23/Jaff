@@ -14,6 +14,7 @@ use Jaff\PayBooking;
 use Jaff\Fullday;
 use Jaff\Dropin;
 use Illuminate\Support\Facades\Input;
+use Maatwebsite\Excel\Facades\Excel;
 use DB;
 use PDF;
 
@@ -226,8 +227,10 @@ class ReportController extends Controller
                     ->orderBy('pay_courses.date','asc')
                     ->get();
                     
-        $pdf = PDF::loadView('report.course_payment_report',['posts'=>$posts,'total'=>count($posts),'fromdate'=>$fromdate,'todate'=>$todate]);
+         $pdf = PDF::loadView('report.course_payment_report',['posts'=>$posts,'total'=>count($posts),'fromdate'=>$fromdate,'todate'=>$todate]);
+        // $excel= Excel::download(['posts'=>$posts,'total'=>count($posts),'fromdate'=>$fromdate,'todate'=>$todate], 'course_payment_report.xlsx');
         return $pdf->stream('Jaff-CoursePayment.pdf');
+        // return $excel;
     }
     public function memberPaymentReport()
     {
@@ -261,8 +264,10 @@ class ReportController extends Controller
                 ->orderBy('pay_bookings.date','asc')
                 ->get();
                     
-        $pdf = PDF::loadView('report.booking_payment_report',['posts'=>$posts,'total'=>count($posts),'fromdate'=>$fromdate,'todate'=>$todate]);
-        return $pdf->stream('Jaff-SlotBookingsPayment.pdf');
+        // $pdf = PDF::loadView('report.booking_payment_report',['posts'=>$posts,'total'=>count($posts),'fromdate'=>$fromdate,'todate'=>$todate]);
+        $excel= Excel::download(new PayBooking, 'booking_payment_report.xlsx');
+        // return $pdf->stream('Jaff-SlotBookingsPayment.pdf');
+        return $excel;
     }
     
         /****** Full day Print ********/
@@ -291,5 +296,6 @@ class ReportController extends Controller
                 $pdf = PDF::loadView('report.dropinPrint',['posts'=>$posts,'total'=>count($posts),'fromdate'=>$fromdate,'todate'=>$todate]);
         return $pdf->stream('Dropin-Pdf.pdf');
     }
+
     
 }
