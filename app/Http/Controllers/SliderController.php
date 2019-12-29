@@ -124,10 +124,12 @@ class SliderController extends Controller
     public function saveSlider(Request $request)
     {
         $validator = Validator::make($request->all(),[
-        'slider_img'=>'dimensions:min_width=5200,max_height=3000'
+        'slider_img'=>'dimensions:min_width=5000,max_height=3000'
         ]);
          if ($validator->fails()) {      
-           return response()->json(['errors'=>$validator->errors()]);
+           // return response()->json(['errors'=>$validator->errors()]);//
+           $message='Maximum width,height must be between 5000X3000';
+           $type='error';
         }else{
         $upload_path='public/img/slider/';
         $slider = new Slider;
@@ -146,12 +148,17 @@ class SliderController extends Controller
             }
         }
         $slider->save();
-        $notification = array(
-                'message' => 'Slider Saved Successfully',
-                'type' => 'success'
+        $message='Slider Saved Successfully';
+        $type='success';
+    }
+            $notification = array(
+                'message' => $message,
+                'type' => $type
         );
         return Response::json($notification); 
-        }
+
+        
+
     }
     public function updateSlider(Request $request)
     {
@@ -159,7 +166,8 @@ class SliderController extends Controller
         'uslider_img'=>'dimensions:min_width=5200,max_height=3000'
         ]);
         if ($validator->fails()) {      
-           return response()->json(['errors'=>$validator->errors()]);
+           $message='Maximum width,height must be between 5000X3000';
+           $type='error';
         }else{
         $upload_path='public/img/slider/';
         $slider = Slider::find($request->slider_id);
@@ -182,12 +190,16 @@ class SliderController extends Controller
             }
         }
         $slider->save();
+        $message='Slider Updated Successfully';
+        $type='error';
+        }
         $notification = array(
-                'message' => 'Slider Updated Successfully',
-                'type' => 'success'
+                'message' =>$message,
+                'type' => $type
         );
+    
         return Response::json($notification); 
-        } 
+        
     }
     public function deleteSlider(Request $request)
     {

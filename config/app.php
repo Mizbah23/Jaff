@@ -176,9 +176,10 @@ return [
         Jaff\Providers\RouteServiceProvider::class,
         
         // ...for pdf
-	Meneses\LaravelMpdf\LaravelMpdfServiceProvider::class
-        
+	    Meneses\LaravelMpdf\LaravelMpdfServiceProvider::class
 
+        //...for excel
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -231,7 +232,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         //For Pdf
         'PDF' => Meneses\LaravelMpdf\Facades\LaravelMpdf::class,
-
+        //For Excel
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

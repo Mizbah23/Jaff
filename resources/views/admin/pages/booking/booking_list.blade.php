@@ -184,6 +184,36 @@
 </div>
 
 <!-- *****************************delete model**********************************-->
+<div class="modal fade delMdl" id="animation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel6" aria-modal="true">
+    <div class="modal-dialog modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            
+        <div class="modal-header bg-primary">
+            <h5 class="modal-title" id="exampleModalScrollableTitle">Delete Booking</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <input type="hidden" value="" id="delid">                                        
+        <div class="modal-body">
+            Are You Sure You want to delete <span class="ttl" style="color:red;"></span>?
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="del" class="btn btn-outline-danger  waves-effect waves-light">
+                Delete <span class="delbtn" role="status" aria-hidden="true"></span>
+            </button>
+        </div>
+            </div>
+        </div>
+</div>
+
+
+
+
+
+
+
+
 <div class="modal fade listModel" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
@@ -513,19 +543,49 @@ $(document).on('click', '.listmdl', function()
        }
     });
 }); 
+$(document).on('click', '.delmdl', function()
+{
+    $('.delbtn').removeClass('spinner-border spinner-border-sm');
+    $('#delid').val($(this).data('delid'));
+    $('.ttl').html($(this).data('ttl'));
+    $('.delMdl').modal('show');
+}); 
+
+$("#del").on('click',function(event)
+{ 
+    event.preventDefault();
+    $('.delbtn').addClass('spinner-border spinner-border-sm');
+    $.ajax({
+      type: 'POST',
+      url: "{{route('del.books')}}",
+      data: {
+        _token: $('meta[name="csrf-token"]').attr('content'),
+        delid: $('#delid').val()
+      },
+      success: function(data){
+         table.ajax.reload( null, false );
+         $('.delMdl').modal('hide');
+         toastr[data.type](data.message);
+      }
+    });
+}); 
+
 $(document).on('click', '.delbs', function()
 {
+   
     $.ajax({
         type: 'POST',
         url: "{{route('del.bookslots')}}",
         data: {
          _token: $('meta[name="csrf-token"]').attr('content'),
-         booksid : $(this).data('booksid'),bookid : $(this).data('bookid')
+         booksid : $(this).data('booksid'),bookid : $(this).data('bookid'),
+        
         },
        success: function(data)
        {
             table.ajax.reload( null, false );
-            $('.slotlist').html(data);
+             $('.slotlist').html(data);
+
        }
     });
 });

@@ -342,6 +342,7 @@ Route::prefix('admin')->group(function()
    Route::post('/get-bookingSlotlist','BookingController@getBookSlot')->name('bookSlotPro');
    Route::post('/get-bookslots','BookingController@getbookMdl')->name('get.bookslots');
    Route::post('/del-bookslots','BookingController@delbookMdl')->name('del.bookslots');
+   Route::post('/del-book','BookingController@delbook')->name('del.books');
    Route::post('/save-book', 'BookingController@saveBook')->name('save.book');
    Route::prefix('reports')->group(function()
    {

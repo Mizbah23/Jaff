@@ -128,7 +128,7 @@ class BookingController extends Controller
             }
             $nestedData['sts']=$status;
 //            $action = '<a class="" data-id="'.$r->id.'" data-nm="'.$r->name.'" data-phn="'.$r->name.'" data-eml="'.$r->name.'" style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a> '
-             $action =  '<a href="#" class="" style="padding: 4px;"><i class="ficon feather icon-trash-2 danger"></i></a>';
+             $action =  '<a href="#" class="delmdl" data-delid="'.$r->book_id.'" data-ttl="'.$r->book_code.'" style="padding: 4px;"><i class="ficon feather icon-trash-2 danger"></i></a>';
             
             if($r->status!=1)
             {
@@ -540,11 +540,20 @@ class BookingController extends Controller
     }
     public function delbookMdl(Request $request) 
     {
-        $del = Bookdetail::find($request->booksid);
-        $del->delete();
+         $del = Bookdetail::find($request->booksid);
+         $del->delete();
         $output = $this->showBookSlots($request->bookid);
         return $output;
+        
     }
-    
+    public function delbook(Request $request){
+        $book = Booking::find($request->delid);
+        $book->delete();
+        $notification = array(
+                 'message' => 'Booking Deleted Successfully',
+                 'type' => 'error'
+             );
+        return Response::json($notification);
+    }
     
 }

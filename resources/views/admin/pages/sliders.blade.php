@@ -59,11 +59,27 @@
                     </div>
                     {{csrf_field()}}
                     <div class="col-md-12 col-xl-12"> 
-                        <div class="form-group">
-                            <label for="first-name-icon">Slider Image *</label>
-                            <label><code>Image dimension should be within 5000X3000</code></label>
-                            <div class="dropzone" id="addDrop"></div>
+       
+                <div class="form-group">
+                    <label for="exampleInputFile">Slider Image:</label><br>
+                    <label><code>Image dimension should be within 5000X3000</code></label>
+                    <br>
+                    <div class="controls">
+                        <div data-provides="fileupload" class="fileupload fileupload-new">
+                            <div  class="fileupload-new thumbnail upimg">
+                                <img alt="" class="" src="{{asset('public/img/empty.png')}}">
+                            </div>
+                            <div  class="fileupload-preview fileupload-exists upimg thumbnail"></div>
+                            <div>
+                               <span class="btn btn-sm btn-success btn-file"><span class="fileupload-new">select</span>
+                               <span class="fileupload-exists">Change</span>
+                               <input type="file" name="slider_img" class="default"></span>
+                                <a data-dismiss="fileupload" class="btn btn-sm bg-maroon fileupload-exists btn-danger" href="#">Remove</a>
+                            </div>
                         </div>
+                    </div>
+                </div>
+       
                     </div>
                 </div>
             </div>   
@@ -96,7 +112,7 @@
             </div>
             <div class="modal-body" style="padding-top: 23px;">
                 <form method="post" id="upSliderForm" enctype="multipart/form-data"> 
-                    <input type="hidden" id="slider_id" class="form-control" name="slider_id" placeholder="Slider Title">
+                    <input type="hidden" id="slider_id" class="form-control" name="slider_id" placeholder="Slider Title" required>
                     <input type="hidden" id="old_img" class="form-control" name="old_img" placeholder="Slider Title">
                 <div class="row" >  
                     <div class="col-md-12 col-xl-12"> 
@@ -383,53 +399,80 @@
     ],
         "order": [[1, 'desc']]   
 });
-Dropzone.autoDiscover = false;
+// Dropzone.autoDiscover = false;
 
 
-var Dropzone1 = new Dropzone(
-    '#addDrop',{
-    autoProcessQueue : false,
-    addRemoveLinks : true,
-    uploadMultiple : false,
-    paramName: "slider_img",
-    maxFiles : 1,
-    url : "{{route('save.slider')}}",
-    init : function () 
-    {
-        var myDropzone = this;
-        $("#addSliderForm").submit(function (e) 
+// var Dropzone1 = new Dropzone(
+//     '#addDrop',{
+//     autoProcessQueue : false,
+//     addRemoveLinks : true,
+//     uploadMultiple : false,
+//     paramName: "slider_img",
+//     maxFiles : 1,
+//     url : "{{route('save.slider')}}",
+//     init : function () 
+//     {
+//         var myDropzone = this;
+//         $("#addSliderForm").submit(function (e) 
+//         {
+//             e.preventDefault();
+//             myDropzone.processQueue();
+//         });
+//         this.on('sending', function(file, xhr, formData)
+//         {
+//             var data = $('#addSliderForm').serializeArray();
+//             $.each(data, function(key, el)
+//             {
+
+//                 formData.append(el.name, el.value);
+//             });
+//         });
+//         this.on("success", function(file, responseText)
+//         {
+//             if(this.errors){
+//              alert('The image width must be greater than 5000');
+//              location.reload();
+//              }else
+//             $('.addSliderModel').modal('hide');
+//             document.getElementById("addSliderForm").reset();
+//             myDropzone.removeAllFiles(true);
+//             console.log(responseText);
+// //          toastr[responseText.type](responseText.message);
+//             table.ajax.reload( null, false );
+//         });
+//         myDropzone.on("maxfilesexceeded", function(file) {
+//         myDropzone.removeFile(file);
+//         });
+
+//     }
+// }); 
+$("#addSliderForm").on('submit',function(event)
+{  
+    event.preventDefault();
+    $('.upbtn').addClass('spinner-border spinner-border-sm');
+    $.ajax({
+        type: 'POST',
+        url: "{{route('save.slider')}}",
+        data:new FormData(this),
+        dataType:'JSON',
+        contentType: false,
+        cache: false,
+        processData: false,
+        success:function(data)
         {
-            e.preventDefault();
-            myDropzone.processQueue();
-        });
-        this.on('sending', function(file, xhr, formData)
-        {
-            var data = $('#addSliderForm').serializeArray();
-            $.each(data, function(key, el)
-            {
-             if(data.errors){
-             alert('The image width must be greater than 5000');
-             location.reload();
-             }else
-                formData.append(el.name, el.value);
-            });
-        });
-        this.on("success", function(file, responseText)
-        {
-            $('.addSliderModel').modal('hide');
-            document.getElementById("addSliderForm").reset();
-            myDropzone.removeAllFiles(true);
-            console.log(responseText);
-//          toastr[responseText.type](responseText.message);
-            table.ajax.reload( null, false );
-        });
-        myDropzone.on("maxfilesexceeded", function(file) {
-        myDropzone.removeFile(file);
-        });
-
-    }
-}); 
-
+            if(data.type=="error"){
+                toastr[data.type](data.message);
+            }else{
+                toastr[data.type](data.message);
+                document.getElementById("addSliderForm").reset();
+                table.ajax.reload( null, false );
+                $('.addSliderModel').modal('hide');
+            }
+            $('.upbtn').removeClass('spinner-border spinner-border-sm');
+            
+        }
+    });
+});
 
 $(document).on('click', '.editmdl', function()
 {
@@ -455,8 +498,8 @@ $("#upSliderForm").on('submit',function(event)
         processData: false,
         success:function(data)
         {
-            if(data.errors){
-             alert('The image width must be greater than 5000');
+            if(data.type=="error"){
+             toastr[data.type](data.message);
              // location.reload();
             }else
             table.ajax.reload( null, false );
