@@ -15,6 +15,7 @@ use Jaff\Fullday;
 use Jaff\Dropin;
 use Illuminate\Support\Facades\Input;
 use Maatwebsite\Excel\Facades\Excel;
+use Jaff\Exports\paymentExport;
 use DB;
 use PDF;
 
@@ -263,10 +264,17 @@ class ReportController extends Controller
                 ->when($to, function ($query, $to){return $query->whereDate('pay_bookings.date','<=',$to);})
                 ->orderBy('pay_bookings.date','asc')
                 ->get();
-                    
-        // $pdf = PDF::loadView('report.booking_payment_report',['posts'=>$posts,'total'=>count($posts),'fromdate'=>$fromdate,'todate'=>$todate]);
-        $excel= Excel::download(new PayBooking, 'booking_payment_report.xlsx');
-        // return $pdf->stream('Jaff-SlotBookingsPayment.pdf');
+         $pdf = PDF::loadView('report.booking_payment_report',['posts'=>$posts,'total'=>count($posts),'fromdate'=>$fromdate,'todate'=>$todate]);
+        // $excel= Excel::download(new paymentExport, 'booking_payment_report.xlsx');
+        return $pdf->stream('Jaff-SlotBookingsPayment.pdf');
+        // return $excel;
+    }
+    public function bookingPaymentReportExcel(){
+        $from= Input::get('fromdate');
+        $to=   Input::get('todate');
+        $fromdate = ($from)?date("d,M Y", strtotime($from)):'';
+        $todate = ($to)?date("d,M Y", strtotime($to)):'';
+        $excel= Excel::download(new paymentExport($fromdate,$todate,$from,$to), 'booking_payment_report.xlsx');
         return $excel;
     }
     

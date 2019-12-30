@@ -297,7 +297,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body " style="padding-bottom: 0px;">
-                        <form method="get" action="{{route('bpay.report')}}" target="_blank">
+                        <form method="get" action="" id="printForm">
                         <div class="row">
                             <div class="col-xl-4 col-md-6 col-12 mb-1">
                                 <fieldset class="form-group">
@@ -312,10 +312,16 @@
                                 </fieldset>
                             </div>
                             <div class="col-xl-4 col-md-6 col-12 mb-1"  style="padding-top: 18px;">
-                                <fieldset class="form-group" style="margin-bottom: 0px;">    
-                                    <button type="submit" class=" btn btn-outline-success mr-1 mb-1 waves-effect waves-light">
+                                <fieldset class="form-group" style="margin-bottom: 0px;">   <div class="btn-group"> 
+                                    <button type="button" class=" btn btn-outline-success mr-1 mb-1 waves-effect waves-light dropdown-toggle"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="feather icon-printer"></i> Print
-                                    </button>
+                                          </button> 
+                                          <div class="dropdown-menu">
+                                           <a class="dropdown-item pdf" target="_blank" href="#"onclick="pdfPage()">PDF Report</a>
+                                           <a class="dropdown-item excel" target="_blank" href="{{route('bpay.excelreport')}}">Excel Report</a>
+                                          </div>
+                                  
+                                </div>
                                 </fieldset>               
                             </div>
                         </div>
@@ -610,10 +616,29 @@ function sumMethod()
        }
     });
 }
-   
-   
-   
-   
-    
+
+</script>
+<script>
+//    $('.pdf').on('click', function () {
+//     var fromdate=$('#fromdate').val();
+//     var todate=$('#todate').val();
+//    $('#printForm').submit();
+//});
+
+ function pdfPage()
+{ 
+    var fromdate=$("#fromdate").val();
+    var todate=$("#todate").val();
+        $.ajax({
+        type: 'GET',
+        url: "{{route('bpay.report')}}",
+        
+        success: function (data) {
+          console.log(data);
+
+    }
+  
+});
+}
 </script>
 @stop

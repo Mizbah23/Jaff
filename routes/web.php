@@ -358,12 +358,12 @@ Route::prefix('admin')->group(function()
         Route::get('/course-payment', ['as' => 'course.report', 'uses' => 'ReportController@coursePaymentReport']);
         Route::get('/member-report', ['as' => 'member.report', 'uses' => 'ReportController@memberPaymentReport']);
         Route::get('/bookings-report', ['as' => 'bpay.report', 'uses' => 'ReportController@bookingPaymentReport']);
+        Route::get('/bookings-excelreport', ['as' => 'bpay.excelreport', 'uses' => 'ReportController@bookingPaymentReportExcel']);
+
         
         Route::get('/fillday-list', ['as' => 'report.fullday', 'uses' => 'ReportController@fulldayPrint']);
         Route::get('/dropin-list', ['as' => 'report.dropin', 'uses' => 'ReportController@dropinPrint']);
-        // Route::get('/payment-list', ['as' => 'report.payExcel', 'uses' => 'ReportController@paymentPrint']);
-        
-   });
+    });
     Route::prefix('acounts')->group(function()
     {
         Route::get('/sections','AccountController@showAsections')->name('show.aslist');
