@@ -67,7 +67,7 @@ class LoginController extends Controller
          // dd($request);
         $this->validate($request,[
             'phone' => 'required',
-            'password' => 'required| min:2'
+            'password' => 'required| min:6'
         ]);
         // dd($request);
         $user = User::where('phone', $request->phone)->first();
@@ -80,10 +80,40 @@ class LoginController extends Controller
                session()->flash('errors', 'Your Password is wrong !!');
                return redirect()->route('login');
            }else{
-               if ($user->status == 1)
+             if (is_null($user->phone_verified_at )) {
+              $postUrl = "http://api.bulksms.icombd.com/api/v3/sendsms/xml";
+              $smsbody = "Dear $request->username, Your OTP code is $user->vcode."
+                . " For any query call us 0011223344.  Regards, Jaff.";
+
+            $xmlString =
+                   "
+                   <SMS>
+                   <authentification>
+                   <username>jakia</username>
+                   <password>Jakiasms786</password>
+                   </authentification>
+                   <message>
+                   <sender>jakia</sender>
+                   <text>$smsbody</text>
+                   </message>
+                   <recipients>
+                   <gsm>88.$request->phone</gsm>
+                   </recipients>
+                   </SMS>
+                   ";
+                   $fields = "XML=" . urlencode($xmlString);
+                   $ch = curl_init();
+                   curl_setopt($ch, CURLOPT_URL, $postUrl);
+                   curl_setopt($ch, CURLOPT_POST, 1);
+                   curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+                   curl_exec($ch);
+                   curl_close($ch);
+                session()->flash('success', 'A verification code has been sent to '.$request->phone);
+                return redirect()->route('otp',['phone'=>$request->phone]);
+             }elseif ($user->status == 1)
                {
                    if(Auth::guard('web')->attempt
-                           (['phone' => $request->phone, 'password' => $request->password], $request->remember))
+                           (['phone' => $request->phone, 'password' => $request->password], $remember))
                    {
                        // $request->session()->put('user',$user);
                        // dd($request->session());
@@ -92,7 +122,7 @@ class LoginController extends Controller
                }else{
                    // $user->notify(new VerifyRegistration($user));
                    // dd('not a user');
-                   session()->flash('errors', 'You have not confirmed your verification.. Please check and confirm your phone');
+                   session()->flash('errors', 'There are some unsolved issues with your account!');
                    return redirect()->route('login');
                }
            }
@@ -141,7 +171,7 @@ class LoginController extends Controller
     public function userLogout() 
     {
         Auth::guard('web')->logout();
-        return redirect('/');
+        return redirect('/login');
     }
     
 }

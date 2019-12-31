@@ -104,22 +104,25 @@ class RegisterController extends Controller
 
          // dd($request->all());
                $this->validate($request,[
-               'username'=>'required',
+               'first_name'=>'required',
+               'last_name'=>'required',
                'phone'=>'required | min:6|unique:users',
                'email'=>'required|unique:users',
-               'password'=>'min:2|required_with:cpass|same:cpass',
-                'cpass'=>'min:2'
+               'password'=>'min:6|required_with:confirm_password|same:confirm_password',
+               'confirm_password'=>'min:6'
         ]);
 
         // $this->validator($request->all());
         $user = new User;
-        $user->username = $request->username;
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->username=substr($request->first_name, 0, strrpos($request->first_name, ' '));;
         $user->phone = $request->phone;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         // $user->status = 1;
         $user->vcode= Str::random(6);
-       
+        // dd($user);
         $user->save();
         
         
@@ -162,6 +165,44 @@ class RegisterController extends Controller
         $data['title']='Sign up';
         $data['user']=User::where('phone',$phone)->first();
          // dd($user);
+        
+
+        return view('user.auth.otp',$data);
+    }
+          public function resendOTP(Request $request,$phone)
+    {
+        $data= array();
+        $data['title']='Sign up';
+        $user=User::where('phone',$phone)->first();
+         // dd($user);
+        $postUrl = "http://api.bulksms.icombd.com/api/v3/sendsms/xml";
+        $smsbody = "Dear $request->username, Your OTP code is $user->vcode."
+                . " For any query call us 0011223344.  Regards, Jaff.";
+
+        $xmlString =
+           "
+           <SMS>
+           <authentification>
+           <username>jakia</username>
+           <password>Jakiasms786</password>
+           </authentification>
+           <message>
+           <sender>jakia</sender>
+           <text>$smsbody</text>
+           </message>
+           <recipients>
+           <gsm>88.$user->phone</gsm>
+           </recipients>
+           </SMS>
+           ";
+           $fields = "XML=" . urlencode($xmlString);
+           $ch = curl_init();
+           curl_setopt($ch, CURLOPT_URL, $postUrl);
+           curl_setopt($ch, CURLOPT_POST, 1);
+           curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+           curl_exec($ch);
+           curl_close($ch);
+           $data['user']=$user;
         return view('user.auth.otp',$data);
     }
     
@@ -192,8 +233,8 @@ class RegisterController extends Controller
         public function newLogin(Request $request,$phone)
                 {
             $this->validate($request,[
-               'password'=>'min:2|required_with:cpass|same:cpass',
-               'cpass'=>'min:2'
+               'password'=>'min:6|required_with:cpass|same:confirm_password',
+               'confirm_password'=>'min:6'
         ]);
 
       $users=User::wherePhone($request->phone)->first();

@@ -253,19 +253,24 @@
 		<div class="info-details info-details-center d-bg-c">
 					<h4>WHAT We OFFER ?</h4>
 					<div class="info-image"><img src="{{$simg->offer_image}}" alt="image" style="width: 100%; height:251px" /></div>
-					<ul class="ul-calendar">
+                    <div class="info-scroll">
+                    <ul class="ul-calendar">
                                             @foreach($offers as $off)
-                                            <li>
+                                            <li class="mtop">
                                                 <span>{{$off->offer_title}}</span>
                                                 <span>{{$off->details}}</span>
+
                                             </li>
+
+
                                             @endforeach
-					</ul>
+                    </ul>
+                    </div>
 				</div>
 
 			<div class="under-button">
 				<span></span>
-				<a href="#" class="d-border-c d-bg-c-h d-text-c">Call Now</a>
+				<a href="{{route('time')}}" class="d-border-c d-bg-c-h d-text-c">Book Now</a>
 			</div>
 		</div>
 		</aside>

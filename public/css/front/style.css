@@ -10733,9 +10733,24 @@ li.slider{
 }
 }
 
-/*Ino-section scroll*/
-  .info-section .info-details.info-details-center {
-    margin-top: -249px;
+/*info section scroll*/
+.info-details.info-details-center.d-bg-c {
+    height: 575px;
+}
+.info-section .info-scroll {
     overflow-y: scroll;
-    height: 400px;
+    height: 325px;
+    padding-right: 15px;
+    position: absolute;
+    margin-top: -19px;
+}
+.info-section .info-scroll::-webkit-scrollbar{
+    width: 7px;
+}
+.info-section .info-scroll::-webkit-scrollbar-thumb{
+    background: #111a88;
+    border-radius: 6px;
+}
+.info-section .ul-calendar li.mtop{
+    margin-top: 20px;
 }

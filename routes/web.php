@@ -23,6 +23,7 @@ Route::post('/signup','Auth\RegisterController@register')->name('register');
 
 Route::get('/verify/{phone}','Auth\RegisterController@getOTP' )->name('otp');
 Route::post('/verify/{phone}','Auth\RegisterController@verifyOTP');
+Route::get('/resend/{phone}','Auth\RegisterController@resendOTP' )->name('resend');
 
 Route::get('password/forget', 'Auth\ForgotPasswordController@forgotPassword')->name('forgotPassword');
 Route::post('password/forget', 'Auth\ForgotPasswordController@postForgotPassword')->name('postForgotPassword');

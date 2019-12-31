@@ -54,10 +54,10 @@
                             <!-- <p class="text-head">Username</p> -->
                             <input type="text" name="otp" class="input" placeholder="Type your OTP Code" required="" />
                         </div>
-                   
+                   <br>
                     
                         <button type="submit" class="signinbutton btn">Confirm</button>
-                        <p class="signup">Have you not get yet?<a href="#" class="signuplink">Resend</a>
+                        <p class="signup">Have you not get yet?<a href="{{route('resend',['phone'=>$user->phone])}}" class="signuplink">Resend</a>
                         </p>
                     </form>
                   

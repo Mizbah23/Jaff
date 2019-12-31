@@ -50,9 +50,9 @@
                             <!-- <p class="text-head">Username</p> -->
                             <input type="text" name="phone" class="input" placeholder="Phone" required="" />
                         </div>
-
+                         <br>
                         <button type="submit" class="signinbutton btn">Send Code</button>
-                      
+                       
 
                     </form>
 

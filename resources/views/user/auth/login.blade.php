@@ -66,7 +66,7 @@
                         </div>
                         
                         <label class="remember">
-                            <input type="checkbox">
+                            <input type="checkbox" name="remember">
                             <span class="checkmark"></span>Remember me
                         </label>
                         <span class="psw">Forgot <a href="{{route('forgotPassword')}}">password?</a></span>

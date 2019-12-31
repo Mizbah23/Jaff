@@ -57,7 +57,7 @@
                             <input type="text" name="otp" class="input" placeholder="Type your Password Verification Code" required="" />
                         </div>
                     
-                    
+                        <br>
                         <button type="submit" class="signinbutton btn">Confirm</button>
                         <p class="signup">Have you not get yet?<a href="#" class="signuplink">Resend</a></p>
                       

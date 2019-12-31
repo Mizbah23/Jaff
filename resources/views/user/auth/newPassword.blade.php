@@ -63,10 +63,12 @@
 
                         <div class="">
                             <!-- <p class="text-head">Password</p> -->
-                            <input type="password" id="cpass" name="cpass" class="input" placeholder="Confirm Password"  required="" />
+                            <input type="password" id="confirm_password" name="confirm_password" class="input" placeholder="Confirm Password"  required="" />
                         </div>
                          <div class="error">{{$errors->first('cpass')}}</div>
-                        <button type="submit" id="submit" class="signinbutton btn">Confirm</button>
+                         <br>
+                         <div><button type="submit" id="submit" class="signinbutton btn">Confirm</button></div>
+                        
                       
                     </form>
                 </div>

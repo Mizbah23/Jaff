@@ -71,7 +71,7 @@ class ForgotPasswordController extends Controller
            <text>$smsbody</text>
            </message>
            <recipients>
-           <gsm>$request->phone</gsm>
+           <gsm>88.$request->phone</gsm>
            </recipients>
            </SMS>
            ";

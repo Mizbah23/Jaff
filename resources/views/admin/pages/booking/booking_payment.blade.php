@@ -297,7 +297,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body " style="padding-bottom: 0px;">
-                        <form method="get" action="" id="printForm">
+                          <form method="get" action="{{route('bpay.excelreport')}}" target="_blank">
                         <div class="row">
                             <div class="col-xl-4 col-md-6 col-12 mb-1">
                                 <fieldset class="form-group">
@@ -312,7 +312,9 @@
                                 </fieldset>
                             </div>
                             <div class="col-xl-4 col-md-6 col-12 mb-1"  style="padding-top: 18px;">
-                                <fieldset class="form-group" style="margin-bottom: 0px;">   <div class="btn-group"> 
+                                 <fieldset class="form-group" style="margin-bottom: 0px;">    
+                                    <button type="submit" class=" btn btn-outline-success mr-1 mb-1 waves-effect waves-light">
+                        {{--         <fieldset class="form-group" style="margin-bottom: 0px;">   <div class="btn-group"> 
                                     <button type="button" class=" btn btn-outline-success mr-1 mb-1 waves-effect waves-light dropdown-toggle"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="feather icon-printer"></i> Print
                                           </button> 
@@ -321,7 +323,8 @@
                                            <a class="dropdown-item excel" target="_blank" href="{{route('bpay.excelreport')}}">Excel Report</a>
                                           </div>
                                   
-                                </div>
+                                </div> --}}
+                                    </button>
                                 </fieldset>               
                             </div>
                         </div>

@@ -45,13 +45,13 @@
                             <a title="About" href="#about_us-section">About</a>
                         </li>
                         <li id="menu-item-308" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-308">
-                            <a title="Classes" href="#classes-section">Programs</a>
+                            <a title="Programs" href="#classes-section">Programs</a>
                         </li>
                         <li id="menu-item-309" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-309">
-                            <a title="Trainers" href="#trainers-section">Coaches</a>
+                            <a title="Coaches" href="#trainers-section">Coaches</a>
                         </li>
                         <li id="menu-item-309" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-309">
-                            <a title="Trainers" href="{{route('user.news')}}">News</a>
+                            <a title="News" href="{{route('user.news')}}">News</a>
                         </li>
 
 
@@ -87,7 +87,7 @@
                        
                         @if(Auth::guard('web')->check())
                         <li id="menu-item-404" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-404 dropdown">
-                            <a title="Blog" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true"><i class="fa fa-user"></i> {{Auth::guard('web')->user()->username}}
+                            <a title="{{Auth::guard('web')->user()->username}}" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true"><i class="fa fa-user"></i> {{Auth::guard('web')->user()->username}}
                                 <span class="caret"></span>
                             </a>
                             <ul role="menu" class="dropdown-menu">
@@ -95,7 +95,7 @@
                                     <a title="Blog" href="#blog">Profile</a>
                                 </li>-->
                                 <li id="menu-item-408" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-408">
-                                    <a title="Blog Page" href="{{route('logout')}}">Logout</a>
+                                    <a title="Logout" href="{{route('logout')}}">Logout</a>
                                 </li>
                             </ul>
                         </li>
