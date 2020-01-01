@@ -111,8 +111,10 @@
     <div class="col-md-3">
         <div class="checkout-options">
             <div class="card">
+                
                 <div class="card-content">
                     <div class="card-body">
+
                         <div class="chart-info d-flex justify-content-between mb-1">
                             <div class="series-info d-flex align-items-center">
                             <i class="fa fa-circle-o text-bold-700 text-primary"></i>
@@ -171,7 +173,7 @@
                 <div class="col-md-6">
                     <div class="card">
                 <div class="card-header flex-column align-items-start">
-                    <h4 class="card-title">Slect User For booking</h4>
+                    <h4 class="card-title">Select User For booking</h4>
                 </div>
                 <div class="card-content">
 
@@ -241,11 +243,11 @@
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between flex-wrap">
                                                 <div class="vs-radio-con vs-radio-primary">
-                                                    <div class="btn btn-primary btn-cvv ml-50 mb-50 confirm">Confirm</div>
+                                                <button type="submit" class="btn btn-primary btn-cvv ml-50 mb-50 {{-- confirm --}}"><a href="{{route('report.bookInvoicePrint')}}">Confirm</a></button>
                                                 </div>
                                             </div>
                                          
-                                       
+                                      
                                         </div>
                                     </div>
                                 </div>

@@ -113,7 +113,7 @@ class LoginController extends Controller
              }elseif ($user->status == 1)
                {
                    if(Auth::guard('web')->attempt
-                           (['phone' => $request->phone, 'password' => $request->password], $remember))
+                           (['phone' => $request->phone, 'password' => $request->password], $request->remember))
                    {
                        // $request->session()->put('user',$user);
                        // dd($request->session());

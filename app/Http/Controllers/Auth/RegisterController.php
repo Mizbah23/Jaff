@@ -203,7 +203,8 @@ class RegisterController extends Controller
            curl_exec($ch);
            curl_close($ch);
            $data['user']=$user;
-        return view('user.auth.otp',$data);
+           session()->flash('success', ' Code has been resent');
+       return redirect()->route('otp',['phone'=>$data['user']->phone]);
     }
     
         public function verifyOTP(Request $request,$phone){

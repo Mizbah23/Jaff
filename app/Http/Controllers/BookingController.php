@@ -15,6 +15,7 @@ use Cart;
 use DB;
 use Auth;
 use Response;
+use PDF;
 
 class BookingController extends Controller
 {
@@ -231,6 +232,7 @@ class BookingController extends Controller
                 'type' => 'success'
             );
         Cart::destroy();
+        // $pdf=PDF::loadView('report.bookInvoicePrint');
         return Response::json($notification); 
     }
     

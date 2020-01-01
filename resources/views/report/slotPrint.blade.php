@@ -38,6 +38,10 @@ img {
   width: 5%;
   height: 5%
 }
+@page {
+  header: page-header;
+  footer: page-footer;
+}
   
 /*$mpdf->Image('/img/app-logo.png', 0, 0, 210, 297, 'jpg', '', true, false);
 */
@@ -56,7 +60,8 @@ img {
     <br>
   </div>
   </div>
-    </a> </center>
+    </a> 
+  </center>
 
     <center>
      <table id="slotTbl" class="table zero-configuration ">
@@ -87,5 +92,8 @@ img {
    </center>
  <br>
         <h4  style="text-align: center;font-size: 12px">Total Slots {{$total}}</h4>
+  <htmlpagefooter name="page-footer">
+
+</htmlpagefooter>
 </body>
 </html>

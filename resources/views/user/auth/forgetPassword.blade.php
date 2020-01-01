@@ -42,7 +42,11 @@
                     <img src="../public/img/app-logo.png" alt="Jaff logo" title="Jaff" style="height:50px;" />
                     </a> </center>
                     <center><h4 class="form-head">Forget Password</h4></center>
-                    
+                    @if (session('message'))
+                    <div class="alert alert-danger">
+                    {{ session('message') }}
+                     </div>
+                    @endif
     
                     <form action="{{route('postForgotPassword')}}" method="post">
                         @csrf

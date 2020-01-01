@@ -13,6 +13,7 @@ use Jaff\PayMember;
 use Jaff\PayBooking;
 use Jaff\Fullday;
 use Jaff\Dropin;
+use Jaff\User;
 use Illuminate\Support\Facades\Input;
 use Maatwebsite\Excel\Facades\Excel;
 use Jaff\Exports\paymentExport;
@@ -310,6 +311,13 @@ class ReportController extends Controller
                             . "bookdetails.`slot_id`=dropins.`slot_id` AND bookdetails.`slot_date`=dropins.`date`) as booked"))->get();
                 $pdf = PDF::loadView('report.dropinPrint',['posts'=>$posts,'total'=>count($posts),'fromdate'=>$fromdate,'todate'=>$todate]);
         return $pdf->stream('Dropin-Pdf.pdf');
+    }
+
+    /***** Booking Invoice Pront *****/
+    public function bookInvoicePrint(Request $request){
+       $users = User::all();
+        $pdf = PDF::loadView('report.bookInvoicePrint',['users'=>$users]);
+        return $pdf->stream('Invoice-Pdf.pdf');         
     }
 
     

@@ -85,7 +85,7 @@ class ForgotPasswordController extends Controller
            session()->flash('success', 'A verification code has been sent to '.$request->phone);
            return redirect()->route('reset',['phone'=>$request->phone]);
          } else {
-            return redirect()->back();    
+            return redirect()->back()->with('message','This user may not exist!');    
          }
 
 //         
