@@ -292,8 +292,8 @@ img {
      @if($group->secid==$section->secid)
           
         <tr class="title-head2">
-            <th width='40%'>{{$group->grp_name}}</td>
-            <th width='20%'</th>
+            <th width='40%'>{{$group->grp_name}}</th>
+            <th width='20%'></th>
             <th width='20%'>{{number_format($group->group_total)}}</th>
             <th width='20%'></th>
         </tr>

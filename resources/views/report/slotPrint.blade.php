@@ -20,12 +20,19 @@ table{
         border: 1px solid;
         border-collapse: collapse;
     }
+table.footer{
+  border: none;
+}
+
+
+
 th,td{
  border: 1px solid;
  padding-left: 5px;
+ text-align: center;
 }
 h4{
-        margin-bottom: 5px;
+        margin-bottom: 10px;
         border: 1px solid;
         border-radius: 10px;
         width: 60%;
@@ -39,8 +46,14 @@ img {
   height: 5%
 }
 @page {
+  
+  margin-top: 12%;
   header: page-header;
   footer: page-footer;
+  odd-header-name: html_myHeader1;
+  even-header-name: html_myHeader1;
+  odd-footer-name: html_myFooter1;
+  even-footer-name: html_myFooter2;
 }
   
 /*$mpdf->Image('/img/app-logo.png', 0, 0, 210, 297, 'jpg', '', true, false);
@@ -48,25 +61,30 @@ img {
 </style>
 </head>
 <body>
-    <center><a class="brand-logo" href="">
-  <div style="text-align: center;font-size: 12px" >
-   
-    <div><img style="margin-top: -15px; margin-left: 260px;" src="public/img/app-logo.png" alt="">
-        <span><h2 style="margin-right: 290px;padding-top: -8px; margin-left: 290px;">Jaff Sports</h2></span></div>
+  <htmlpageheader name="myHeader1" >
+    <center style="margin-bottom:5px">
+  <div style="text-align: center;font-size: 12px;padding-top: 15px">
+  <div><img style="margin-top:10px;margin-left:280px;" src="public/img/app-logo.png" alt="">
+        <span><h2 style="margin-left:-300px;padding-top:4px;" >Jaff Sports</h2></span></div>
     <div style="margin-top: -10px">Bashundhara Main Gate,
     Opposite of Jamuna Future Park Sidegate,<br>Bashundhara R/A,Dhaka.
     <br>Phone: +8801304229158, Email: info@jaff.com
-    <h4>Slots List</h4>
-    <br>
+     
+ </div>
   </div>
-  </div>
-    </a> 
-  </center>
+  <h4 style="text-align:center;">Slots List</h4>
+  <br> 
+</center>
 
-    <center>
-     <table id="slotTbl" class="table zero-configuration ">
+
+</htmlpageheader>
+
+
+    <center style="margin-top:5px">
+     <table style="margin-top:5px" id="slotTbl" class="table zero-configuration ">
        <thead>
-        <tr>
+        <tr>   
+               <th>#Sl</thead>
                <th>Day</th>
                <th>Duration</th>
                <th>Type</th>
@@ -76,8 +94,9 @@ img {
        </tr>
        </thead>
        <tbody>
-        @foreach ($posts as $item)  
+        @foreach ($posts as $key=>$item)  
         <tr>
+            <td>{{++$key}}</td>
             <td>{{$item->day}}</td>
             <td>{{date( "h:i A", strtotime($item->start))}}-{{date( "h:i A", strtotime($item->end))}}</td>
             <td>{{$item->type}}</td>
@@ -88,12 +107,22 @@ img {
         @endforeach
        </tbody>
    </table>
-       
+   
    </center>
- <br>
-        <h4  style="text-align: center;font-size: 12px">Total Slots {{$total}}</h4>
-  <htmlpagefooter name="page-footer">
 
-</htmlpagefooter>
+       
+    <htmlpagefooter name="myFooter1" style="display:none">
+       {PAGENO}/{nbpg}
+    </htmlpagefooter>
+     <htmlpagefooter name="myFooter2" style="display:none">
+       
+        <table width="100%">
+            <tr>
+                <td width="33%">My document</td>
+                <td width="33%" align="center">{PAGENO}/{nbpg}</td>
+                <td width="33%" style="text-align: right;">{DATE j-m-Y}</td>
+            </tr>
+        </table>
+     </htmlpagefooter>
 </body>
 </html>

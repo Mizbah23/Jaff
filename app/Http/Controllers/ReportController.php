@@ -48,7 +48,8 @@ class ReportController extends Controller
                 ->select('slots.*','grounds.name','weekdays.day','types.type')->orderBy('day_id','asc')->get();
                 $pdf = PDF::loadView('report.slotPrint',['posts'=>$posts,'total'=>count($posts)]);
             
-        return $pdf->stream('Slot-Pdf.pdf');
+        // return $pdf->stream('Slot-Pdf.pdf');
+            return    $pdf ;
     }
     
     
@@ -207,11 +208,9 @@ class ReportController extends Controller
                 ->when($from, function ($query, $from){return $query->whereDate('balances.date','>=',$from);})
                 ->when($to, function ($query, $to){return $query->whereDate('balances.date','<=',$to);}) 
                 ->get();
-//     $pdf = PDF::loadView('report.balance_report',['all_section'=>$all_section,'all_group'=>$all_group,
-//         'all_account'=>$all_account,
-//         'income_group'=>$income_group,'inflow'=>$inflow,'from'=>$from,'to'=>$to]);
-//        return $pdf->stream('Balance-report.pdf');  
-        return view('report.balance_report',$data);
+    $pdf = PDF::loadView('report.balance_report',$data);
+       return $pdf->stream('Balance-report.pdf');  
+        // return view('report.balance_report',$data);
 
     }
     public function coursePaymentReport()

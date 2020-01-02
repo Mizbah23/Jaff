@@ -12,7 +12,11 @@ Auth::routes();
 Route::get('/','HomeController@getMainPage')->name('home');
 Route::get('/timetable','HomeController@getTimeTable')->name('time');
 
+
+
+
 //User Login & Reg routes
+
 Route::get('/login','Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login','Auth\LoginController@login')->name('loginPost');
 
@@ -33,6 +37,7 @@ Route::post('/reset_code/{phone}','Auth\ResetPasswordController@verifyCode')->na
 
 Route::get('/Reset_Password/{phone}','Auth\RegisterController@showNewForm')->name('newPassword');
 Route::post('/Reset_Password/{phone}','Auth\RegisterController@newLogin');
+   
 
 
 Route::prefix('news')->group(function()

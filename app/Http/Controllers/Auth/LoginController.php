@@ -23,18 +23,18 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/';
+    // /**
+    //  * Where to redirect users after login.
+    //  *
+    //  * @var string
+    //  */
+    // protected $redirectTo = '/';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    // /**
+    //  * Create a new controller instance.
+    //  *
+    //  * @return void
+    //  */
     public function showLoginForm()
     
     {
@@ -171,7 +171,7 @@ class LoginController extends Controller
     public function userLogout() 
     {
         Auth::guard('web')->logout();
-        return redirect('/login');
+        return redirect('/');
     }
     
 }

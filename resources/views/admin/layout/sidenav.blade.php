@@ -183,14 +183,14 @@
                             </a>
                         </li>
                         @endif
-                        @if(session()->has('dday'))
+                  {{--       @if(session()->has('dday')) --}}
                         <li class="drp nav-item">
                             <a href="{{route('get.dropin')}}">
                                 <i class="feather icon-clipboard"></i>
                                 <span class="menu-title" data-i18n="Calender">Drop In</span>
                             </a>
                         </li>
-                        @endif
+         {{--                @endif --}}
                     </ul>
                 </li>
                 
