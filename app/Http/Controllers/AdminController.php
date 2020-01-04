@@ -9,6 +9,7 @@ use Jaff\Category;
 use Jaff\User;
 use Jaff\Booking;
 use Jaff\Bookdetail;
+use Jaff\Balance;
 use Illuminate\Support\Facades\Hash;
 use Response;
 use Illuminate\Support\Facades\DB;
@@ -35,22 +36,22 @@ class AdminController extends Controller
                                 DB::raw('Date(created_at) as date'),
                                 DB::raw('COUNT(*) as "count"')
                             ))->pluck( 'count', 'date' );
-         // dd($data['users']);
+          // dd($data['users']);
          $dates = $dates->merge( $data['users'] );
          $data['dates']=$dates;
          $dates = [];
-         $counts=[];
+         $dcounts=[];
          foreach ($data['dates'] as $key=>$count) {
             // dd($data['dates']);
-           array_push($counts, $count);
+           array_push($dcounts, $count);
            array_push($dates, $key);
  
          }
          
          $dates = implode(",",$dates);
-         $counts=implode(",",$counts);
+         $dcounts=implode(",",$dcounts);
          // dd($dates);
-         $data['counts'] = $counts;
+         $data['dcounts'] = $dcounts;
          //******bookings date chart************//
 
          $data['total_books']=Bookdetail::where( 'slot_date', '>=', Carbon::now()->subDays(7))->orderBy('slot_date','desc')->get();
@@ -101,13 +102,52 @@ class AdminController extends Controller
 
         // Last 12 Month Income Expense
         
-        // $months = collect();
-        // foreach( range( 0, 11 ) as $i ) {
-        //     $date = Carbon::now()->subMonths( $i )->format( 'M' );
-        //     $months->put( $date, 0);
-        //  }
-        // dd($months);
-     
+        $months = collect();
+        foreach( range( 11, 0 ) as $i ) {
+            $date = Carbon::today()->subMonths( $i )->format( 'M' );
+            $months->put( $date, 0);
+         }
+        
+        $data['income_date'] = Balance::join('accounts','balances.accid','=','accounts.accid')->where([['date', '>=', Carbon::today()->subMonths(9)],['accounts.type','=','1']])->orderBy('balances.date','desc')
+                ->groupBy(DB::raw('balances.date'))
+                ->get(array(DB::raw('date_format(date, "%b")as date'),DB::raw('SUM(amount) as count')))->pluck('count','date');
+        // dd($data['income_date']);
+       $months=$months->merge( $data['income_date'] );
+       $data['months']=$months;
+        // dd($data['months']);
+       $months = [];
+       $mcounts=[];
+       foreach ($data['months'] as $key=>$mcount) {
+           
+           array_push($mcounts, $mcount);
+           array_push($months, '"'.$key.'"');
+
+         }
+
+         $months = implode(",",$months);
+         $mcounts=implode(",",$mcounts);
+         // dd($months);
+         //dd($mcounts);
+         $data['mcounts'] = $mcounts;
+         // dd(($data['mcounts']>0)? number_format($data['mcounts']/1000):0.0);
+         $data['months']=$months;
+
+        //Last 12 months Expense
+
+        $data['expense_date'] = Balance::join('accounts','balances.accid','=','accounts.accid')->where([['date', '>=', Carbon::today()->subMonths(9)],['accounts.type','=','2']])->orderBy('balances.date','desc')
+                ->groupBy(DB::raw('balances.date'))
+                ->get(array(DB::raw('date_format(date, "%b")as date'),DB::raw('SUM(amount) as count')))->pluck('count','date');
+         
+         foreach ($data['months'] as $key=>$ecount) {
+           
+           array_push($ecounts, $ecount);
+
+         }
+         $ecounts=implode(",",$ecounts);
+         $data['mcounts'] = $mcounts;
+         dd($months);
+         // dd(($data['mcounts']>0)? number_format($data['mcounts']/1000):0.0);
+        
         return view('admin.dashboard',$data);
         
         

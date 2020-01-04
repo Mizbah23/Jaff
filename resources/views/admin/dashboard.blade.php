@@ -182,7 +182,7 @@
                 </div>
             </div>
         </div>
-{{--         <div class="col-lg-4 col-lg-7">
+        <div class="col-lg-4 col-lg-7">
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">Column Chart</h4>
@@ -193,7 +193,7 @@
                                     </div>
                                 </div>
                             </div>
-        </div> --}}
+        </div>
 {{--         <div class="col-lg-4 col-12">
             <div class="card">
                 <div class="card-header">
@@ -473,7 +473,7 @@
          series: [
          {
              name: "users",
-             data: [{{$counts}}]
+             data: [{{$dcounts}}]
          }],
          xaxis:
          {
@@ -748,5 +748,77 @@
         }]
     };
     new ApexCharts(document.querySelector("#donut-chart"), y).render();
+</script>
+<script>
+    var r = {
+        chart:
+        {
+            height: 350,
+            type: "bar"
+        },
+        colors: a,
+        plotOptions:
+        {
+            bar:
+            {
+                horizontal: !1,
+                endingShape: "rounded",
+                columnWidth: "55%"
+            }
+        },
+        dataLabels:
+        {
+            enabled: !1
+        },
+        stroke:
+        {
+            show: !0,
+            width: 2,
+            colors: ["transparent"]
+        },
+        series: [
+        {
+            name: "Net Profit",
+            data: [76, 85, 101, 98, 87, 105, 91, 114, 94,10,11]
+        },
+        {
+            name: "Income",
+            data: [{{$mcounts}}]
+        },
+        {
+            name: "Expense",
+            data: [35, 41, 36, 26, 45, 48, 52, 53, 41,9,11]
+        }],
+        legend:
+        {
+            offsetY: -10
+        },
+        xaxis:
+        {
+            categories: [{!!$months!!}]
+        },
+        yaxis:
+        {
+            title:
+            {
+                text: "$(thousands)"
+            }
+        },
+        fill:
+        {
+            opacity: 1
+        },
+        tooltip:
+        {
+            y:
+            {
+                formatter: function (e)
+                {
+                    return "$ " + e + " thousands"
+                }
+            }
+        }
+    };
+    new ApexCharts(document.querySelector("#column-chart"), r).render();
 </script>
 @stop

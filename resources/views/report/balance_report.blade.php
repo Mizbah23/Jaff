@@ -145,7 +145,7 @@ img {
                 
                 
                 
-                
+/*                
 @media print {
     #printbtn {
         display :  none;
@@ -156,20 +156,21 @@ img {
     content: none !important;
   }
 }
-
+*/
 		
 	</style>
 </head>
 <body>
-     <form>
+{{--      <form>
          <input type = "button" value = "Print" id="printbtn" onclick = "window.print()" />
-      </form> 
+      </form>  --}}
     <center>
         <!--<a class="brand-logo" href="">-->
         <div style="text-align: center;font-size: 12px" >
           <div>
 
-              <span><h2 style="margin-right: 290px;padding-top: -8px; margin-left: 290px;">Jaff Sports</h2></span></div>
+              <span><h2 style="margin-right: 290px;padding-top: -8px; margin-left: 290px;">Jaff Sports</h2></span>
+          </div>
           <div style="margin-top: -10px">Bashundhara Main Gate,
           Opposite of Jamuna Future Park Sidegate,<br>Bashundhara R/A,Dhaka.
           <br>Phone: +8801304229158, Email: info@jaff.com
@@ -188,8 +189,8 @@ img {
 	<div class="wrapper">
 
 
-		<label class="label-title" for="">CASH INFLOW :</label>
-                <section class="container-main" style="margin-top: 0px;">
+		<label for="">CASH INFLOW :</label>
+                {{-- <section class="container-main" style="margin-top: 0px;"> --}}
 			<table class="table-main">
 			<thead>
 				<tr >
@@ -210,7 +211,7 @@ img {
                                             <th>{{$in_group->grp_name}}</th>
                                             <th class="td-visible"></th>
                                             <th></th>
-                                            <th class="td-visible">{{number_format($in_group->group_total)}}</th>
+                                            <th class="td-visible" style="text-align:right">{{number_format($in_group->group_total)}}</th>
                                             
 					</tr>
                                           @foreach($inflow as $infl)
@@ -218,7 +219,7 @@ img {
                                              <tr class="title-head">
                                                 <td >{{$infl->acc_name}} </td>
                                                  <td class="td-visible"></td>
-                                                <td>{{number_format($infl->amount)}}</td>
+                                                <td style="text-align:right;">{{number_format($infl->amount)}}</td>
                                                   @php $total_inflow=$total_inflow+$infl->amount;@endphp
                                                 <td class="td-visible td-visible-top"></td>
                                              </tr>
@@ -230,21 +231,21 @@ img {
                                             <th class="td-visible">Course Payment</th>
                                             <th class="td-visible"></th>
                                             <th class="td-visible"></th>
-                                            <th class="td-visible">{{number_format($cpay)}}</th>
+                                            <th class="td-visible" style="text-align:right;">{{number_format($cpay)}}</th>
 					</tr>
              
                                         <tr class="title-head ">
                                             <th class="td-visible">Membership Payment</th>
                                             <th class="td-visible"></th>
                                             <th class="td-visible"></th>
-                                            <th class="td-visible">{{number_format($mpay)}}</th>
+                                            <th class="td-visible" style="text-align:right;">{{number_format($mpay)}}</th>
 					</tr>
                           
                                         <tr class="title-head ">
                                             <th class="td-visible">Slot Booking Payment</th>
                                             <th class="td-visible"></th>
                                             <th class="td-visible"></th>
-                                            <th class="td-visible">{{number_format($bpay)}}</th>
+                                            <th class="td-visible" style="text-align:right;">{{number_format($bpay)}}</th>
 					</tr>
                                         @php $total_inflow +=$cpay+$mpay+$bpay;@endphp
                    
@@ -261,7 +262,7 @@ img {
             <th>Total Cash Inflow</th>
             <th class="td-visible"></th>
             <th></th>
-            <th class="td-visible">{{number_format($total_inflow)}}</th>                        
+            <th class="td-visible" style="text-align:right;">{{number_format($total_inflow)}}</th>                        
         </tr>
     </thead>
 </table>
@@ -275,7 +276,7 @@ img {
 @php $total_outflow=0; @endphp
 @foreach($all_section as $section)
 
-          
+<br>          
 <table class="table-main2">
     
     <thead>
@@ -294,7 +295,7 @@ img {
         <tr class="title-head2">
             <th width='40%'>{{$group->grp_name}}</th>
             <th width='20%'></th>
-            <th width='20%'>{{number_format($group->group_total)}}</th>
+            <th width='20%'style="text-align:right;">{{number_format($group->group_total)}}</th>
             <th width='20%'></th>
         </tr>
         @foreach($all_account as $account)
@@ -326,29 +327,26 @@ img {
             <th>Total Cash Outflow</th>
             <th class="td-visible"></th>
             <th></th>
-            <th class="td-visible">{{number_format($total_outflow)}}</th>                        
+            <th class="td-visible" style="text-align:right;">{{number_format($total_outflow)}}</th>                        
         </tr>
     </thead>
 </table>
 
 
-		</section>
+		
                 
                 
                     <div class="row page-head">
         @if(isset($month1) && isset($year))
-        <h4>Total Balance of {{$month1}} -{{$year}} - ({{$total_inflow-$total_outflow}} &#2547; ) </h4>
+        <h4>Total Balance of {{$month1}} -{{$year}} - ({{$total_inflow-$total_outflow}} BDT ) </h4>
         @else
-        <h4>Total Balance of ({{$from}} To {{$to}}) - ({{$total_inflow-$total_outflow}} &#2547; ) </h4>
+        <h4>Total Balance of ({{$from}} To {{$to}}) - ({{$total_inflow-$total_outflow}} BDT ) </h4>
         @endif
         
        
     </div>
                 
                 
-                
-                
-                
-	</div>
+</div>
 </body>
 </html>
