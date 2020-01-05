@@ -128,7 +128,7 @@ class RegisterController extends Controller
         
 
         $postUrl = "http://api.bulksms.icombd.com/api/v3/sendsms/xml";
-        $smsbody = "Dear $request->username, Your OTP code is $user->vcode."
+        $smsbody = "Dear $user->username, Your OTP code is $user->vcode."
                 . " For any query call us 0011223344.  Regards, Jaff.";
 
         $xmlString =
@@ -176,7 +176,7 @@ class RegisterController extends Controller
         $user=User::where('phone',$phone)->first();
          // dd($user);
         $postUrl = "http://api.bulksms.icombd.com/api/v3/sendsms/xml";
-        $smsbody = "Dear $request->username, Your OTP code is $user->vcode."
+        $smsbody = "Dear $user->username, Your OTP code is $user->vcode."
                 . " For any query call us 0011223344.  Regards, Jaff.";
 
         $xmlString =
@@ -218,6 +218,9 @@ class RegisterController extends Controller
             if($code===$enteredOtp){
                 User::where('phone', $phone)->update(['status' => 1,'phone_verified_at'=>date('Y-m-d H:i:s'),'vcode'=>null]);
                 return redirect()->route('login')->with('success','You are ready to login');
+            }
+            else{
+              return redirect()->back()->with('message','Wrong OTP!'); 
             }
         }
     }

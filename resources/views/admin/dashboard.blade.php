@@ -185,7 +185,7 @@
         <div class="col-lg-4 col-lg-7">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Column Chart</h4>
+                                    <h4 class="card-title">Income-Expense Chart(Last 6 months)</h4>
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
@@ -778,8 +778,8 @@
         },
         series: [
         {
-            name: "Net Profit",
-            data: [76, 85, 101, 98, 87, 105, 91, 114, 94,10,11]
+            name: "Net Total",
+            data: [{{($profits)}}]
         },
         {
             name: "Income",
@@ -787,7 +787,7 @@
         },
         {
             name: "Expense",
-            data: [35, 41, 36, 26, 45, 48, 52, 53, 41,9,11]
+            data: [{{$ecounts}}]
         }],
         legend:
         {
@@ -801,7 +801,7 @@
         {
             title:
             {
-                text: "$(thousands)"
+                text: "Income-Expense(TAKA)"
             }
         },
         fill:
@@ -814,7 +814,7 @@
             {
                 formatter: function (e)
                 {
-                    return "$ " + e + " thousands"
+                    return "BDT" + e + " taka"
                 }
             }
         }

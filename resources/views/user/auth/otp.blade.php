@@ -48,8 +48,9 @@
                     <form action="" method="post" id="">
                         <input type="hidden" name="phone" value="{{$user->phone}}">
                         @csrf
-                      <p style="color:red"> {{ session('success') }}</p>
 
+                      <p style="color:red"> {{ session('success') }}</p>
+                       <p style="color:red"> {{ session('message') }}</p>  
                         <div class="">
                             <!-- <p class="text-head">Username</p> -->
                             <input type="text" name="otp" class="input" placeholder="Type your OTP Code" required="" />

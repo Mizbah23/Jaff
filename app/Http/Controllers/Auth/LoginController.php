@@ -40,7 +40,7 @@ class LoginController extends Controller
     {
         $data = array();
         $data['title'] = 'Log In';
-        return view('user.auth.login',$data);
+        return view('user.auth.login1',$data);
         
     }
     
@@ -171,7 +171,7 @@ class LoginController extends Controller
     public function userLogout() 
     {
         Auth::guard('web')->logout();
-        return redirect('/');
+        return redirect('/login');
     }
     
 }

@@ -15,6 +15,7 @@ use Jaff\Singleimg;
 use Jaff\Testimonial;
 use Jaff\Notice;
 use Carbon\Carbon;
+use Jaff\Setting;
 
 use DB;
 use Response;
@@ -96,8 +97,10 @@ class HomeController extends Controller
     public function getTimeTable()
     {
         $data = array();
+        $max_days = Setting::where('id',1)->value('max_days');
+        $data['max_date'] = date('Y-m-d', strtotime("+".$max_days." days", strtotime(today())));
         $data['title'] = 'Slot Time Table';
-        return view('user.pages.timetable',$data);
+        return view('user.pages.timetable1',$data);
     }
     public function showAllNews()
     {

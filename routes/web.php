@@ -12,9 +12,6 @@ Auth::routes();
 Route::get('/','HomeController@getMainPage')->name('home');
 Route::get('/timetable','HomeController@getTimeTable')->name('time');
 
-
-
-
 //User Login & Reg routes
 
 Route::get('/login','Auth\LoginController@showLoginForm')->name('login');

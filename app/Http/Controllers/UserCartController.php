@@ -46,7 +46,7 @@ class UserCartController extends Controller
             $data['dd'][$dd->date]= $dd->price;
             $data['ds'][$dd->slot_id]= $dd->price;
         }
-        return view('user.pages.cart',$data);
+        return view('user.pages.cart1',$data);
     }
     public function addCart(Request $request)
     {

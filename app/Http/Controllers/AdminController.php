@@ -100,20 +100,23 @@ class AdminController extends Controller
         $data['full_count']=Bookdetail::where( [['slot_date', '>=', Carbon::now()->subDays(30)], ['type', '=', '3' ]])->count();
         $data['drop_count']=Bookdetail::where( [['slot_date', '>=', Carbon::now()->subDays(30)], ['type', '=', '4' ]])->count();
 
-        // Last 12 Month Income Expense
+        // Last 12 Month Income 
         
         $months = collect();
-        foreach( range( 11, 0 ) as $i ) {
+        foreach( range( 0, 5 ) as $i ) {
             $date = Carbon::today()->subMonths( $i )->format( 'M' );
             $months->put( $date, 0);
          }
+        $data['income_date'] = Balance::join('accounts','balances.accid','=','accounts.accid')
         
-        $data['income_date'] = Balance::join('accounts','balances.accid','=','accounts.accid')->where([['date', '>=', Carbon::today()->subMonths(9)],['accounts.type','=','1']])->orderBy('balances.date','desc')
-                ->groupBy(DB::raw('balances.date'))
-                ->get(array(DB::raw('date_format(date, "%b")as date'),DB::raw('SUM(amount) as count')))->pluck('count','date');
-        // dd($data['income_date']);
+        ->where([['balances.date', '>=', Carbon::today()->subMonths(6)],['accounts.type','=','1']])
+        ->groupBy(DB::raw('Month(balances.date)'),'month')
+        ->orderBy('balances.date','desc')
+        ->get(array(DB::raw('date_format(date, "%b") as month'),DB::raw('SUM(amount) as total')))
+        ->pluck('total','month');
+         // dd($data['income_date']);
        $months=$months->merge( $data['income_date'] );
-       $data['months']=$months;
+       $data['months']=$income=$months;
         // dd($data['months']);
        $months = [];
        $mcounts=[];
@@ -127,27 +130,48 @@ class AdminController extends Controller
          $months = implode(",",$months);
          $mcounts=implode(",",$mcounts);
          // dd($months);
-         //dd($mcounts);
+         // dd($mcounts);
          $data['mcounts'] = $mcounts;
-         // dd(($data['mcounts']>0)? number_format($data['mcounts']/1000):0.0);
          $data['months']=$months;
 
         //Last 12 months Expense
+        
+        $emonths = collect();
+        foreach( range( 0, 5 ) as $i ) {
+            $date = Carbon::today()->subMonths( $i )->format( 'M' );
+            $emonths->put( $date, 0);
+         }
 
-        $data['expense_date'] = Balance::join('accounts','balances.accid','=','accounts.accid')->where([['date', '>=', Carbon::today()->subMonths(9)],['accounts.type','=','2']])->orderBy('balances.date','desc')
-                ->groupBy(DB::raw('balances.date'))
-                ->get(array(DB::raw('date_format(date, "%b")as date'),DB::raw('SUM(amount) as count')))->pluck('count','date');
-         
-         foreach ($data['months'] as $key=>$ecount) {
+        $data['expense_date'] = Balance::join('accounts','balances.accid','=','accounts.accid')
+        ->where([['date', '>=', Carbon::today()->subMonths(6)],['accounts.type','=','2']])
+        ->groupBy(DB::raw('Month(balances.date)'),'month')
+        ->orderBy('balances.date','desc')
+        ->get(array(DB::raw('date_format(date, "%b") as month'),DB::raw('SUM(amount) as total')))
+        ->pluck('total','month');
+        
+        $emonths=$emonths->merge( $data['expense_date'] );
+        $data['emonths']=$expense=$emonths; 
+        // dd($expense);
+        $emonths = [];
+        $ecounts=[];
+        foreach ($data['emonths'] as $key=>$ecount) {
            
            array_push($ecounts, $ecount);
 
-         }
-         $ecounts=implode(",",$ecounts);
-         $data['mcounts'] = $mcounts;
-         dd($months);
-         // dd(($data['mcounts']>0)? number_format($data['mcounts']/1000):0.0);
-        
+         };
+        $ecounts=implode(",",$ecounts);
+        $data['ecounts'] = $ecounts;
+        // dd($income);
+        //Last 12 months Profit
+        $profits = array();
+      
+        foreach ($income as $key => $value) {
+      
+            $profits[$key]= $value-$expense[$key];
+        }
+        $profits=implode(",",$profits);
+        $data['profits'] = $profits;
+        // dd($data['profits']);
         return view('admin.dashboard',$data);
         
         
