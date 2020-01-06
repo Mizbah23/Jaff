@@ -5,10 +5,12 @@ namespace Jaff\Http\Controllers\Auth;
 use Jaff\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use illuminate\Support\Str;
 use Jaff\User;
+use Redirect;
 
 class ResetPasswordController extends Controller
 {
@@ -47,8 +49,8 @@ class ResetPasswordController extends Controller
      $data= array();
      $data['title'] = 'Reset';
      $user=User::where('phone',$phone)->first();
-         // dd($user);
-    return view('user.auth.reset',$data)->with('user',$user);
+     
+     return view('user.auth.reset',$data)->with('user',$user);
     }
     
     public function verifyCode(Request $request,$phone)
@@ -65,7 +67,10 @@ class ResetPasswordController extends Controller
           if($code===$enteredOtp){
             User::where('phone', $phone)->update(['phone_verified_at'=>date('Y-m-d H:i:s'),'vcode'=>null]);
             // dd($request->all());
-            return redirect()->route('newPassword',['phone'=>$request->phone])->with('success','You are ready to give new Password');
+            return Redirect::to(URL::temporarySignedRoute('newPassword',now()->addMinutes(2),['phone'=>$request->phone]))->with('success','You are ready to give new Password');
+            // return redirect()->route('newPassword',['phone'=>$request->phone])->with('success','You are ready to give new Password');
+            }else{
+                return redirect()->back()->with('message','Wrong OTP!');
             }
       }
     }

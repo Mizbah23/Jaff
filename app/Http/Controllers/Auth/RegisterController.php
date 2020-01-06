@@ -5,6 +5,7 @@ namespace Jaff\Http\Controllers\Auth;
 use Jaff\User;
 use Jaff\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
@@ -154,29 +155,30 @@ class RegisterController extends Controller
            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
            curl_exec($ch);
            curl_close($ch);
-        session()->flash('success', 'A verification code has been sent to '.$request->phone);
-        return redirect()->route('otp',['phone'=>$request->phone]);
+           session()->flash('success', 'A verification code has been sent to '.$request->phone);
+        // return URL::temporarySignedRoute(
+        //     'otp', now()->addMinutes(2), ['phone'=>$request->phone]
+        //   );
+        return Redirect::to(URL::temporarySignedRoute('otp',now()->addMinutes(2),['phone'=>$user->phone])); 
 
     }
     
         public function getOTP(Request $request,$phone)
     {
         $data= array();
-        $data['title']='Sign up';
+        $data['title']='OTP verification';
         $data['user']=User::where('phone',$phone)->first();
          // dd($user);
-        
-
         return view('user.auth.otp',$data);
     }
           public function resendOTP(Request $request,$phone)
     {
         $data= array();
-        $data['title']='Sign up';
+        $data['title']='OTP verification';
         $user=User::where('phone',$phone)->first();
          // dd($user);
         $postUrl = "http://api.bulksms.icombd.com/api/v3/sendsms/xml";
-        $smsbody = "Dear $user->username, Your OTP code is $user->vcode."
+        $smsbody = "Dear $user->username, Your OTP code is $user->vcode"
                 . " For any query call us 0011223344.  Regards, Jaff.";
 
         $xmlString =
@@ -204,7 +206,7 @@ class RegisterController extends Controller
            curl_close($ch);
            $data['user']=$user;
            session()->flash('success', ' Code has been resent');
-       return redirect()->route('otp',['phone'=>$data['user']->phone]);
+       return Redirect::to(URL::temporarySignedRoute('otp',now()->addMinutes(2),['phone'=>$data['user']->phone])); 
     }
     
         public function verifyOTP(Request $request,$phone){

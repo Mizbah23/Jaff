@@ -22,17 +22,17 @@ Route::get('/logout','Auth\LoginController@userLogout')->name('logout');
 Route::get('/signup','Auth\RegisterController@showRegistrationForm' )->name('signup');
 Route::post('/signup','Auth\RegisterController@register')->name('register');
 
-Route::get('/verify/{phone}','Auth\RegisterController@getOTP' )->name('otp');
-Route::post('/verify/{phone}','Auth\RegisterController@verifyOTP');
+Route::get('/otp/{phone}','Auth\RegisterController@getOTP' )->name('otp')->middleware('signed');
+Route::post('/verify/{phone}','Auth\RegisterController@verifyOTP')->name('verify');
 Route::get('/resend/{phone}','Auth\RegisterController@resendOTP' )->name('resend');
 
 Route::get('password/forget', 'Auth\ForgotPasswordController@forgotPassword')->name('forgotPassword');
 Route::post('password/forget', 'Auth\ForgotPasswordController@postForgotPassword')->name('postForgotPassword');
 
-Route::get('/reset_code/{phone}','Auth\ResetPasswordController@resetCode' )->name('reset');
+Route::get('/reset_code/{phone}','Auth\ResetPasswordController@resetCode' )->name('reset')->middleware('signed');
 Route::post('/reset_code/{phone}','Auth\ResetPasswordController@verifyCode')->name('verifyCode');
 
-Route::get('/Reset_Password/{phone}','Auth\RegisterController@showNewForm')->name('newPassword');
+Route::get('/Reset_Password/{phone}','Auth\RegisterController@showNewForm')->name('newPassword')->middleware('signed');
 Route::post('/Reset_Password/{phone}','Auth\RegisterController@newLogin');
    
 

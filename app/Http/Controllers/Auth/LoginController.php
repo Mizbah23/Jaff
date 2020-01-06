@@ -5,9 +5,11 @@ namespace Jaff\Http\Controllers\Auth;
 use Jaff\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use Hash;
 use Auth;
 use Jaff\User;
+use Redirect;
 class LoginController extends Controller
 {
     /*
@@ -80,7 +82,7 @@ class LoginController extends Controller
                session()->flash('errors', 'Your Password is wrong !!');
                return redirect()->route('login');
            }else{
-             if (is_null($user->phone_verified_at )) {
+             if (is_null($user->phone_verified_at )||($user->status==0)) {
               $postUrl = "http://api.bulksms.icombd.com/api/v3/sendsms/xml";
               $smsbody = "Dear $request->username, Your OTP code is $user->vcode."
                 . " For any query call us 0011223344.  Regards, Jaff.";
@@ -109,7 +111,8 @@ class LoginController extends Controller
                    curl_exec($ch);
                    curl_close($ch);
                 session()->flash('success', 'A verification code has been sent to '.$request->phone);
-                return redirect()->route('otp',['phone'=>$request->phone]);
+                // return redirect()->route('otp',['phone'=>$request->phone]);
+                return Redirect::to(URL::temporarySignedRoute('otp',now()->addMinutes(2),['phone'=>$request->phone])); 
              }elseif ($user->status == 1)
                {
                    if(Auth::guard('web')->attempt

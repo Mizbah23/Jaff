@@ -45,7 +45,7 @@
                     </a> </center>
             
 
-                    <form action="" method="post" id="">
+                    <form action="{{route('verify',['phone'=>$user->phone])}}" method="post" id="">
                         <input type="hidden" name="phone" value="{{$user->phone}}">
                         @csrf
 

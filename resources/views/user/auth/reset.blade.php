@@ -50,7 +50,7 @@
                         <input type="hidden" name="phone" value="{{$user->phone}}">
                         @csrf
                       <p style="color:red"> {{ session('success') }}</p>
-                      
+                      <p style="color:red"> {{ session('message') }}</p>
 
                         <div class="">
                             <!-- <p class="text-head">Username</p> -->
@@ -59,7 +59,7 @@
                     
                         <br>
                         <button type="submit" class="signinbutton btn">Confirm</button>
-                        <p class="signup">Have you not get yet?<a href="#" class="signuplink">Resend</a></p>
+                        <p class="signup">Have you not get yet?<a href="{{route('resend',['phone'=>$user->phone])}}" class="signuplink">Resend</a></p>
                       
                     </form>
                   

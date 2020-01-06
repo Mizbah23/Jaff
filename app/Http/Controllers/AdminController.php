@@ -172,10 +172,7 @@ class AdminController extends Controller
         $profits=implode(",",$profits);
         $data['profits'] = $profits;
         // dd($data['profits']);
-        return view('admin.dashboard',$data);
-        
-        
-        
+        return view('admin.dashboard',$data);   
     }
     public function UserList()
     {

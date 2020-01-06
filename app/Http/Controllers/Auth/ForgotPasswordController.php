@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use illuminate\Support\Str;
+use Illuminate\Support\Facades\URL;
 use Response;
 use Redirect;
 use Auth;
@@ -83,7 +84,8 @@ class ForgotPasswordController extends Controller
            curl_exec($ch);
            curl_close($ch);
            session()->flash('success', 'A verification code has been sent to '.$request->phone);
-           return redirect()->route('reset',['phone'=>$request->phone]);
+           return Redirect::to(URL::temporarySignedRoute('reset',now()->addMinutes(2),
+            ['phone'=>$request->phone])); 
          } else {
             return redirect()->back()->with('message','This user may not exist!');    
          }
