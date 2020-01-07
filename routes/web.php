@@ -8,14 +8,21 @@
 |routes are loaded by the RouteServiceProvider within a group which
 |contains the "web" middleware group. Now create something great!
 */
+
+
 Auth::routes();
 Route::get('/','HomeController@getMainPage')->name('home');
 Route::get('/timetable','HomeController@getTimeTable')->name('time');
+Route::get('/timetableapps','HomeController@getAppTimeTable')->name('appstime');
+Route::get('/cartapps', 'UserCartController@showAppsCart')->name('usrappcart');
+Route::get('/successapps', 'UserBookController@successAppNofity')->name('appNotify');
+
 
 //User Login & Reg routes
 
 Route::get('/login','Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login','Auth\LoginController@login')->name('loginPost');
+Route::get('/loginapps','Auth\LoginController@showAppsLoginForm')->name('loginApps');
 
 Route::get('/logout','Auth\LoginController@userLogout')->name('logout');
 
@@ -63,6 +70,7 @@ Route::prefix('usercal')->group(function()
 Route::prefix('cart')->group(function()
 {
     Route::get('/', 'UserCartController@showCart')->name('usrcart');
+
     Route::post('/add-cart', 'UserCartController@addCart')->name('add.usrcart');
     Route::post('/rmv-cart', 'UserCartController@rmvCart')->name('rmv.usrcart');
     Route::post('/del-cart', 'UserCartController@delCart')->name('del.usrcart');

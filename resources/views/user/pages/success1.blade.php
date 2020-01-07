@@ -1,5 +1,5 @@
 @extends('user.master')
-@section('title'){{$title}}@stop
+{{-- @section('title'){{$info->title}}@stop --}}
 @section('style')
     <link rel="stylesheet" href="{{asset('public/css/back/bootstrap-4.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/css/back/toastr.min.css')}}">
@@ -51,7 +51,7 @@ iframe, img, figure {
 </style>
 @stop
 @section('header')
-    @include('user.layout.common_header')
+
 @stop
 
 @section('content')
@@ -219,7 +219,7 @@ iframe, img, figure {
 @stop
 
 @section('footer')
-    @include('user.layout.footer')
+    {{-- @include('user.layout.footer') --}}
 @stop
 @section('script')
 <script src="{{asset('public/js/back/sweetalert2.min.js')}}"></script>

@@ -42,10 +42,17 @@ class LoginController extends Controller
     {
         $data = array();
         $data['title'] = 'Log In';
-        return view('user.auth.login1',$data);
+        return view('user.auth.login',$data);
         
     }
     
+    public function showAppsLoginForm()
+    {
+        $data = array();
+        $data['title'] = 'Log In';
+        return view('user.auth.login1',$data);
+    }
+
     public function __construct()
     {
         $this->middleware('guest:web',['except'=>['logout','userLogout']]);
@@ -84,7 +91,7 @@ class LoginController extends Controller
            }else{
              if (is_null($user->phone_verified_at )||($user->status==0)) {
               $postUrl = "http://api.bulksms.icombd.com/api/v3/sendsms/xml";
-              $smsbody = "Dear $request->username, Your OTP code is $user->vcode."
+              $smsbody = "Dear $user->username, Your OTP code is $user->vcode."
                 . " For any query call us 0011223344.  Regards, Jaff.";
 
             $xmlString =

@@ -61,7 +61,7 @@
                                 <ul id="menu-main-menu" class="nav navbar-nav" style="margin-top: auto;">
 
                         <li id="menu-item-305" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-305 ">
-                            <a title="Cart" href="{{route('usrcart')}}" aria-haspopup="true">
+                            <a title="Cart" href="{{route('usrappcart')}}" aria-haspopup="true">
                                 <i class="fa fa-cart-plus"></i>
                                 <span class="badge badge-pill badge-primary badge-up tcart" style="background-color: #024279;">{{Cart::count()}}</span>
                             </a>

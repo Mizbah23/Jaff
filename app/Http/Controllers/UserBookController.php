@@ -108,7 +108,7 @@ class UserBookController extends Controller
                 }                        
             }
             $bookdetail->save(); 
-        }
+         }
         }
         return 'ok';   
     }
@@ -165,7 +165,18 @@ class UserBookController extends Controller
     {
         $data = array();
         $data['title'] = 'Booking Confirmed';
+        // $data['']
         session()->flash('success', 'Booked Successfully! You have 48 hours to make the payments');
-        return view('user.pages.success');
+        return view('user.pages.success',$data);
     }
+
+
+
+    // public function successAppNofity()
+    // {
+    //     $data = array();
+    //     $data['title'] = 'Booking Confirmed';
+    //     session()->flash('success', 'Booked Successfully! You have 48 hours to make the payments');
+    //     return view('user.pages.success1',$data);
+    // }
 }

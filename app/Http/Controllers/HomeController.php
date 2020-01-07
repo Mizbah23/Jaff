@@ -100,7 +100,7 @@ class HomeController extends Controller
         $max_days = Setting::where('id',1)->value('max_days');
         $data['max_date'] = date('Y-m-d', strtotime("+".$max_days." days", strtotime(today())));
         $data['title'] = 'Slot Time Table';
-        return view('user.pages.timetable1',$data);
+        return view('user.pages.timetable',$data);
     }
     public function showAllNews()
     {
@@ -146,6 +146,14 @@ class HomeController extends Controller
                            ->orderby('view_count','desc')->limit(2)->get();
 
         return view('user.pages.notice',$data);
+    }
+        public function getAppTimeTable()
+    {
+        $data = array();
+        $max_days = Setting::where('id',1)->value('max_days');
+        $data['max_date'] = date('Y-m-d', strtotime("+".$max_days." days", strtotime(today())));
+        $data['title'] = 'Slot Time Table';
+        return view('user.pages.timetable1',$data);
     }
 
 }

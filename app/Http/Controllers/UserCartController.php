@@ -46,7 +46,7 @@ class UserCartController extends Controller
             $data['dd'][$dd->date]= $dd->price;
             $data['ds'][$dd->slot_id]= $dd->price;
         }
-        return view('user.pages.cart1',$data);
+        return view('user.pages.cart',$data);
     }
     public function addCart(Request $request)
     {
@@ -220,5 +220,39 @@ class UserCartController extends Controller
                 'type' => 'error'
             );
         return $notify;
+    }
+
+    public function showAppsCart()
+    {
+        $data = array();
+        if(Auth::guard('web')->check())
+        {
+           $member = Member::where('userid',Auth::guard('web')->user()->id)
+                   ->where('status',1)->whereDate('end_date','>=',today())
+                   ->exists();
+           if($member){
+               $data['member']='member';
+           }
+        }
+        $data['od'] = $data['os'] = $data['fd'] = $data['dd'] =$data['ds']= array();
+        $data['title'] = 'Cart History';
+        $offers = Offerdetail::join('offers','offerdetails.offer_id','=','offers.id')->where('offers.status',1)->get();
+        $fdays= Fullday::where('status',1)->get();
+        $dds= Dropin::where('status',1)->get();
+        foreach($offers as $ofr)
+        {
+            $data['od'][$ofr->offer_date] = $ofr->percentage;
+            $data['os'][$ofr->slot_id] = $ofr->percentage;
+        }
+        foreach($fdays as $fd)
+        {
+            $data['fd'][$fd->date]= $fd->price;
+        }
+        foreach($dds as $dd)
+        {
+            $data['dd'][$dd->date]= $dd->price;
+            $data['ds'][$dd->slot_id]= $dd->price;
+        }
+        return view('user.pages.cart1',$data);
     }
 }

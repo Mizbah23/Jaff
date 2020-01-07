@@ -243,7 +243,7 @@
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between flex-wrap">
                                                 <div class="vs-radio-con vs-radio-primary">
-                                                <button type="submit" class="btn btn-primary btn-cvv ml-50 mb-50 {{-- confirm --}}"><a href="{{route('report.bookInvoicePrint')}}">Confirm</a></button>
+                                                <button type="submit" class="btn btn-primary btn-cvv ml-50 mb-50 confirm">Confirm</a></button>
                                                 </div>
                                             </div>
                                          
