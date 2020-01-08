@@ -13,9 +13,9 @@ use Jaff\Offerdetail;
 use Jaff\Fullday;
 use Jaff\Dropin;
 
-class UserBookController extends Controller
+class AppsBookingController extends Controller
 {
-    public function __construct()
+     public function __construct()
     {
         $this->middleware('auth:web');
     }
@@ -110,7 +110,7 @@ class UserBookController extends Controller
             $bookdetail->save(); 
          }
         }
-        return  $bookid;   
+        return 'ok';   
     }
     
 
@@ -144,41 +144,39 @@ class UserBookController extends Controller
                     return redirect()->back();
                     
                 }else{
-                    $bookid=$this->saveBooking($user_id,$available,$mdis,$memid);
+                    $this->saveBooking($user_id,$available,$mdis,$memid);
                     Cart::destroy();
                     session()->flash('success', 'Booked Successfully! You have 48 hours to make the payments');
-                    return redirect()->route('notify.success');
+                    return redirect()->route('appNotify');
                 }
             }else{
                 session()->flash('error', 'Please Enter a valid Code');
                 return redirect()->back();
             }
         }else{
-            $bookid=$this->saveBooking($user_id,$available,$mdis,$memid);
+            $this->saveBooking($user_id,$available,$mdis,$memid);
             Cart::destroy();
             session()->flash('success', 'Booked Successfully! You have 48 hours to make the payments');
             // return redirect()->back();
-            return redirect()->route('notify.success',$bookid);
+            return redirect()->route('appNotify');
         }
     }
-    public function successNofity($bookid)
-    {
-        $data = array();
-        $data['title'] = 'Booking Confirmed';
-        $data['bookinfo']=Booking::where('book_id',$bookid)->first();
-        $data['bookdetail']=Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where('bookdetails.book_id',$bookid)->get();
-        // session()->flash('success', 'Booked Successfully! You have 48 hours to make the payments');
-        // dd($data['bookdetail']);
-        return view('user.pages.success',$data);
-    }
-
-
-
-    // public function successAppNofity()
+    // public function successNofity()
     // {
     //     $data = array();
     //     $data['title'] = 'Booking Confirmed';
-    //     session()->flash('success', 'Booked Successfully! You have 48 hours to make the payments');
-    //     return view('user.pages.success1',$data);
+    //     // $data['']
+    //     // session()->flash('success', 'Booked Successfully! You have 48 hours to make the payments');
+    //     return view('user.pages.success',$data);
     // }
+
+
+
+    public function successAppNofity()
+    {
+      $data = array();
+       $data['title'] = 'Booking Confirmed';
+      session()->flash('success', 'Booked Successfully! You have 48 hours to make the payments');
+         return view('user.pages.success1',$data);
+    }
 }

@@ -58,13 +58,13 @@ iframe, img, figure {
 
 <div class="content">
 
-<div class="path-section" style='background-image: url(public/img/slide-1.jpg);'>
+{{-- <div class="path-section" style='background-image: url(public/img/slide-1.jpg);'>
     <div class="bg-cover">
         <div class="container">
             <h3>Slot Booking</h3>
         </div>
     </div>
-</div>
+</div> --}}
 <div class="blog-section page_spacing">
         <div class="container">
         @if(session()->has('error'))

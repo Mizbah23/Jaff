@@ -3,8 +3,22 @@
 @section('style')
     <link rel="stylesheet" href="{{asset('public/css/back/bootstrap-4.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/css/back/toastr.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/css/back/invoice.min.css')}}">
     <script src="{{asset('public/js/back/sweetalert2.min.js')}}"></script>
     <script src="{{asset('public/js/back/toastr.min.js')}}"></script>
+       <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/vendors.min.css')}}">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+
+    {{-- <link rel="stylesheet" type="text/css" href="{{asset('/public/css/back/bootstrap-extended.min.css')}}"> --}}
+    <link rel="stylesheet" type="text/css" href="{{asset('/public/css/back/colors.min.css')}}">
+    {{--  <link rel="stylesheet" type="text/css" href="{{asset('/public/css/back/components.min.css')}}"> --}}
+  
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="{{asset('public/css/back/style.css')}}">
 <style>
     .upimg{border: 1px solid gray;border-radius: 10px;width:180px; 
            height: 130px; line-height: 20px;}
@@ -44,7 +58,7 @@ td.table-border{s
 .con{
     color: #ffffff;
 }
-iframe, img, figure {
+ img.logo, figure {
     max-width: 100%;
     height: 100px;
 }
@@ -58,7 +72,7 @@ iframe, img, figure {
 
 <div class="content">
 
-<div class="path-section" style='background-image: url(public/img/slide-1.jpg);'>
+<div class="path-section" style='background-image: url({{asset('public/img/slide-1.jpg')}});'>
     <div class="bg-cover">
         <div class="container">
             <h3>Slot Booking</h3>
@@ -80,20 +94,21 @@ iframe, img, figure {
     <div class="content-body">
                 <section class="card invoice-page">
                     <div id="invoice-template" class="card-body">
+                      
                         <!-- Invoice Company Details -->
                         <div id="invoice-company-details" class="row">
                             <div class="col-md-6 col-sm-12 text-left pt-1">
                                 <div class="media pt-1">
-                                    <img src="{{asset('public/img/app-logo.png')}}" alt="company logo" class="" />
+                                    <img src="{{asset('public/img/app-logo.png')}}" alt="Jaff logo" class="logo" />
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12 text-right">
                                 <h1>Invoice</h1>
                                 <div class="invoice-details mt-2">
-                                    <h6>INVOICE NO.</h6>
-                                    <p>001/2019</p>
-                                    <h6 class="mt-2">INVOICE DATE</h6>
-                                    <p>{{-- {{date("d,m Y",strtotime($bookdetail->slot_date))}} --}}</p>
+                                    <h6>INVOICE NO: {{$bookinfo->book_code}}</h6>
+                                    
+                                    <h6 class="mt-2">INVOICE DATE:{{date( "d.m.Y", strtotime($bookinfo->created_at))}}</h6>
+                                    <span></span>
                                 </div>
                             </div>
                         </div>
@@ -104,10 +119,9 @@ iframe, img, figure {
                             <div class="col-md-6 col-sm-12 text-left">
                                 <h5>Recipient</h5>
                                 <div class="recipient-info my-2">
-                                    <p>{{Auth::guard('web')->user()->first_name}}</p>
-                                    <p>8577 West West Drive</p>
-                                    <p>Holbrook, NY</p>
-                                    <p>90001</p>
+                                    <p>{{Auth::guard('web')->user()->first_name}} {{Auth::guard('web')->user()->last_name}}</p>
+                                    <p>{!!Auth::guard('web')->user()->address!!}</p>
+                                  
                                 </div>
                                 <div class="recipient-contact pb-2">
                                     <p>
@@ -130,11 +144,11 @@ iframe, img, figure {
                                 <div class="company-contact">
                                     <p>
                                         <i class="fa fa-envelope"></i>
-                                        hello@pixinvent.net
+                                        info@jaff.com.bd
                                     </p>
                                     <p>
                                         <i class="fa fa-phone"></i>
-                                        +91 999 999 9999
+                                        +8801304229158
                                     </p>
                                 </div>
                             </div>
@@ -142,71 +156,89 @@ iframe, img, figure {
                         <!--/ Invoice Recipient Details -->
 
                         <!-- Invoice Items Details -->
-                        <div id="invoice-items-details" class="pt-1 invoice-items-table">
-                            <div class="row">
-                                <div class="table-responsive col-sm-12">
-                                    <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
-                                                <th>TASK DESCRIPTION</th>
-                                                <th>HOURS</th>
-                                                <th>RATE</th>
-                                                <th>AMOUNT</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Website Redesign</td>
-                                                <td>60</td>
-                                                <td>15 USD</td>
-                                                <td>90000 USD</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Newsletter template design</td>
-                                                <td>20</td>
-                                                <td>12 USD</td>
-                                                <td>24000 USD</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="invoice-total-details" class="invoice-total-table">
-                            <div class="row">
-                                <div class="col-7 offset-5">
-                                    <div class="table-responsive">
-                                        <table class="table table-borderless">
-                                            <tbody>
-                                                <tr>
-                                                    <th>SUBTOTAL</th>
-                                                    <td>114000 USD</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>DISCOUNT (5%)</th>
-                                                    <td>5700 USD</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>TOTAL</th>
-                                                    <td>108300 USD</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="table-responsive-sm">
+                    <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th class="center">#</th>
+                        <th>Date</th>
+                        <th>Slot</th>
+                        <th class="right">Price(Taka)</th>
+                        <th class="center">Discount</th>
+                        <th class="right">Booked Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @php $pay=$total_price=$total_discount=0;@endphp 
+                    @foreach($bookdetail as $key=>$item)
+                    <tr>
+                        <td>{{++$key}}</td>
+                        <td>{{date( "D,M Y", strtotime($item->created_at))}}</td>
+                        <td>{{date( "h:i A", strtotime($item->start))}}-{{date( "h:i A", strtotime($item->end))}}</td>
+                        <td>{{number_format($item->price)}}</td>
+                        <td>{{number_format($item->discount)}}</td>
+                        <td>{{number_format($item->book_price)}}</td>
+                    </tr>
+                    @php $pay+=$item->book_price;
+                         $total_price+=$item->price;
+                         $total_discount+=$item->discount;
+                    @endphp
+                    @endforeach
+                    </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+
+                    </div>
+
+                <div class="col-lg-6 col-sm-12 ml-auto">
+                    <table class="table table-clear">
+                    <tbody> 
+                       <tr>
+                        <td>
+                        <strong>Total Slots</strong>
+                        </td>
+                        <td align="left">{{$bookdetail->count()}}</td>
+                        </tr>
+                        <tr>
+                        <td>
+                        <strong>Price</strong>
+                        </td>
+                        <td align="left">{{number_format($total_price)}}</td>
+                        </tr>
+                       <tr>
+                        <td>
+                        <strong>Discount</strong>
+                        </td>
+                        <td align="left">{{number_format($total_discount)}}</td>
+                        </tr>
+                       <tr>
+                        <td>
+                        <strong>Amount to Pay</strong>
+                        </td>
+                        <td align="left">
+                        <strong>{{number_format($pay)}}</strong>
+                        </td>
+                       </tr>
+           
+                    </tbody>
+                    </table>
+
+                </div>
+              
+            </div>
 
                         <!-- Invoice Footer -->
                         <div id="invoice-footer" class="text-right pt-3">
-                            <p>Transfer the amounts to the business amount below. Please include invoice number on your check.
-                                <p class="bank-details mb-0">
-                                    <span class="mr-4">BANK: <strong>FTSBUS33</strong></span>
-                                    <span>IBAN: <strong>G882-1111-2222-3333</strong></span>
-                                </p>
+                            <p> Please include invoice number on your check.</p>
                         </div>
                         <!--/ Invoice Footer -->
-
+                        <center><fieldset style="margin-bottom: 0px;">    
+                            <button class=" btn btn-outline-success mr-1 mb-1 waves-effect waves-light"><a href="{{route('report.bookInvoicePrint',['bookid'=>$bookinfo->book_id])}}" target="_blank"><i class="fa fa-printer"></i> Print
+                            </a></button>
+                        </fieldset></center>  
+                
                     </div>
                 </section>
 
@@ -224,6 +256,22 @@ iframe, img, figure {
 @section('script')
 <script src="{{asset('public/js/back/sweetalert2.min.js')}}"></script>
 <script src="{{asset('public/js/back/toastr.min.js')}}"></script>
+    <!-- BEGIN: Vendor JS-->
+      <script src="{{asset('public/js/back/vendors.min.js')}}"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+{{--     <script src="{{asset('public/js/back/app-menu.min.js')}}"></script>
+    <script src="{{asset('public/js/back/app-menu.min.js')}}"></script>
+    <script src="{{asset('public/js/back/app.min.js')}}"></script> --}}
+    <script src="{{asset('public/js/back/components.min.js')}}"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <!-- END: Page JS-->
 <script type="text/javascript">
 Toast = Swal.mixin({
       toast: true,

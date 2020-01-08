@@ -204,7 +204,7 @@ td.table-border{
                     </div>
 
     <div class="col-lg-4 col-sm-12 col-md-12 col-xs-12">
-        <form method="post" action="{{route('con.book')}}">
+        <form method="post" action="{{route('appbook')}}">
             
         
 <div class="table-responsive mt-1">

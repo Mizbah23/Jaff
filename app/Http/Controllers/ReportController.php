@@ -313,9 +313,10 @@ class ReportController extends Controller
     }
 
     /***** Booking Invoice Pront *****/
-    public function bookInvoicePrint(Request $request){
-       $users = User::all();
-        $pdf = PDF::loadView('report.bookInvoicePrint',['users'=>$users]);
+    public function bookInvoicePrint($bookid){
+        $data['bookinfo']=Booking::where('book_id',$bookid)->first();
+        $data['bookdetail']=Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where('bookdetails.book_id',$bookid)->get();
+        $pdf = PDF::loadView('report.bookInvoicePrint',$data);
         return $pdf->stream('Invoice-Pdf.pdf');         
     }
 

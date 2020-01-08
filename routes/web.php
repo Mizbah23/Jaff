@@ -15,7 +15,9 @@ Route::get('/','HomeController@getMainPage')->name('home');
 Route::get('/timetable','HomeController@getTimeTable')->name('time');
 Route::get('/timetableapps','HomeController@getAppTimeTable')->name('appstime');
 Route::get('/cartapps', 'UserCartController@showAppsCart')->name('usrappcart');
-Route::get('/successapps', 'UserBookController@successAppNofity')->name('appNotify');
+Route::get('/successapps', 'AppsBookingController@successAppNofity')->name('appNotify');
+Route::post('/appscon-book', 'AppsBookingController@userConBook')->name('appbook');
+Route::get('/booked-invoice/{bookid}',  'ReportController@bookInvoicePrint')->name('report.bookInvoicePrint');
 
 
 //User Login & Reg routes
@@ -80,7 +82,7 @@ Route::prefix('cart')->group(function()
 //    Route::post('/del-cartrow', 'SlotController@delCartRow')->name('del.cartrow');
 });
 
-Route::get('/notify', 'UserBookController@successNofity')->name('notify.success');
+Route::get('/notify/{bookid}', 'UserBookController@successNofity')->name('notify.success');
 
 
 Route::prefix('admin')->group(function()
@@ -372,7 +374,7 @@ Route::prefix('admin')->group(function()
         Route::get('/bookings-excelreport', ['as' => 'bpay.excelreport', 'uses' => 'ReportController@bookingPaymentReportExcel']);
         Route::get('/fillday-list', ['as' => 'report.fullday', 'uses' => 'ReportController@fulldayPrint']);
         Route::get('/dropin-list', ['as' => 'report.dropin', 'uses' => 'ReportController@dropinPrint']);
-        Route::get('/booked-invoice', ['as' => 'report.bookInvoicePrint', 'uses' => 'ReportController@bookInvoicePrint']);
+        
     });
     Route::prefix('acounts')->group(function()
     {
