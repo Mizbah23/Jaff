@@ -258,15 +258,18 @@
 					<div class="info-image"><img src="{{$simg->offer_image}}" alt="image" style="width: 100%; height:251px" /></div>
                     <div class="info-scroll">
                     <ul class="ul-calendar">
-                                            @foreach($offers as $off)
-                                            <li class="mtop">
-                                                <span>{{$off->offer_title}}</span>
-                                                <span>{{$off->details}}</span>
-
-                                            </li>
-                                            
-                                            
-                                            @endforeach
+                        @if(count($offers)>0)
+                            @foreach($offers as $off)
+                                <li class="mtop">
+                                    <span>{{$off->offer_title}}</span>
+                                    <span>{{$off->details}}</span>             
+                                </li>
+                            @endforeach
+                        @else
+                                <li class="mtop">
+                                <span>No offers Available</span>
+                                </li>
+                        @endif
                     </ul>
                     </div>
 				</div>

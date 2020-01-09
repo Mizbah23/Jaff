@@ -11,7 +11,7 @@
 
     img.attachment-thumb-221-221.size-thumb-221-221.wp-post-image{
     height: 150px;
-    }
+}
 
 </style>
 @stop
@@ -46,7 +46,7 @@
               
                 <div class="entry-hover d-bg-c">
                     <h2> {{$li->headline}}</h2>
-                    <h2>{{date('d',strtotime($li->notice_date))}} {{date('M',strtotime($li->notice_date))}} {{date('Y',strtotime($li->notice_date))}}</h3>
+                    <h2>{{date('d',strtotime($li->notice_date))}} {{date('M',strtotime($li->notice_date))}} {{date('Y',strtotime($li->notice_date))}}</h2>
                 </div>
                 <div class="entry-summary">
                     <p>{!! $li->description!!} </p>
@@ -54,12 +54,9 @@
             </article>
         @endforeach
 				<div class="text-center">{{ $list->links() }}</div>	
-		
-  </div>
+	</div>
 
-    
-				
-				
+    				
     <div class="col-md-3">
 					
         <div class="sidebar wow bounceInRight">
@@ -183,28 +180,14 @@
             <div class="mini-post-cover"><a href="#">
                     <img width="221" height="221" src="{{asset($arr->post_img)}}" class="attachment-thumb-221-221 size-thumb-221-221 wp-post-image"
                          alt="" sizes="(max-width: 221px) 100vw, 221px" /></a></div>
-            <h3><a href="{{route('user.snews', $arr->slug)}}" class="d-text-c-h">{{$arr->title}}</a></h3>
+            <h3><a href="{{route('user.snews', $arr->slug)}}" class="d-text-c-h">{{$arr->title}}</a>
+            </h3>
              <!--h6>5 days ago</h6-->
         </div>
     @endif
 @php $counter++; @endphp
 @endforeach
-<!--                       
-                        <div class="mini-post">
-                            <div class="mini-post-cover"><a href="#">
-                                    <img width="221" height="221" src="img/blog-f1-221x221.jpg" class="attachment-thumb-221-221 size-thumb-221-221 wp-post-image"
-                                         alt="" sizes="(max-width: 221px) 100vw, 221px" /></a></div>
-                            <h3><a href="details.html" class="d-text-c-h">Having fun at the lake</a></h3>
-                            h6>5 days ago</h6
-                        </div>
 
-                        <div class="mini-post">
-                            <div class="mini-post-cover"><a href="#">
-                                    <img width="221" height="221" src="img/blog-f2-221x221.jpg" class="attachment-thumb-221-221 size-thumb-221-221 wp-post-image" alt="" 
-                                                                          srcset="http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f2-221x221.jpg 221w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f2-150x150.jpg 150w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f2-180x180.jpg 180w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f2-300x300.jpg 300w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f2-495x495.jpg 495w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f2-263x263.jpg 263w, http://lolthemes.com/demo/geo/ulysses/wp-content/uploads/2015/01/blog-f2-120x120.jpg 120w" sizes="(max-width: 221px) 100vw, 221px" /></a></div>
-                            <h3><a href="../having-fun-at-the-lake-2/index.html" class="d-text-c-h">Having fun at the lake</a></h3>
-                                                        h6>5 days ago</h6
-                        </div>-->
                     </div>
                 </div>
             </div>
@@ -255,15 +238,18 @@
 					<div class="info-image"><img src="{{$simg->offer_image}}" alt="image" style="width: 100%; height:251px" /></div>
                     <div class="info-scroll">
                     <ul class="ul-calendar">
-                                            @foreach($offers as $off)
-                                            <li class="mtop">
-                                                <span>{{$off->offer_title}}</span>
-                                                <span>{{$off->details}}</span>
-
-                                            </li>
-
-
-                                            @endforeach
+                        @if(count($offers)>0)
+                            @foreach($offers as $off)
+                                <li class="mtop">
+                                    <span>{{$off->offer_title}}</span>
+                                    <span>{{$off->details}}</span>             
+                                </li>
+                            @endforeach
+                            @else
+                                <li class="mtop">
+                                    <span>No offers Available</span>
+                                </li>
+                        @endif
                     </ul>
                     </div>
 				</div>

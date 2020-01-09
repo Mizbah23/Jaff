@@ -25,8 +25,11 @@ table.start{
   border: none;
 }
 table.table1{
-  border: none;
-}
+        width: 30%;
+        margin: 1px;
+        border: 1px solid;
+        border-collapse: collapse;
+}  
 table.footer{
   border: none;
 }
@@ -94,11 +97,11 @@ img {
                <td align="right"></td>
             </tr>
             <tr>     
-               <td align="left"><p>{{Auth::guard('web')->user()->email}}</p></td>
+               <td align="left"><p>Mail:{{Auth::guard('web')->user()->email}}<br>Phone:{{Auth::guard('web')->user()->phone}}</p></td>
                <td align="right"><h3>Jaff Sports</h3></td>
             </tr>
             <tr>     
-               <td align="left"><p>{{Auth::guard('web')->user()->phone}}</p></td>
+               <td align="left"></td>
                <td align="right"><p>Jaff Street Bashundhara Main Gate,<br>
                                     Opposite  of Jamuna Future Park Sidegate,Dhaka<br>
                                     94203</p></td>
@@ -123,7 +126,7 @@ img {
       <!--/ Invoice Recipient Details -->
   
       <!-- Invoice Items Details -->
-                <div class="table-responsive-sm">
+                
                     <table class="table table-striped">
                     <thead>
                     <tr>
@@ -154,37 +157,34 @@ img {
                     @endforeach
                     </tbody>
                     </table>
-                </div>
+             
                 <br>
-                <div class="row">
-                    <div class="col-lg-6 col-sm-12">
+    
+                  
 
-                    </div>
-
-                <div class="col-lg-6 col-sm-12 ml-auto">
-                    <table class="table1">
+                    <table class="table1" align="right">
                     <tbody>
                   
                        <tr>
-                        <td align="right">
+                        <td align="left">
                         <strong>Total Slots</strong>
                         </td>
                         <td align="center">{{$bookdetail->count()}}</td>
                         </tr>
                         <tr>
-                        <td align="right">
+                        <td align="left">
                         <strong>Price</strong>
                         </td>
                         <td align="center">{{number_format($total_price)}}</td>
                         </tr>
                        <tr>
-                        <td align="right">
+                        <td align="left">
                         <strong>Discount</strong>
                         </td>
                         <td align="center">{{number_format($total_discount)}}</td>
                         </tr>
                        <tr>
-                        <td align="right">
+                        <td align="left">
                         <strong>Amount to Pay</strong>
                         </td>
                         <td align="center">
@@ -195,9 +195,9 @@ img {
                     </tbody>
                     </table>
 
-                </div>
+             
               
-            </div>
+   
 
                         <!-- Invoice Footer -->
 

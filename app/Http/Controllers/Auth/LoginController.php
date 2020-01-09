@@ -3,6 +3,7 @@
 namespace Jaff\Http\Controllers\Auth;
 
 use Jaff\Http\Controllers\Controller;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
@@ -124,10 +125,9 @@ class LoginController extends Controller
                {
                    if(Auth::guard('web')->attempt
                            (['phone' => $request->phone, 'password' => $request->password], $request->remember))
-                   {
-                       // $request->session()->put('user',$user);
-                       // dd($request->session());
-                       return redirect()->route('home');
+                   { 
+                         return redirect()->back();
+                      
                    }
                }else{
                    // $user->notify(new VerifyRegistration($user));

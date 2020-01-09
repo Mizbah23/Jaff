@@ -99,7 +99,7 @@ class BalanceController extends Controller
         $income->date = $request->date;
         $income->amount = $request->amount;
         $income->details = $request->details;
-        $income->created_by = Auth::guard('admin')->user()->id;
+        $income->created_by = Auth::guard('admin')->user()->name;
         $income->save();
         $notification = array(
                 'message' => 'Income Saved Successfully',
@@ -114,7 +114,7 @@ class BalanceController extends Controller
         $income->date = $request->udate;
         $income->amount = $request->uamount;
         $income->details = $request->udetails;
-        $income->updated_by = Auth::guard('admin')->user()->id;
+        $income->updated_by = Auth::guard('admin')->user()->name;
         $income->save();
         $notification = array(
                 'message' => 'Income Updated Successfully',
@@ -159,6 +159,7 @@ class BalanceController extends Controller
         
         $columns = array(0 =>'date',1=> 'accid',2=> 'amount',3=> 'details',4=> 'created_by',5=>'created_by');
         $totalData = Balance::join('accounts','balances.accid','=','accounts.accid')
+
                 ->when($from, function ($query, $from){return $query->whereDate('balances.date','>=',$from);})
                     ->when($to, function ($query, $to){return $query->whereDate('balances.date','<=',$to);})
                               ->where('accounts.type',2)->count();
@@ -230,7 +231,7 @@ class BalanceController extends Controller
         $income->date = $request->date;
         $income->amount = $request->amount;
         $income->details = $request->details;
-        $income->created_by = Auth::guard('admin')->user()->id;
+        $income->created_by = Auth::guard('admin')->user()->name;
         $income->save();
         $notification = array(
                 'message' => 'Expense Saved Successfully',
@@ -245,7 +246,7 @@ class BalanceController extends Controller
         $income->date = $request->udate;
         $income->amount = $request->uamount;
         $income->details = $request->udetails;
-        $income->updated_by = Auth::guard('admin')->user()->id;
+        $income->updated_by = Auth::guard('admin')->user()->name;
         $income->save();
         $notification = array(
                 'message' => 'Expense Updated Successfully',
