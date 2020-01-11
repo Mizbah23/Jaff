@@ -11,7 +11,8 @@ use Hash;
 use Auth;
 use Jaff\User;
 use Redirect;
-class LoginController extends Controller
+
+class AppLoginController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -38,20 +39,13 @@ class LoginController extends Controller
     //  *
     //  * @return void
     //  */
-    public function showLoginForm()
-    
-    {
-        $data = array();
-        $data['title'] = 'Log In';
-        return view('user.auth.login',$data);
-        
-    }
     
     public function showAppsLoginForm()
     {
+
         $data = array();
         $data['title'] = 'Log In';
-        return view('user.auth.login',$data);
+        return view('user.auth.login1',$data);
     }
 
     public function __construct()
@@ -74,7 +68,7 @@ class LoginController extends Controller
     
         public function login(Request $request)
     {
-         // dd($request);
+         
         $this->validate($request,[
             'phone' => 'required',
             'password' => 'required| min:6'
@@ -88,7 +82,7 @@ class LoginController extends Controller
            {
                // dd($user);
                session()->flash('errors', 'Your Password is wrong !!');
-               return redirect()->route('login');
+               return redirect()->route('loginApps');
            }else{
              if (is_null($user->phone_verified_at )||($user->status==0)) {
               $postUrl = "http://api.bulksms.icombd.com/api/v3/sendsms/xml";
@@ -126,19 +120,24 @@ class LoginController extends Controller
                    if(Auth::guard('web')->attempt
                            (['phone' => $request->phone, 'password' => $request->password], $request->remember))
                    { 
-                         return redirect()->back();
+                   	     if(Cart::count()>0){
+                   	     	return redirect()->route('usrappcart');
+                   	     }else{
+                   	     	 return redirect()->back();
+                   	     }
+                        
                       
                    }
                }else{
                    // $user->notify(new VerifyRegistration($user));
                    // dd('not a user');
                    session()->flash('errors', 'There are some unsolved issues with your account!');
-                   return redirect()->route('login');
+                   return redirect()->route('loginApps');
                }
            }
        }else{
            session()->flash('errors', 'Please Register first !!');
-           return redirect()->route('login');
+           return redirect()->route('loginApps');
        }
     }
 //    
@@ -181,7 +180,7 @@ class LoginController extends Controller
     public function userLogout() 
     {
         Auth::guard('web')->logout();
-        return redirect()->route('login');
+        return redirect()->route('loginApps');
     }
     
 }

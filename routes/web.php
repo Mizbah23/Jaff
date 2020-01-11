@@ -24,7 +24,7 @@ Route::get('/booked-invoice/{bookid}',  'ReportController@bookInvoicePrint')->na
 
 Route::get('/login','Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login','Auth\LoginController@login')->name('loginPost');
-Route::get('/loginapps','Auth\LoginController@showAppsLoginForm')->name('loginApps');
+Route::get('/loginapps','Auth\AppLoginController@showAppsLoginForm')->name('loginApps');
 
 Route::get('/logout','Auth\LoginController@userLogout')->name('logout');
 
