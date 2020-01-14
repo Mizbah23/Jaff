@@ -40,17 +40,18 @@ class AppLoginController extends Controller
     //  * @return void
     //  */
     
-    public function showAppsLoginForm()
+
+
+    public function __construct()
+    {
+        $this->middleware('guest:web',['except'=>['logout','userLogout']]);
+    }
+        public function showAppsLoginForm()
     {
 
         $data = array();
         $data['title'] = 'Log In';
         return view('user.auth.login1',$data);
-    }
-
-    public function __construct()
-    {
-        $this->middleware('guest:web',['except'=>['logout','userLogout']]);
     }
     
 //    public function login(Request $request)

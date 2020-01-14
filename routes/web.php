@@ -15,7 +15,7 @@ Route::get('/','HomeController@getMainPage')->name('home');
 Route::get('/timetable','HomeController@getTimeTable')->name('time');
 Route::get('/timetableapps','HomeController@getAppTimeTable')->name('appstime');
 Route::get('/cartapps', 'UserCartController@showAppsCart')->name('usrappcart');
-Route::get('/successapps', 'AppsBookingController@successAppNofity')->name('appNotify');
+Route::get('/successapps/{bookid}', 'AppsBookingController@successAppNofity')->name('appNotify');
 Route::post('/appscon-book', 'AppsBookingController@userConBook')->name('appbook');
 Route::get('/booked-invoice/{bookid}',  'ReportController@bookInvoicePrint')->name('report.bookInvoicePrint');
 
@@ -25,6 +25,7 @@ Route::get('/booked-invoice/{bookid}',  'ReportController@bookInvoicePrint')->na
 Route::get('/login','Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login','Auth\LoginController@login')->name('loginPost');
 Route::get('/loginapps','Auth\AppLoginController@showAppsLoginForm')->name('loginApps');
+Route::post('/loginapps','Auth\AppLoginController@login')->name('loginAppsPost');
 
 Route::get('/logout','Auth\LoginController@userLogout')->name('logout');
 

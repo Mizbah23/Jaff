@@ -51,7 +51,7 @@ class LoginController extends Controller
     {
         $data = array();
         $data['title'] = 'Log In';
-        return view('user.auth.login',$data);
+        return view('user.auth.login1',$data);
     }
 
     public function __construct()

@@ -48,8 +48,8 @@ class ReportController extends Controller
                 ->select('slots.*','grounds.name','weekdays.day','types.type')->orderBy('day_id','asc')->get();
                 $pdf = PDF::loadView('report.slotPrint',['posts'=>$posts,'total'=>count($posts)]);
             
-        // return $pdf->stream('Slot-Pdf.pdf');
-            return    $pdf ;
+        return $pdf->stream('Slot-Pdf.pdf');
+            // return    $pdf ;
     }
     
     
@@ -270,20 +270,20 @@ class ReportController extends Controller
         return $pdf->stream('Jaff-SlotBookingsPayment.pdf');
         // return $excel;
     }
-    public function bookingPaymentReportExcel(){
-        // $from= Input::get('fromdate');
-        // $to=   Input::get('todate');
-        // $fromdate = ($from)?date("d,M Y", strtotime($from)):'';
-        // $todate = ($to)?date("d,M Y", strtotime($to)):'';
-        $excel= Excel::download(new paymentExport(), 'booking_payment_report.xlsx');
+    // public function bookingPaymentReportExcel(){
+    //     // $from= Input::get('fromdate');
+    //     // $to=   Input::get('todate');
+    //     // $fromdate = ($from)?date("d,M Y", strtotime($from)):'';
+    //     // $todate = ($to)?date("d,M Y", strtotime($to)):'';
+    //     $excel= Excel::download(new paymentExport(), 'booking_payment_report.xlsx');
 
                     
-        // $pdf = PDF::loadView('report.booking_payment_report',['posts'=>$posts,'total'=>count($posts),'fromdate'=>$fromdate,'todate'=>$todate]);
-        // $excel= Excel::download($posts, 'booking_payment_report.xlsx');
-        // return $pdf->stream('Jaff-SlotBookingsPayment.pdf');
-        return $excel;
+    //     // $pdf = PDF::loadView('report.booking_payment_report',['posts'=>$posts,'total'=>count($posts),'fromdate'=>$fromdate,'todate'=>$todate]);
+    //     // $excel= Excel::download($posts, 'booking_payment_report.xlsx');
+    //     // return $pdf->stream('Jaff-SlotBookingsPayment.pdf');
+    //     return $excel;
 
-    }
+    // }
     
         /****** Full day Print ********/
         public function fulldayPrint(Request $request)
