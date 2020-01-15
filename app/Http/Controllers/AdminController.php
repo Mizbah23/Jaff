@@ -24,15 +24,15 @@ class AdminController extends Controller
     {
         $data = array();
         $data['title'] = 'Dashboard';
-        $data['total']=User::where( 'created_at', '>=', Carbon::now()->subDays(7))->orderBy('created_at','desc')->get();
+        $data['total']=User::where( 'created_at', '>=', Carbon::today()->subDays(7))->orderBy('created_at','desc')->get();
         // dd($data['total']);
         $dates = collect();
         foreach( range( 0, 6 ) as $i ) {
-            $date = Carbon::now()->subDays( $i )->format( 'Y-m-d' );
+            $date = Carbon::today()->subDays( $i )->format( 'Y-m-d' );
             $dates->put( $date, 0);
          }
         // dd($dates);
-         $data['users']=User::where( 'created_at', '>=', Carbon::now()->subDays(7))->orderBy('created_at','desc')->groupBy(DB::raw('Date(created_at)'))->get(array(
+         $data['users']=User::where( 'created_at', '>=', Carbon::today()->subDays(7))->orderBy('created_at','desc')->groupBy(DB::raw('Date(created_at)'))->get(array(
                                 DB::raw('Date(created_at) as date'),
                                 DB::raw('COUNT(*) as "count"')
                             ))->pluck( 'count', 'date' );
@@ -54,13 +54,13 @@ class AdminController extends Controller
          $data['dcounts'] = $dcounts;
          //******bookings date chart************//
 
-         $data['total_books']=Bookdetail::where( 'slot_date', '>=', Carbon::now()->subDays(7))->orderBy('slot_date','desc')->get();
+         $data['total_books']=Bookdetail::where( 'slot_date', '>=', Carbon::today()->subDays(7))->orderBy('slot_date','desc')->get();
          $book_dates = collect();
         foreach( range( 0, 6 ) as $i ) {
-            $date = Carbon::now()->subDays( $i )->format( 'Y-m-d' );
+            $date = Carbon::today()->subDays( $i )->format( 'Y-m-d' );
             $book_dates->put( $date, 0);
          }
-         $data['books']=Bookdetail::where( 'slot_date', '>=', Carbon::now()->subDays(7))->orderBy('slot_date','desc')->groupBy(DB::raw('Date(slot_date)'))->get(array(
+         $data['books']=Bookdetail::where( 'slot_date', '>=', Carbon::today()->subDays(7))->orderBy('slot_date','desc')->groupBy(DB::raw('Date(slot_date)'))->get(array(
                                 DB::raw('Date(slot_date) as date'),
                                 DB::raw('COUNT(*) as "count"')
                             ))->pluck( 'count', 'date' );
@@ -89,10 +89,22 @@ class AdminController extends Controller
 
         // dd($data);
         ///**********Slot type wise booking*********'///
-        $data['peak_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '2' ]])->count();
-        $data['offpeak_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '3' ]])->count();
-        $data['normal_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '4' ]])->count();
+        // $data['peak_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '2' ]])->count();
+        // $data['offpeak_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '3' ]])->count();
+        // $data['normal_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '4' ]])->count();
         // dd($data['normal_count']);
+        //*********Paid Money************// 
+        $paid= Bookdetail::join('pay_bookings','bookdetails.book_id','=','pay_bookings.book_id')
+        ->where( 'pay_bookings.created_at', '>=', Carbon::now()->subDays(30))
+        ->sum('pay_bookings.amount');
+        $total_booking=Bookdetail::where( 'created_at', '>=', Carbon::now()->subDays(30))->sum('book_price');
+        //dd($total_booking);
+        $due=$total_booking-$paid;
+        
+        //dd($due);
+        $data['total_booking']=$total_booking;
+        $data['paid']=$paid;
+        $data['due']=$due;
         ///**********User type wise booking*********'///
         $data['total_btcount'] = Bookdetail::where( 'slot_date', '>=', Carbon::now()->subDays(30))->count();
         $data['reg_count']=Bookdetail::where( [['slot_date', '>=', Carbon::now()->subDays(30)], ['type', '=', '1' ]])->count();
@@ -171,7 +183,12 @@ class AdminController extends Controller
         }
         $profits=implode(",",$profits);
         $data['profits'] = $profits;
-        // dd($data['profits']);
+        // LATEST Bookings
+        $data['latest']= Bookdetail::join('bookings','bookdetails.book_id','=','bookings.book_id')
+        ->join('users','users.id','=','bookings.booked_for')->join('slots','slots.slot_id','=','bookdetails.slot_id')
+        ->select('bookdetails.*','bookings.*','users.id','users.first_name','users.last_name','users.img','slots.start','slots.end')
+        ->orderBy('bookdetails.id','desc')->limit(5)->get();
+        
         return view('admin.dashboard',$data);   
     }
     public function UserList()

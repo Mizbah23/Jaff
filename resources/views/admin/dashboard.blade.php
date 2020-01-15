@@ -87,7 +87,7 @@
         <div class="col-md-6 col-12">
                                       <div class="card">
                                 <div class="card-header d-flex justify-content-between pb-0">
-                                    <h4 class="card-title">Booked Slot(Peak-Off Peak-Normal)</h4>
+                                    <h4 class="card-title">Slot Booking Income</h4>
                                     <div class="dropdown chart-dropdown">
                                         <button class="btn btn-sm border-0 dropdown-toggle px-0" type="button" id="dropdownItem3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Last 30 Days
@@ -103,28 +103,28 @@
                                         <li class="list-group-item d-flex justify-content-between ">
                                             <div class="series-info">
                                                 <i class="fa fa-circle font-small-3 text-primary"></i>
-                                                <span class="text-bold-600">Peak</span>
+                                                <span class="text-bold-600">Total Booked Amount</span>
                                             </div>
                                             <div class="product-result">
-                                                <span>{{$peak_count}}</span>
+                                                <span>{{number_format($total_booking)}} BDT</span>
                                             </div>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between ">
                                             <div class="series-info">
                                                 <i class="fa fa-circle font-small-3 text-warning"></i>
-                                                <span class="text-bold-600">Off-Peak</span>
+                                                <span class="text-bold-600">Paid Amount</span>
                                             </div>
                                             <div class="product-result">
-                                                <span>{{$offpeak_count}}</span>
+                                                <span>{{number_format($paid)}} BDT</span>
                                             </div>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between ">
                                             <div class="series-info">
                                                 <i class="fa fa-circle font-small-3 text-danger"></i>
-                                                <span class="text-bold-600">Normal</span>
+                                                <span class="text-bold-600">Due Amount</span>
                                             </div>
                                             <div class="product-result">
-                                                <span>{{$normal_count}}</span>
+                                                <span>{{number_format($due)}} BDT</span>
                                             </div>
                                         </li>
                                     </ul>
@@ -262,147 +262,70 @@
                     
                     
                     
-    <!--<div class="row">-->
+    <div class="row">
         
-    <!--    <div class="col-12">-->
-    <!--        <div class="card">-->
-    <!--            <div class="card-header">-->
-    <!--                <h4 class="mb-0">Dispatched Orders</h4>-->
-    <!--            </div>-->
-    <!--            <div class="card-content">-->
-    <!--                <div class="table-responsive mt-1">-->
-    <!--                    <table class="table table-hover-animation mb-0">-->
-    <!--                        <thead>-->
-    <!--                            <tr>-->
-    <!--                                <th>ORDER</th>-->
-    <!--                                <th>STATUS</th>-->
-    <!--                                <th>OPERATORS</th>-->
-    <!--                                <th>LOCATION</th>-->
-    <!--                                <th>DISTANCE</th>-->
-    <!--                                <th>START DATE</th>-->
-    <!--                                <th>EST DEL. DT</th>-->
-    <!--                            </tr>-->
-    <!--                        </thead>-->
-    <!--                        <tbody>-->
-    <!--                            <tr>-->
-    <!--                                <td>#879985</td>-->
-    <!--                                <td><i class="fa fa-circle font-small-3 text-success mr-50"></i>Moving</td>-->
-    <!--                                <td class="p-1">-->
-    <!--                                    <ul class="list-unstyled users-list m-0  d-flex align-items-center">-->
-    <!--                                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Vinnie Mostowy" class="avatar pull-up">-->
-    <!--                                            <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-5.png" alt="Avatar" height="30" width="30">-->
-    <!--                                        </li>-->
-    <!--                                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Elicia Rieske" class="avatar pull-up">-->
-    <!--                                            <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-7.png" alt="Avatar" height="30" width="30">-->
-    <!--                                        </li>-->
-    <!--                                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Julee Rossignol" class="avatar pull-up">-->
-    <!--                                            <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-10.png" alt="Avatar" height="30" width="30">-->
-    <!--                                        </li>-->
-    <!--                                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Darcey Nooner" class="avatar pull-up">-->
-    <!--                                            <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-8.png" alt="Avatar" height="30" width="30">-->
-    <!--                                        </li>-->
-    <!--                                    </ul>-->
-    <!--                                </td>-->
-    <!--                                <td>Anniston, Alabama</td>-->
-    <!--                                <td>-->
-    <!--                                    <span>130 km</span>-->
-    <!--                                    <div class="progress progress-bar-success mt-1 mb-0">-->
-    <!--                                        <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>-->
-    <!--                                    </div>-->
-    <!--                                </td>-->
-    <!--                                <td>14:58 26/07/2018</td>-->
-    <!--                                <td>28/07/2018</td>-->
-    <!--                            </tr>-->
-    <!--                            <tr>-->
-    <!--                                <td>#156897</td>-->
-    <!--                                <td><i class="fa fa-circle font-small-3 text-warning mr-50"></i>Pending</td>-->
-    <!--                                <td class="p-1">-->
-    <!--                                    <ul class="list-unstyled users-list m-0  d-flex align-items-center">-->
-    <!--                                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Trina Lynes" class="avatar pull-up">-->
-    <!--                                            <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-1.png" alt="Avatar" height="30" width="30">-->
-    <!--                                        </li>-->
-    <!--                                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Lilian Nenez" class="avatar pull-up">-->
-    <!--                                            <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-2.png" alt="Avatar" height="30" width="30">-->
-    <!--                                        </li>-->
-    <!--                                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Alberto Glotzbach" class="avatar pull-up">-->
-    <!--                                            <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-3.png" alt="Avatar" height="30" width="30">-->
-    <!--                                        </li>-->
-    <!--                                    </ul>-->
-    <!--                                </td>-->
-    <!--                                <td>Cordova, Alaska</td>-->
-    <!--                                <td>-->
-    <!--                                    <span>234 km</span>-->
-    <!--                                    <div class="progress progress-bar-warning mt-1 mb-0">-->
-    <!--                                        <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>-->
-    <!--                                    </div>-->
-    <!--                                </td>-->
-    <!--                                <td>14:58 26/07/2018</td>-->
-    <!--                                <td>28/07/2018</td>-->
-    <!--                            </tr>-->
-    <!--                            <tr>-->
-    <!--                                <td>#568975</td>-->
-    <!--                                <td><i class="fa fa-circle font-small-3 text-success mr-50"></i>Moving</td>-->
-    <!--                                <td class="p-1">-->
-    <!--                                    <ul class="list-unstyled users-list m-0  d-flex align-items-center">-->
-    <!--                                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Lai Lewandowski" class="avatar pull-up">-->
-    <!--                                            <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-6.png" alt="Avatar" height="30" width="30">-->
-    <!--                                        </li>-->
-    <!--                                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Elicia Rieske" class="avatar pull-up">-->
-    <!--                                            <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-7.png" alt="Avatar" height="30" width="30">-->
-    <!--                                        </li>-->
-    <!--                                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Darcey Nooner" class="avatar pull-up">-->
-    <!--                                            <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-8.png" alt="Avatar" height="30" width="30">-->
-    <!--                                        </li>-->
-    <!--                                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Julee Rossignol" class="avatar pull-up">-->
-    <!--                                            <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-10.png" alt="Avatar" height="30" width="30">-->
-    <!--                                        </li>-->
-    <!--                                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Jeffrey Gerondale" class="avatar pull-up">-->
-    <!--                                            <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-9.png" alt="Avatar" height="30" width="30">-->
-    <!--                                        </li>-->
-    <!--                                    </ul>-->
-    <!--                                </td>-->
-    <!--                                <td>Florence, Alabama</td>-->
-    <!--                                <td>-->
-    <!--                                    <span>168 km</span>-->
-    <!--                                    <div class="progress progress-bar-success mt-1 mb-0">-->
-    <!--                                        <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>-->
-    <!--                                    </div>-->
-    <!--                                </td>-->
-    <!--                                <td>14:58 26/07/2018</td>-->
-    <!--                                <td>28/07/2018</td>-->
-    <!--                            </tr>-->
-    <!--                            <tr>-->
-    <!--                                <td>#245689</td>-->
-    <!--                                <td><i class="fa fa-circle font-small-3 text-danger mr-50"></i>Canceled</td>-->
-    <!--                                <td class="p-1">-->
-    <!--                                    <ul class="list-unstyled users-list m-0  d-flex align-items-center">-->
-    <!--                                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Vinnie Mostowy" class="avatar pull-up">-->
-    <!--                                            <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-5.png" alt="Avatar" height="30" width="30">-->
-    <!--                                        </li>-->
-    <!--                                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Elicia Rieske" class="avatar pull-up">-->
-    <!--                                            <img class="media-object rounded-circle" src="../../../app-assets/images/portrait/small/avatar-s-7.png" alt="Avatar" height="30" width="30">-->
-    <!--                                        </li>-->
-    <!--                                    </ul>-->
-    <!--                                </td>-->
-    <!--                                <td>Clifton, Arizona</td>-->
-    <!--                                <td>-->
-    <!--                                    <span>125 km</span>-->
-    <!--                                    <div class="progress progress-bar-danger mt-1 mb-0">-->
-    <!--                                        <div class="progress-bar" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>-->
-    <!--                                    </div>-->
-    <!--                                </td>-->
-    <!--                                <td>14:58 26/07/2018</td>-->
-    <!--                                <td>28/07/2018</td>-->
-    <!--                            </tr>-->
-    <!--                        </tbody>-->
-    <!--                    </table>-->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--    </div>-->
+       <div class="col-12">
+         <div class="card">
+           <div class="card-header">
+                    <h4 class="mb-0">Latest Bookings</h4>
+                </div>
+                <div class="card-content">
+                    <div class="table-responsive mt-1">
+                        <table class="table table-hover-animation mb-0">
+                            <thead>
+                                <tr>
+                                    <th>BOOKING CODE</th>
+                                    <th>STATUS</th>
+                                    <th style="text-align:center;">USER</th>
+                                    <th>Book TYPE</th>
+                                    <th>BOOKED PRICE</th>
+                                    <th>SLOT</th>
+                                    <th>DATE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($latest as $li)
+                                <tr>
+                                    <td>{{$li->book_code}}</td>
+                                    <td>@if($li->status==0)
+                                    <i class="fa fa-circle font-small-3 text-danger mr-50"></i>Due
+                                    @elseif($li->status==1)
+                                    <i class="fa fa-circle font-small-3 text-success mr-50"></i>
+                                    Paid
+                                    @else
+                                    <i class="fa fa-circle font-small-3 text-warning mr-50"></i>
+                                    Partial
+                                    @endif
+                                    </td>
+                                    <td class="p-1">
+                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
+                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="{{$li->first_name}}" class="avatar pull-up">
+                                                <img class="media-object rounded-circle" src="{{$li->img}}" alt="Avatar" height="30" width="30">
+                                            </li><span></span>
+                                            <li>{{$li->first_name}} {{$li->last_name}}</li>
+                                        </ul>
+                                    </td>
+                                    <td>@if($li->type==1)Regular
+                                        @elseif($li->type==2)Offer
+                                        @elseif($li->type==3)Full
+                                        @else Drop @endif
+                                    </td>
+                                    <td>{{$li->book_price}}</td>
+                                    <td>{{date( "h:i A", strtotime($li->start))}}-{{date( "h:i A", strtotime($li->end))}} {{date( "d/m/Y", strtotime($li->slot_date))}}</td>
+                                    <td>{{date( "d/m/Y", strtotime($li->created_at))}}</td>
+                                </tr>
+
+                                 @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
         
-    <!--</div>-->
-     {{-- dfsdf {{$dates}}          --}}
+    </div>
+
 </section>
 
 @stop
@@ -686,8 +609,8 @@
                     show: !1
                 }
             },
-            labels: ["Peak", "Off-Peak", "Normal"],
-            series: [{{$peak_count}},{{$offpeak_count}},{{$normal_count}}],
+            labels: ["Total Amount", "Paid","Due"],
+            series: [{{$total_booking}},{{$paid}},{{$due}}],
             dataLabels:
             {
                 enabled: !1
