@@ -279,8 +279,8 @@
                                     <th style="text-align:center;">USER</th>
                                     <th>Book TYPE</th>
                                     <th>BOOKED PRICE</th>
-                                    <th>SLOT</th>
-                                    <th>DATE</th>
+                                    <th style="text-align:center;">SLOT</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -310,9 +310,9 @@
                                         @elseif($li->type==3)Full
                                         @else Drop @endif
                                     </td>
-                                    <td>{{$li->book_price}}</td>
+                                    <td style="text-align:center;">{{$li->book_price}}</td>
                                     <td>{{date( "h:i A", strtotime($li->start))}}-{{date( "h:i A", strtotime($li->end))}} {{date( "d/m/Y", strtotime($li->slot_date))}}</td>
-                                    <td>{{date( "d/m/Y", strtotime($li->created_at))}}</td>
+                                  
                                 </tr>
 
                                  @endforeach

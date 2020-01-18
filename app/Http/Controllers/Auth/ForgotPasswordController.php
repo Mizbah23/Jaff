@@ -2,6 +2,7 @@
 
 namespace Jaff\Http\Controllers\Auth;
 
+use Jaff\Notifications\SendMail;
 use Jaff\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
@@ -49,15 +50,15 @@ class ForgotPasswordController extends Controller
     public function postForgotPassword(Request $request)
     {
 
-       $users=User::wherePhone($request->phone)->first();
+       $user=User::wherePhone($request->phone)->first();
        
-       if($users!=null){
-        $users->vcode= Str::random(6);
-        $users->save();
-         // dd($users);
+       if($user!=null){
+        $user->vcode= Str::random(6);
+        $user->save();
+        $user->notify(new SendMail($user));
         $postUrl = "http://api.bulksms.icombd.com/api/v3/sendsms/xml";
         
-        $smsbody = "Dear $users->username, your password varification code is $users->vcode."
+        $smsbody = "Dear $user->username, your password varification code is $user->vcode."
                  . " For any query call us 0011223344.  Regards, Jaff.";
 
          $xmlString =
