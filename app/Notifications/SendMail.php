@@ -41,13 +41,15 @@ class SendMail extends Notification
      */
     public function toMail($notifiable)
     {
-        // return $this->view('mail.html.layout');
+        
+        // $img_url = env('APP_URL')."public/img/app-logo.png";
         return (new MailMessage)
                     ->subject('OTP')
-                    ->greeting('Hello!'.$this->user->username)
+                    ->greeting('Hello '.$this->user->username.'!')
                     ->line('Your OTP code is '. $this->user->vcode.'.')
                     // ->action('Notification Action', url('/'))
                     ->line('For any query call us 0011223344.');
+                    // ->line('html.message', ['url_img'=>$img_url]);
     }
 
     /**

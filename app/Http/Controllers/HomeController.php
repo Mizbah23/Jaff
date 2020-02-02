@@ -56,6 +56,7 @@ class HomeController extends Controller
                             . "slots.`day_id`=weekdays.`id`) as start"),DB::raw("(SELECT MAX(slots.end) FROM slots WHERE "
                             . "slots.`day_id`=weekdays.`id`) as end"))->get();
         $data['types'] = Type::get();
+        // dd($data);
         return view('user.pages.home',$data);
     }
     public function programList()

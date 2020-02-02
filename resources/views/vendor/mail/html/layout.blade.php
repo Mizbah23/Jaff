@@ -37,14 +37,13 @@
                                 <tr>
                                     <td class="content-cell">
                                         {{ Illuminate\Mail\Markdown::parse($slot) }}
-
-                                        {{ $subcopy ?? '' }}
-                                        <img src="app-logo.png" alt="Jaff-Image" />
+                                            {{-- ![Some option text][logo] --}}
                                     </td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
+                                     {{-- {{asset('public/img/app-logo.png')}} --}}
 
                     {{ $footer ?? '' }}
                 </table>

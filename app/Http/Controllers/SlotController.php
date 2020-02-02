@@ -68,8 +68,8 @@ class SlotController extends Controller
             $nestedData['gdtl'] = $r->details;
             $nestedData['sts']=($r->status==1)?'<div class="badge  badge-pill badge-success mr-1 badge-glow mb-1"><i class="feather icon-check"></i><span>Active</span></div>':
                 '<div class="badge badge-pill  badge-danger mr-1 badge-glow mb-1"><i class="feather icon-x"></i><span>Active</span></div>';
-            $nestedData['action'] = '<a class="editmdl" data-id="'.$r->id.'" data-nm="'.$r->name.'" data-phn="'.$r->address.'" data-eml="'.$r->details.'" style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a> '
-                    . '<a href="#" class="delmdl" style="padding: 4px;"><i class="ficon feather icon-trash danger"></i></a>';
+            $nestedData['action'] = '<a class="editmdl" data-gid="'.$r->id.'" data-name="'.$r->name.'" data-address="'.$r->address.'" data-details="'.$r->details.'" style="padding: 4px;"><i class="ficon feather icon-edit success"></i></a> ';
+                    // . '<a href="#" class="delmdl" style="padding: 4px;"><i class="ficon feather icon-trash danger"></i></a>'
             $data[] = $nestedData;
         }
     }     
@@ -90,6 +90,20 @@ class SlotController extends Controller
         $ground->save();
         $notification = array(
                 'message' => 'Play Ground Info saved Successfully',
+                'type' => 'success'
+            );
+        return Response::json($notification); 
+    }
+
+    public function updateGround(Request $request) 
+    {
+        $ground = Ground::find($request->gid);
+        $ground->name = $request->name;
+        $ground->address = $request->address;
+        $ground->details = $request->details;
+        $ground->save();
+        $notification = array(
+                'message' => 'Play Ground Info Updated Successfully',
                 'type' => 'success'
             );
         return Response::json($notification); 

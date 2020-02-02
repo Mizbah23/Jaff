@@ -250,7 +250,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <input type="text" value="" id="delcid">                                        
+        <input type="hidden" value="" id="delcid">                                        
         <div class="modal-body">
             Are You Sure You want to delete <span class="ttl" style="color:red;"></span>?
         </div>

@@ -38,9 +38,9 @@
                                                 <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" aria-controls="about" role="tab" aria-selected="false">About us section image</a>
                                             </li>
 
-                                            <li class="nav-item">
+{{--                                             <li class="nav-item">
                                                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" aria-controls="profile" role="tab" aria-selected="false">#</a>
-                                            </li>
+                                            </li> --}}
   
                                         </ul>
                                         <div class="tab-content">

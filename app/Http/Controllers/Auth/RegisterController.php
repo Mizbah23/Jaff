@@ -118,7 +118,7 @@ class RegisterController extends Controller
         $user = new User;
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
-        $user->username=substr($request->first_name, 0, strrpos($request->first_name, ' '));;
+        $user->username=$request->first_name;
         $user->phone = $request->phone;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
@@ -131,7 +131,7 @@ class RegisterController extends Controller
         $postUrl = "http://api.bulksms.icombd.com/api/v3/sendsms/xml";
         $smsbody = "Dear $user->username, Your OTP code is $user->vcode."
                 . " For any query call us 0011223344.  Regards, Jaff.";
-
+        
         $xmlString =
            "
            <SMS>

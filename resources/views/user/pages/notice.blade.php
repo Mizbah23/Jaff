@@ -131,7 +131,7 @@
             	<i class="ulysses_widget_icon"></i>
             	<h3 class="widget-title">Social</h3><i class="bottom_border"></i>		
             	<ul class="socials">
-                    <li><a class="d-bg-c-h" href="#"><i class="fa fa-facebook"></i></a></li>			
+                    <li><a class="d-bg-c-h" href="https://http://localhost/jaff/user.notice.html"><i class="fa fa-facebook"></i></a></li>			
                     <li><a class="d-bg-c-h" href="#"><i class="fa fa-twitter"></i></a></li>			
                     <li><a class="d-bg-c-h" href="#"><i class="fa fa-instagram"></i></a></li>			
                     <li><a class="d-bg-c-h" href="#"><i class="fa fa-google-plus"></i></a></li>			
@@ -307,6 +307,14 @@
     @include('user.layout.footer')
 @stop
 @section('script')
+ 
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
 @stop
 
 

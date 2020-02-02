@@ -18,7 +18,9 @@ Route::get('/cartapps', 'UserCartController@showAppsCart')->name('usrappcart');
 Route::get('/successapps/{bookid}', 'AppsBookingController@successAppNofity')->name('appNotify');
 Route::post('/appscon-book', 'AppsBookingController@userConBook')->name('appbook');
 Route::get('/booked-invoice/{bookid}',  'ReportController@bookInvoicePrint')->name('report.bookInvoicePrint');
-
+// Route::get('/mail', function () {
+//     return view('vendor.mail.html.layout');
+// });
 
 //User Login & Reg routes
 
@@ -63,12 +65,11 @@ Route::prefix('notice')->group(function()
 
 Route::prefix('usercal')->group(function()
 {
-//    Route::get('/', 'CalendarController@calender')->name('calender.setting');
+    // Route::get('/', 'CalendarController@calender')->name('calender.setting');
     Route::post('/load-event','UserCalController@loadEvent')->name('load.usrevent');
     Route::post('/avail-slot', 'UserCalController@availSlot')->name('avail.usrslot');
-    
-    
-//    Route::post('/del-cartrow', 'SlotController@delCartRow')->name('del.cartrow');
+
+    // Route::post('/del-cartrow', 'SlotController@delCartRow')->name('del.cartrow');
 });
 Route::prefix('cart')->group(function()
 {
@@ -273,6 +274,8 @@ Route::prefix('admin')->group(function()
         Route::get('/list', 'SlotController@groundList')->name('ground.setting');
         Route::post('/get','SlotController@getGround')->name('groundPro');
         Route::post('/save','SlotController@saveGround')->name('save.ground');
+        Route::post('/update','SlotController@updateGround')->name('update.ground');
+
     });
     Route::prefix('weeks-pricing')->group(function()
     {
