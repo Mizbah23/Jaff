@@ -143,7 +143,7 @@ class AdminController extends Controller
         ->orderBy('bookings.created_at','desc')
         ->get(array(DB::raw('MONTH(bookings.created_at) as month'),DB::raw('SUM(book_price) as total')))
         ->pluck('total','month');
-         // dd($booking_date);
+          dd($booking_date);
         // print_r($booking_date);
         $income = array();
        foreach ($booking_date as $key=>$value) {
@@ -151,13 +151,11 @@ class AdminController extends Controller
          if(array_key_exists($key, $member_date)){
             $value+=$member_date[$key];
          }
-         if(array_key_exists($key, $member_date)){
-            $value+=$member_date[$key];
-         }
+ 
          $income[$key] = $value;
        }
        
-       
+
 
        $months=$months->merge($data['bank_trans_date']);
        $data['months']=$income=$months;
@@ -171,7 +169,7 @@ class AdminController extends Controller
 
          }
 
-         $months = implode(",",$months);
+         $months =implode(",",$months);
          $mcounts=implode(",",$mcounts);
          // dd($months);
          // dd($mcounts);
