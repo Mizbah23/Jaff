@@ -15,10 +15,11 @@ use Jaff\Dropin;
 
 class AppsBookingController extends Controller
 {
-     public function __construct()
-    {
-        $this->middleware('auth:web');
-    }
+    //  public function __construct()
+    // {
+    //     $this->middleware('auth:web');
+    // }
+
     public function saveBooking($user_id,$available,$mdis,$memid)
     {
         $lists = $slots = $fdays = $drops = $dslot = array();
@@ -110,16 +111,18 @@ class AppsBookingController extends Controller
             $bookdetail->save(); 
          }
         }
-        return 'ok';   
+        return $bookid;   
     }
     
 
     public function userConBook(Request $request)
     {
-        $user_cart = Cart::count();
-        $user_id= Auth::guard('web')->user()->id;
-        $max_slot = Setting::where('id',1)->value('max_slot');
+        if (Auth::check()) {
+            $user_cart = Cart::count();
+             $user_id= Auth::guard('web')->user()->id;
+                     $max_slot = Setting::where('id',1)->value('max_slot');
         $available = ""; $mdis= 0;$memid= 0;
+
         if($user_cart>$max_slot)
         {
             session()->flash('error', 'Your are not allowed to book more than '.$max_slot.' Slot');
@@ -154,13 +157,18 @@ class AppsBookingController extends Controller
                 return redirect()->back();
             }
         }else{
-            $this->saveBooking($user_id,$available,$mdis,$memid);
+            $bookid=$this->saveBooking($user_id,$available,$mdis,$memid);
             Cart::destroy();
             session()->flash('success', 'Booked Successfully! You have 48 hours to make the payments');
             // return redirect()->back();
-            return redirect()->route('appNotify');
+            return redirect()->route('appNotify',$bookid);
         }
+        
+
+    }else{
+        return redirect()->route('loginApps');
     }
+}
     // public function successNofity()
     // {
     //     $data = array();
@@ -172,11 +180,12 @@ class AppsBookingController extends Controller
 
 
 
-    public function successAppNofity()
+    public function successAppNofity($bookid)
     {
       $data = array();
-       $data['title'] = 'Booking Confirmed';
-      session()->flash('success', 'Booked Successfully! You have 48 hours to make the payments');
+        $data['title'] = 'Booking Confirmed';
+        $data['bookinfo']=Booking::where('book_id',$bookid)->first();
+        $data['bookdetail']=Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where('bookdetails.book_id',$bookid)->get();
          return view('user.pages.success1',$data);
     }
 }

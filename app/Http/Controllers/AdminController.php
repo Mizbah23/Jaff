@@ -10,6 +10,7 @@ use Jaff\User;
 use Jaff\Booking;
 use Jaff\Bookdetail;
 use Jaff\Balance;
+use Jaff\Membership;
 use Illuminate\Support\Facades\Hash;
 use Response;
 use Illuminate\Support\Facades\DB;
@@ -24,15 +25,15 @@ class AdminController extends Controller
     {
         $data = array();
         $data['title'] = 'Dashboard';
-        $data['total']=User::where( 'created_at', '>=', Carbon::now()->subDays(7))->orderBy('created_at','desc')->get();
+        $data['total']=User::where( 'created_at', '>=', Carbon::today()->subDays(7))->orderBy('created_at','desc')->get();
         // dd($data['total']);
         $dates = collect();
         foreach( range( 0, 6 ) as $i ) {
-            $date = Carbon::now()->subDays( $i )->format( 'Y-m-d' );
+            $date = Carbon::today()->subDays( $i )->format( 'Y-m-d' );
             $dates->put( $date, 0);
          }
         // dd($dates);
-         $data['users']=User::where( 'created_at', '>=', Carbon::now()->subDays(7))->orderBy('created_at','desc')->groupBy(DB::raw('Date(created_at)'))->get(array(
+         $data['users']=User::where( 'created_at', '>=', Carbon::today()->subDays(7))->orderBy('created_at','desc')->groupBy(DB::raw('Date(created_at)'))->get(array(
                                 DB::raw('Date(created_at) as date'),
                                 DB::raw('COUNT(*) as "count"')
                             ))->pluck( 'count', 'date' );
@@ -54,13 +55,13 @@ class AdminController extends Controller
          $data['dcounts'] = $dcounts;
          //******bookings date chart************//
 
-         $data['total_books']=Bookdetail::where( 'slot_date', '>=', Carbon::now()->subDays(7))->orderBy('slot_date','desc')->get();
+         $data['total_books']=Bookdetail::where( 'slot_date', '>=', Carbon::today()->subDays(7))->orderBy('slot_date','desc')->get();
          $book_dates = collect();
         foreach( range( 0, 6 ) as $i ) {
-            $date = Carbon::now()->subDays( $i )->format( 'Y-m-d' );
+            $date = Carbon::today()->subDays( $i )->format( 'Y-m-d' );
             $book_dates->put( $date, 0);
          }
-         $data['books']=Bookdetail::where( 'slot_date', '>=', Carbon::now()->subDays(7))->orderBy('slot_date','desc')->groupBy(DB::raw('Date(slot_date)'))->get(array(
+         $data['books']=Bookdetail::where( 'slot_date', '>=', Carbon::today()->subDays(7))->orderBy('slot_date','desc')->groupBy(DB::raw('Date(slot_date)'))->get(array(
                                 DB::raw('Date(slot_date) as date'),
                                 DB::raw('COUNT(*) as "count"')
                             ))->pluck( 'count', 'date' );
@@ -89,10 +90,22 @@ class AdminController extends Controller
 
         // dd($data);
         ///**********Slot type wise booking*********'///
-        $data['peak_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '2' ]])->count();
-        $data['offpeak_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '3' ]])->count();
-        $data['normal_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '4' ]])->count();
+        // $data['peak_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '2' ]])->count();
+        // $data['offpeak_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '3' ]])->count();
+        // $data['normal_count']= Bookdetail::join('slots','bookdetails.slot_id','=','slots.slot_id')->where( [['bookdetails.created_at', '>=', Carbon::now()->subDays(30)], ['slots.type_id', '=', '4' ]])->count();
         // dd($data['normal_count']);
+        //*********Paid Money************// 
+        $paid= Bookdetail::join('pay_bookings','bookdetails.book_id','=','pay_bookings.book_id')
+        ->where( 'pay_bookings.created_at', '>=', Carbon::now()->subDays(30))
+        ->sum('pay_bookings.amount');
+        $total_booking=Bookdetail::where( 'created_at', '>=', Carbon::now()->subDays(30))->sum('book_price');
+        //dd($total_booking);
+        $due=$total_booking-$paid;
+        
+        //dd($due);
+        $data['total_booking']=$total_booking;
+        $data['paid']=$paid;
+        $data['due']=$due;
         ///**********User type wise booking*********'///
         $data['total_btcount'] = Bookdetail::where( 'slot_date', '>=', Carbon::now()->subDays(30))->count();
         $data['reg_count']=Bookdetail::where( [['slot_date', '>=', Carbon::now()->subDays(30)], ['type', '=', '1' ]])->count();
@@ -107,17 +120,46 @@ class AdminController extends Controller
             $date = Carbon::today()->subMonths( $i )->format( 'M' );
             $months->put( $date, 0);
          }
-        $data['income_date'] = Balance::join('accounts','balances.accid','=','accounts.accid')
+         $data['bank_trans_date']=DB::table('bank_trans')->where([['date', '>=', Carbon::today()->subMonths(6)],['type','=','1'],['purpose','=','0']])->groupBy(DB::raw('Month(date)'),'month')->orderBy('date','desc')->get(array(DB::raw('date_format(date, "%b") as month'),DB::raw('SUM(amount) as total')))->pluck('total','month');
+         // dd($data['bank_trans_date']);
+         $data['bkash_trans_date']=DB::table('bkash_trans')->where([['date', '>=', Carbon::today()->subMonths(6)],['type','=','1'],['purpose','=','0']])->groupBy(DB::raw('Month(date)'),'month')->orderBy('date','desc')->get(array(DB::raw('date_format(date, "%b") as month'),DB::raw('SUM(amount) as total')))->pluck('total','month');
+
         
-        ->where([['balances.date', '>=', Carbon::today()->subMonths(6)],['accounts.type','=','1']])
-        ->groupBy(DB::raw('Month(balances.date)'),'month')
-        ->orderBy('balances.date','desc')
-        ->get(array(DB::raw('date_format(date, "%b") as month'),DB::raw('SUM(amount) as total')))
+        // dd($data['bkash_trans_date']);
+         $cash_trans_date =DB::table('cash_trans')->where([['date', '>=', Carbon::today()->subMonths(6)],['type','=','1'],['purpose','=','0']])->groupBy(DB::raw('Month(date)'),'month')->orderBy('date','desc')->get(array(DB::raw('date_format(date, "%b") as month'),DB::raw('SUM(amount) as total')))->pluck('total','month');
+        // dd($data['cash_trans_date']);
+         $assign_date =DB::table('assigns')->where('created_at', '>=', Carbon::today()->subMonths(6))->groupBy(DB::raw('Month(created_at)'),'month')->orderBy('created_at','desc')->get(array(DB::raw('date_format(created_at, "%b") as month'),DB::raw('SUM(price) as total')))->pluck('total','month');
+         // dd($data['assign_date']);
+        $member_date = Membership::join('members','memberships.id','=','members.mid')
+        ->where('members.created_at', '>=', Carbon::today()->subMonths(6))
+        ->groupBy(DB::raw('Month(members.created_at)'),'month')
+        ->orderBy('members.created_at','desc')
+        ->get(array(DB::raw('MONTH(members.created_at) as month'),DB::raw('SUM(fee) as total')))->pluck('total','month');
+         // dd($member_date);
+        
+        $booking_date = Booking::join('bookdetails','bookings.book_id','=','bookdetails.book_id')
+        ->where([['bookings.created_at', '>=', Carbon::today()->subMonths(6)],['bookings.status','!=','0']])
+        ->groupBy(DB::raw('Month(bookings.created_at)'),'month')
+        ->orderBy('bookings.created_at','desc')
+        ->get(array(DB::raw('MONTH(bookings.created_at) as month'),DB::raw('SUM(book_price) as total')))
         ->pluck('total','month');
-         // dd($data['income_date']);
-       $months=$months->merge( $data['income_date'] );
+          dd($booking_date);
+        // print_r($booking_date);
+        $income = array();
+       foreach ($booking_date as $key=>$value) {
+   
+         if(array_key_exists($key, $member_date)){
+            $value+=$member_date[$key];
+         }
+ 
+         $income[$key] = $value;
+       }
+       
+
+
+       $months=$months->merge($data['bank_trans_date']);
        $data['months']=$income=$months;
-        // dd($data['months']);
+       // dd($data['months']);
        $months = [];
        $mcounts=[];
        foreach ($data['months'] as $key=>$mcount) {
@@ -127,7 +169,7 @@ class AdminController extends Controller
 
          }
 
-         $months = implode(",",$months);
+         $months =implode(",",$months);
          $mcounts=implode(",",$mcounts);
          // dd($months);
          // dd($mcounts);
@@ -142,36 +184,41 @@ class AdminController extends Controller
             $emonths->put( $date, 0);
          }
 
-        $data['expense_date'] = Balance::join('accounts','balances.accid','=','accounts.accid')
-        ->where([['date', '>=', Carbon::today()->subMonths(6)],['accounts.type','=','2']])
-        ->groupBy(DB::raw('Month(balances.date)'),'month')
-        ->orderBy('balances.date','desc')
-        ->get(array(DB::raw('date_format(date, "%b") as month'),DB::raw('SUM(amount) as total')))
-        ->pluck('total','month');
+        // $data['expense_date'] = Balance::join('accounts','balances.accid','=','accounts.accid')
+        // ->where([['date', '>=', Carbon::today()->subMonths(6)],['accounts.type','=','2']])
+        // ->groupBy(DB::raw('Month(balances.date)'),'month')
+        // ->orderBy('balances.date','desc')
+        // ->get(array(DB::raw('date_format(date, "%b") as month'),DB::raw('SUM(amount) as total')))
+        // ->pluck('total','month');
         
-        $emonths=$emonths->merge( $data['expense_date'] );
-        $data['emonths']=$expense=$emonths; 
-        // dd($expense);
-        $emonths = [];
-        $ecounts=[];
-        foreach ($data['emonths'] as $key=>$ecount) {
+        // $emonths=$emonths->merge( $data['expense_date'] );
+        // $data['emonths']=$expense=$emonths; 
+        // // dd($expense);
+        // $emonths = [];
+        // $ecounts=[];
+        // foreach ($data['emonths'] as $key=>$ecount) {
            
-           array_push($ecounts, $ecount);
+        //    array_push($ecounts, $ecount);
 
-         };
-        $ecounts=implode(",",$ecounts);
-        $data['ecounts'] = $ecounts;
-        // dd($income);
-        //Last 12 months Profit
-        $profits = array();
+        //  };
+        // $ecounts=implode(",",$ecounts);
+        // $data['ecounts'] = $ecounts;
+        // // dd($income);
+        // //Last 12 months Profit
+        // $profits = array();
       
-        foreach ($income as $key => $value) {
+        // foreach ($income as $key => $value) {
       
-            $profits[$key]= $value-$expense[$key];
-        }
-        $profits=implode(",",$profits);
-        $data['profits'] = $profits;
-        // dd($data['profits']);
+        //     $profits[$key]= $value-$expense[$key];
+        // }
+        // $profits=implode(",",$profits);
+        // $data['profits'] = $profits;
+        // // LATEST Bookings
+        // $data['latest']= Bookdetail::join('bookings','bookdetails.book_id','=','bookings.book_id')
+        // ->join('users','users.id','=','bookings.booked_for')->join('slots','slots.slot_id','=','bookdetails.slot_id')
+        // ->select('bookdetails.*','bookings.*','users.id','users.first_name','users.last_name','users.img','slots.start','slots.end')
+        // ->orderBy('bookdetails.id','desc')->limit(5)->get();
+        
         return view('admin.dashboard',$data);   
     }
     public function UserList()
@@ -333,7 +380,7 @@ class AdminController extends Controller
             foreach ($marray as $m_array){
                 array_push($data["mdata"], $m_array);
            }
-        }
+    }
         if(count($warray)>0){
             foreach ($warray as $w_array){
                 array_push($data["wdata"], $w_array);

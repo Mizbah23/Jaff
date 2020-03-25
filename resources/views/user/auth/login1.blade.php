@@ -1,17 +1,61 @@
 @extends('user.master')
 @section('title'){{$title}}@stop
 @section('style')
-
+<style >
+  i.fa.fa-cart-plus {
+    font-size: 22px;
+    margin-top: -2px;
+    }
+    .path-section .bg-cover {
+    padding: 130px 0 60px;
+    }
+   .path-section {
+    height: 100px;
+    }
+    ul#menu-main-menu {
+    float: right;
+    position: relative;
+}
+@media(min-width: 320px){
+  li#menu-item-305 {
+    position: relative;
+    float: right;
+    margin-right: 21px;
+    margin-top: -31px;
+}
+}
+@media(min-width: 480px){
+    li#menu-item-305 {
+    position: relative;
+    margin-top: -51px;
+}
+}
+@media(min-width: 768px){
+  li#menu-item-305 {
+    position: relative;
+    margin-top: -68px;
+  }
+}
+@media (min-width: 992px){
+li#menu-item-305 {
+    position: relative;
+    margin-top: -35px;
+    float: right;
+    margin-left: 970px;
+}
+}
+</style>
 @stop
 
 @section('header')
-            <header class="header sticky-wrapper sticky-bar">
-        
+    <header class="header sticky-wrapper sticky-bar">
+      
             <div class="container">
-        <div class="row">
+              <div class="row">
                     
                     <div class="col-md-2 col-xs-3">
-                        <div class="logo"><a class="to-top" href="#goto-top"><img src="{{asset('public/img/app-logo.png')}}"></div>
+                        <div class="logo"><a class="to-top" href="#goto-top"><img src="{{asset('public/img/app-logo.png')}}">
+                        </div>
                     </div>
                     
                     <div class="col-md-10 col-xs-9">
@@ -27,7 +71,7 @@
                                     <i class="cart-icon"></i>
                                 </a>
                                 <ul class="dropdown-menu cart-dropdown">
-                                    <li>                                    
+                                    <li>                  
                                         <span class="cart_details">0 items, Total of <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>0.00</span></span>
                                         <a class="checkout" title="View your shopping cart" href="cart/index.html">
                                                 Checkout <span class="icon-chevron-right"></span>
@@ -35,31 +79,31 @@
                                     </li>
                                 </ul>
                             </li>-->
-                            <li class="menu-toggle">
+{{--                             <li class="menu-toggle">
                                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                                     <i class="fa fa-bars"></i>
                                 </button>
-                            </li>
-            </ul>
+                            </li> --}}
+                      </ul>
                         
-                        <nav id="navbar" class="nav menu navbar navbar-custom navbar-fixed-top" role="navigation">
-                            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                        {{-- <nav id="navbar" class="nav menu navbar navbar-custom navbar-fixed-top" role="navigation"> --}}
+                            <div {{-- class="collapse navbar-collapse navbar-right navbar-main-collapse" --}}>
                                 <ul id="menu-main-menu" class="nav navbar-nav" style="margin-top: auto;">
 
                         <li id="menu-item-305" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-305 ">
-                            <a title="Cart" href="{{route('usrcart')}}" aria-haspopup="true">
+                            <a title="Cart" href="{{route('usrappcart')}}" aria-haspopup="true">
                                 <i class="fa fa-cart-plus"></i>
                                 <span class="badge badge-pill badge-primary badge-up tcart" style="background-color: #024279;">{{Cart::count()}}</span>
                             </a>
                         </li> 
 
-                                </ul>                           
+                                </ul>             
                             </div>
-                        </nav>
+                       {{--  </nav> --}}
                     </div>
                     
                 </div>
-            </div>
+              </div>
 
         </header>
 @stop
@@ -67,14 +111,14 @@
 @section('content')
 <div class="content">
 
-{{-- <div class="path-section" style="background-image: url({{asset('public/img/slide-1.jpg')}})">
-    <div class="bg-cover" style="padding: 90px 0 20px">
+<div class="path-section" style="background-image: url({{asset('public/img/black.png')}})">
+{{--     <div class="bg-cover" style="padding: 90px 0 20px">
     <div class="container">
             <h3>Time Table</h3>
         </div>
-    </div>
+    </div> --}}
 </div>
-		 --}}		
+				
 <div class="blog-section page_spacing">
     <div class="container-fluid shortcode-view">
         
@@ -104,7 +148,9 @@
                     {{ session('success') }}
                      </div>
                     @endif
+
                     <form action="{{route('apploginPost')}}" method="post">
+
                         @csrf
                         <div class="">
                             <!-- <p class="text-head">Username</p> -->

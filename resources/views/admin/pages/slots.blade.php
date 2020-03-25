@@ -339,36 +339,6 @@
             </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="modal fade text-left addHourMdl" tabindex="-1" role="dialog" aria-labelledby="myModalLabel130" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
         <div class="modal-content">

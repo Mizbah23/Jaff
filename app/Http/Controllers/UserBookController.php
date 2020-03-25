@@ -110,7 +110,7 @@ class UserBookController extends Controller
             $bookdetail->save(); 
          }
         }
-        return  $bookid;   
+        return $bookid;   
     }
     
 

@@ -66,7 +66,7 @@ class paymentExport implements FromCollection,WithHeadings,WithColumnFormatting,
         public function columnFormats(): array
     {
         return [
-            'c' => NumberFormat::FORMAT_DATE_DDMMYYYY
+            'b' => NumberFormat::FORMAT_DATE_DDMMYYYY
         ];
     }
 

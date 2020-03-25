@@ -3,6 +3,7 @@
 namespace Jaff\Http\Controllers\Auth;
 
 use Jaff\User;
+use Jaff\Notifications\SendMail;
 use Jaff\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
@@ -117,7 +118,7 @@ class RegisterController extends Controller
         $user = new User;
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
-        $user->username=substr($request->first_name, 0, strrpos($request->first_name, ' '));;
+        $user->username=$request->first_name;
         $user->phone = $request->phone;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
@@ -125,13 +126,12 @@ class RegisterController extends Controller
         $user->vcode= Str::random(6);
         // dd($user);
         $user->save();
-        
-        
+        $user->notify(new SendMail($user));
 
         $postUrl = "http://api.bulksms.icombd.com/api/v3/sendsms/xml";
         $smsbody = "Dear $user->username, Your OTP code is $user->vcode."
                 . " For any query call us 0011223344.  Regards, Jaff.";
-
+        
         $xmlString =
            "
            <SMS>
@@ -167,8 +167,10 @@ class RegisterController extends Controller
     {
         $data= array();
         $data['title']='OTP verification';
-        $data['user']=User::where('phone',$phone)->first();
-         // dd($user);
+        $user=User::where('phone',$phone)->first();
+        $user->notify(new SendMail($user));
+        $data['user']=$user;
+        // dd($data['user']);
         return view('user.auth.otp',$data);
     }
           public function resendOTP(Request $request,$phone)

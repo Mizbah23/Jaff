@@ -17,6 +17,7 @@ class UserCartController extends Controller
 {
     public function showCart()
     {
+        
         $data = array();
         if(Auth::guard('web')->check())
         {
@@ -224,6 +225,7 @@ class UserCartController extends Controller
 
     public function showAppsCart()
     {
+        // dd('success');
         $data = array();
         if(Auth::guard('web')->check())
         {

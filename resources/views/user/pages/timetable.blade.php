@@ -114,7 +114,7 @@ $(function() {
 
     $('#calendar').fullCalendar({
       header: {
-        left: 'prev,next today',
+        left: 'prev,next, today',
         right: 'title'
       },
     dayClick: function(date, jsEvent, view, resourceObj)
