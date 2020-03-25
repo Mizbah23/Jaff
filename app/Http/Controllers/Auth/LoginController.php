@@ -51,7 +51,7 @@ class LoginController extends Controller
     {
         $data = array();
         $data['title'] = 'Log In';
-        return view('user.auth.login',$data);
+        return view('user.auth.login1',$data);
     }
 
     public function __construct()
@@ -176,7 +176,75 @@ class LoginController extends Controller
 //            return redirect('/login');
 //        }
 //    }
-    
+            public function appslogin(Request $request)
+    {
+         // dd($request);
+        $this->validate($request,[
+            'phone' => 'required',
+            'password' => 'required| min:6'
+        ]);
+        // dd($request);
+        $user = User::where('phone', $request->phone)->first();
+        // dd($user);
+       if(!is_null($user))
+       {   
+           if(!Hash::check($request->password, $user->password))
+           {
+               // dd($user);
+               session()->flash('errors', 'Your Password is wrong !!');
+               return redirect()->route('loginApps');
+           }else{
+             if (is_null($user->phone_verified_at )||($user->status==0)) {
+              $postUrl = "http://api.bulksms.icombd.com/api/v3/sendsms/xml";
+              $smsbody = "Dear $user->username, Your OTP code is $user->vcode."
+                . " For any query call us 0011223344.  Regards, Jaff.";
+
+            $xmlString =
+                   "
+                   <SMS>
+                   <authentification>
+                   <username>jakia</username>
+                   <password>Jakiasms786</password>
+                   </authentification>
+                   <message>
+                   <sender>jakia</sender>
+                   <text>$smsbody</text>
+                   </message>
+                   <recipients>
+                   <gsm>88.$request->phone</gsm>
+                   </recipients>
+                   </SMS>
+                   ";
+                   $fields = "XML=" . urlencode($xmlString);
+                   $ch = curl_init();
+                   curl_setopt($ch, CURLOPT_URL, $postUrl);
+                   curl_setopt($ch, CURLOPT_POST, 1);
+                   curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+                   curl_exec($ch);
+                   curl_close($ch);
+                session()->flash('success', 'A verification code has been sent to '.$request->phone);
+                // return redirect()->route('otp',['phone'=>$request->phone]);
+                return Redirect::to(URL::temporarySignedRoute('otp',now()->addMinutes(2),['phone'=>$request->phone])); 
+             }elseif ($user->status == 1)
+               {
+                   if(Auth::guard('web')->attempt
+                           (['phone' => $request->phone, 'password' => $request->password], $request->remember))
+                   { 
+                         return redirect()->back();
+                      
+                   }
+               }else{
+                   // $user->notify(new VerifyRegistration($user));
+                   // dd('not a user');
+                   session()->flash('errors', 'There are some unsolved issues with your account!');
+                   return redirect()->route('loginApps');
+               }
+           }
+       }else{
+           session()->flash('errors', 'Please Register first !!');
+           return redirect()->route('loginApps');
+       }
+    }
     
     public function userLogout() 
     {

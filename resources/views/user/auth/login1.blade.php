@@ -104,7 +104,7 @@
                     {{ session('success') }}
                      </div>
                     @endif
-                    <form action="{{route('loginPost')}}" method="post">
+                    <form action="{{route('apploginPost')}}" method="post">
                         @csrf
                         <div class="">
                             <!-- <p class="text-head">Username</p> -->
